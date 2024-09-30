@@ -1,0 +1,13 @@
+.DS_Store
+.sass-cache
+node_modules
+/dist
+.vscode
+release_bin
+release
+run_config.json
+*~
+.python-version
+*.pem
+config.yml
+.env

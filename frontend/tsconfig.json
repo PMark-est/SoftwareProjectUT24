@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "strictNullChecks": true,
+        "skipLibCheck": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "es6",
+        "esModuleInterop": true,
+        "jsx": "react",
+        "paths": {
+            "@/*": ["./app/scripts/*"]
+        },
+        "allowJs": true
+    }
+}

@@ -77,7 +77,7 @@ createSplashScreen()
 ;(async () => {
     try {
         // TODO This was added in July 2024, remove after a few months?
-        convertJstorage()
+        //convertJstorage() POLE VAJA
         // Check if user is logged in
         const initAuth = authenticationProxy.init()
         // Fetch everything that only needs to be check once

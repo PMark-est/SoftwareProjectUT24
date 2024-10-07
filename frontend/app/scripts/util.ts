@@ -390,6 +390,9 @@ export function httpConfAddMethod<T extends JQuery.AjaxSettings | IRequestConfig
         conf.method = "GET"
         conf["params" in conf ? "params" : "data"] = data
     }
+    conf.headers = {
+        "ngrok-skip-browser-warning": "69420",
+    }
     return conf
 }
 
@@ -432,9 +435,25 @@ export function httpConfAddMethodFetch(
         for (const key in params) {
             body.append(key, params[key])
         }
-        return { url, request: { method: "POST", body } }
+        return {
+            url,
+            request: {
+                headers: {
+                    "ngrok-skip-browser-warning": "69420",
+                },
+                method: "POST",
+                body,
+            },
+        }
     } else {
-        return { url: url + "?" + new URLSearchParams(params) }
+        return {
+            url: url + "?" + new URLSearchParams(params),
+            request: {
+                headers: {
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            },
+        }
     }
 }
 

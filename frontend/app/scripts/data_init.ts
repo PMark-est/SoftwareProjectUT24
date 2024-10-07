@@ -107,7 +107,11 @@ async function getConfig(): Promise<Config> {
     }
     let response: Response
     try {
-        response = await fetch(configUrl)
+        response = await fetch(configUrl, {
+            headers: {
+                "ngrok-skip-browser-warning": "69420",
+            },
+        })
     } catch (error) {
         throw Error("Config request failed")
     }

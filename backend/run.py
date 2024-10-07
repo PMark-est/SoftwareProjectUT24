@@ -17,14 +17,14 @@ from gevent.pywsgi import WSGIServer
 
 from korp import create_app
 
+
 if __name__ == "__main__":
     app = create_app()
-
     if len(sys.argv) == 2 and sys.argv[1] == "dev":
         # Run using Flask (use only for development)
-        app.run(debug=True, threaded=True, host=app.config["WSGI_HOST"], port=app.config["WSGI_PORT"])
+        app.run(debug=True, threaded=True, host='0.0.0.0', port=app.config["WSGI_PORT"])
     else:
         # Run using gevent
         print("Serving using gevent")
-        http = WSGIServer((app.config["WSGI_HOST"], app.config["WSGI_PORT"]), app.wsgi_app)
+        http = WSGIServer(('0.0.0.0', app.config["WSGI_PORT"]), app.wsgi_app)
         http.serve_forever()

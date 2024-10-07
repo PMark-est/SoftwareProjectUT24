@@ -102,6 +102,7 @@ def get_mode(mode_name: str, corpora: list, cache: bool):
             mode = yaml.load(fp, Loader=SafeLoader)
     except FileNotFoundError:
         return
+    
 
     attr_types = {
         "positional": "pos_attributes",

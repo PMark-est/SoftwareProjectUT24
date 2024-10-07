@@ -153,7 +153,6 @@ def query(args, abort_event=None):
 
     saved_statistics = {}
     query_data = args.get("query_data")
-
     if query_data:
         try:
             query_data = zlib.decompress(base64.b64decode(

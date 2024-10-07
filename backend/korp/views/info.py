@@ -124,7 +124,6 @@ def corpus_info(args, no_combined_cache=False):
             if sentences.isdigit():
                 total_sentences += int(sentences)
             continue
-
         # Read attributes
         attrs = cwb.read_attributes(lines)
 

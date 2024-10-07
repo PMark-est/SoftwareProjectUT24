@@ -31,13 +31,14 @@ class CWB:
         env["LC_COLLATE"] = self.locale
         if not isinstance(command, str):
             command = "\n".join(command)
+
         command = "set PrettyPrint off;\n" + command
         command = command.encode(self.encoding)
         process = subprocess.Popen([self.executable, "-c", "-r", self.registry],
                                    stdin=subprocess.PIPE,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE, env=env)
-
+        
         # Use a loop and timeout to be able to kill aborted searches
         timeout = 1
         try:

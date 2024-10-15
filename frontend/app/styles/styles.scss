@@ -2182,13 +2182,12 @@ li.active a span .num-to-find {
   color: white;
   padding: 5px;
   border-radius: 5px;
-  opacity: 1.0;
-  display: none;
+  opacity: 0;
   white-space: nowrap;
 }
 
 .tooltip.active {
-  display: block;
+  opacity: 1;
 }
 
 @keyframes blinker {

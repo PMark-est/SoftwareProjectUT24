@@ -480,10 +480,6 @@ angular.module("korpApp").component("kwic", {
                 }
 
                 $ctrl.isTooltipVisible = true
-                var wordRect = word[0].getBoundingClientRect();
-                var tableRect = tooltip.parentElement.getBoundingClientRect();
-                tooltip.style.left = wordRect.left + tooltip.parentElement.scrollLeft - 25 + "px"
-                tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
                 if (obj.error_correction != "_") {
                     var correction_status = obj.correction_status == "true" ? "soovituslik" : "kohustuslik";
                     tooltip.innerHTML = "<b>" + obj.error_correction + "</b>: " + correction_status + ", " + obj.error_tag + ", " + obj.error_type
@@ -491,6 +487,10 @@ angular.module("korpApp").component("kwic", {
                 else {
                     tooltip.innerHTML = "_"
                 }
+                var wordRect = word[0].getBoundingClientRect();
+                var tableRect = tooltip.parentElement.getBoundingClientRect();
+                tooltip.style.left = wordRect.left - tableRect.left + (word[0].offsetWidth / 2) + tooltip.parentElement.scrollLeft - (tooltip.offsetWidth / 2) + "px"
+                tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
             }
 
             function selectWord(word, scope) {

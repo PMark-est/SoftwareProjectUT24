@@ -65,7 +65,6 @@ angular.module("korpApp").component("kwic", {
                                 </span>
                             </div>
                         </td>
-
                         <td ng-if="::sentence.isLinked" colspan="3" class="lnk">
                             <kwic-word
                                 ng-repeat="word in sentence.tokens"
@@ -74,6 +73,9 @@ angular.module("korpApp").component("kwic", {
                                 sentence-index="$parent.$index"
                             />
                         </td>
+                        <div class="tooltip" ng-class="{'active': $ctrl.isTooltipVisible}">
+                            This is the tooltip content!
+                        </div>
 
                         <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="left">
                             <kwic-word
@@ -89,8 +91,7 @@ angular.module("korpApp").component("kwic", {
                                 word="word"
                                 sentence="sentence"
                                 sentence-index="$parent.$index"
-                            />
-                        </td>
+                            /> </td>
                         <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="right">
                             <kwic-word
                                 ng-repeat="word in $ctrl.selectRight(sentence)"
@@ -164,6 +165,7 @@ angular.module("korpApp").component("kwic", {
         prevParams: "<",
         prevRequest: "<",
         corpusOrder: "<",
+        isTooltipVisible: "<",
         /** Current page of results. */
         kwicInput: "<",
         corpusHits: "<",
@@ -244,6 +246,7 @@ angular.module("korpApp").component("kwic", {
                 if (event.target.classList.contains("word")) {
                     onWordClick(event)
                 } else {
+                    $ctrl.isTooltipVisible = false
                     if (
                         event.target.id === "frontendDownloadLinks" ||
                         event.target.classList.contains("kwicDownloadLink") ||
@@ -458,6 +461,7 @@ angular.module("korpApp").component("kwic", {
                 const obj = scope.word
                 const sent = scope.sentence
                 const word = $(event.target)
+                const tooltip = $('.tooltip')[0]
 
                 if ($ctrl.active) {
                     statemachine.send("SELECT_WORD", {
@@ -473,6 +477,19 @@ angular.module("korpApp").component("kwic", {
                     selectWordParallel(word, scope, sent)
                 } else {
                     selectWord(word, scope)
+                }
+
+                $ctrl.isTooltipVisible = true
+                var wordRect = word[0].getBoundingClientRect();
+                var tableRect = tooltip.parentElement.getBoundingClientRect();
+                tooltip.style.left = wordRect.left + tooltip.parentElement.scrollLeft - 25 + "px"
+                tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
+                if (obj.error_correction != "_") {
+                    var correction_status = obj.correction_status == "true" ? "soovituslik" : "kohustuslik";
+                    tooltip.innerHTML = "<b>" + obj.error_correction + "</b>: " + correction_status + ", " + obj.error_tag + ", " + obj.error_type
+                }
+                else {
+                    tooltip.innerHTML = "_"
                 }
             }
 

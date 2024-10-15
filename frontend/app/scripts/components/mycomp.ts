@@ -8,12 +8,22 @@ export default angular.module("korpApp").component("mycomp", {
         <uib-dropdown>
             <button uib-dropdown-toggle type="button">Dropdown <span class="caret"></span></button>
             <ul uib-dropdown-menu>
-                <li ng-repeat="item in $ctrl.menuItems">
-                    <a href="" ng-click="$ctrl.selectItem(item)">{{ item.name }}</a>
+                <li ng-repeat="">
+                    <a href="" ng-click=""></a>
                 </li>
             </ul>
         </uib-dropdown>
     </span>`,
-    bindings: {},
-    controller: () => {},
+    bindings: {
+        kwicHits: "<",
+    },
+    controller: function () {
+        let $ctrl: any = this
+
+        $ctrl.$onChanges = (changes) => {
+            if ($ctrl.kwicHits !== undefined) {
+                console.log("Updated kwicHits:", $ctrl.kwicHits)
+            }
+        }
+    },
 })

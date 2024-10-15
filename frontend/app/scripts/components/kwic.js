@@ -46,7 +46,7 @@ angular.module("korpApp").component("kwic", {
                 page-change="$ctrl.pageEvent(page)"
                 hits-per-page="$ctrl.hitsPerPage"
             ></kwic-pager>
-            <mycomp></mycomp>
+            <mycomp kwic-hits="$ctrl.kwic"></mycomp>
             <span ng-if="$ctrl.hits" class="reading_btn link" ng-click="$ctrl.toggleReading()">
                 <span ng-if="!$ctrl.isReading">{{'show_reading' | loc:$root.lang}}</span>
                 <span ng-if="$ctrl.isReading">{{'show_kwic' | loc:$root.lang}}</span>
@@ -191,6 +191,7 @@ angular.module("korpApp").component("kwic", {
             $ctrl.$onChanges = (changeObj) => {
                 if ("kwicInput" in changeObj && $ctrl.kwicInput != undefined) {
                     $ctrl.kwic = massageData($ctrl.kwicInput)
+                    console.log($ctrl.kwic)
                     $ctrl.useContext = $ctrl.isReading || $location.search()["in_order"] != null
                     if (!$ctrl.isReading) {
                         $timeout(() => {

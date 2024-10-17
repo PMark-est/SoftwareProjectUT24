@@ -489,7 +489,9 @@ angular.module("korpApp").component("kwic", {
                 }
                 var wordRect = word[0].getBoundingClientRect();
                 var tableRect = tooltip.parentElement.getBoundingClientRect();
-                tooltip.style.left = wordRect.left - tableRect.left + (word[0].offsetWidth / 2) + tooltip.parentElement.scrollLeft - (tooltip.offsetWidth / 2) + "px"
+                var scrollLeft = tooltip.parentElement.scrollLeft;
+                var left = wordRect.left - tableRect.left + (word[0].offsetWidth / 2) + scrollLeft - (tooltip.offsetWidth / 2)
+                tooltip.style.left = Math.max(left, tableRect.left) + "px"
                 tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
             }
 

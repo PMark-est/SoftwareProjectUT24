@@ -561,9 +561,6 @@ table {
 .table_scrollarea {
   position: relative;
   clear: both;
-  overflow-y: visible;
-  -ms-overflow-y: visible;
-  overflow: auto;
   transition: opacity 200ms;
   &.paging {
     opacity : 0.5 !important;

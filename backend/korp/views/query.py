@@ -4,6 +4,8 @@ import os
 import random
 import uuid
 import zlib
+import re
+
 from collections import defaultdict, OrderedDict
 from concurrent import futures
 from concurrent.futures import ThreadPoolExecutor
@@ -253,6 +255,9 @@ def query(args, abort_event=None):
         # saved_statistics is missing or incomplete, so we need to query the corpora in
         # serial until we have the needed rows, and then query the remaining corpora
         # in parallel to get number of hits.
+        print()
+        print("WTF")
+        print()
         if incremental:
             yield {"progress_corpora": corpora}
         ns.progress_count = 0
@@ -276,6 +281,7 @@ def query(args, abort_event=None):
                 kwic, nr_hits = query_and_parse(corpus, within=within[corpus], context=context[corpus],
                                                 start=ns.start_local, end=ns.end_local, abort_event=abort_event,
                                                 **queryparams)
+                #print(kwic)
 
             statistics[corpus] = nr_hits
             ns.total_hits += nr_hits
@@ -501,6 +507,9 @@ def query_corpus(corpus, cqp, within=None, cut=None, context=None, show=None, sh
 
     ######################################################################
     # Then we call the CQP binary, and read the results
+    print("_____")
+    print(" ".join(x for x in cmd))
+    print("_____")
     lines = cwb.run_cqp(cmd, attr_ignore=True, abort_event=abort_event)
 
     # Skip the CQP version
@@ -531,7 +540,6 @@ def query_corpus(corpus, cqp, within=None, cut=None, context=None, show=None, sh
             os.rename(cache_filename_temp, cache_filename)
         except FileNotFoundError:
             pass
-
     return lines, nr_hits, attrs
 
 
@@ -539,6 +547,7 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
     """Parse concordance lines from CWB."""
 
     # Filter out unavailable attributes
+    print(attrs)
     p_attrs = [attr for attr in attrs["p"] if attr in show]
     nr_splits = len(p_attrs) - 1
     s_attrs = set(attr for attr in attrs["s"] if attr in show)
@@ -555,6 +564,9 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
         match = {}
 
         header, line = line.split(":", 1)
+        print(header)
+        print(line)
+        print()
         if header[:3] == "-->":
             # For aligned corpora, every other line is the aligned result
             aligned = header[3:]
@@ -564,7 +576,7 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
             match["position"] = int(header)
 
         # Handle PrintStructures
-        if ls_attrs and not aligned:
+        if ls_attrs and not aligned: #skipib esimesel otsingul
             if ":  " in line:
                 lineattr, line = line.rsplit(":  ", 1)
             else:
@@ -593,15 +605,23 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
 
                 linestructs[s_key] = s_val
 
+        words = re.split(r'(?<!<)\/', line)
+        start = 8
+        while(start < len(words)):
+            words[start] = words[start].replace(" ", "_")
+            start += 14
+        line = "/".join(words)
         words = line.split()
         tokens = []
         n = 0
         structs = {}
         struct = None
         struct_value = []
+        phrase_with_errors = False
 
         try:
             for word in words:
+                print(word)
                 if struct:
                     # Structural attrs can be split in the middle (<s_n 123>),
                     # so we need to finish the structure here
@@ -626,7 +646,7 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
 
                 # We read all structural attributes that are opening (from the left)
                 while word[0] == "<":
-                    if word[1:] in s_attrs:
+                    if word[1:] in s_attrs: 
                         # We have found a structural attribute with a value (<s_n 123>).
                         # We continue to the next word to get the value
                         struct = word[1:]
@@ -639,11 +659,15 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
                     else:
                         # What we've found is not a structural attribute
                         break
+                
 
                 if struct:
                     # If we stopped in the middle of a struct (<s_n 123>),
                     # we need to continue with the next word
                     continue
+                
+                if phrase_with_errors:
+                    phrase_token += word
 
                 # Now we read all s-attrs that are closing (from the right)
                 while word[-1] == ">" and "</" in word:

@@ -382,6 +382,7 @@ export function httpConfAddMethod<T extends JQuery.AjaxSettings | IRequestConfig
     // The property to use for GET: AngularJS $http uses params for
     // GET and data for POST, whereas jQuery.ajax uses data for both
     const data = "params" in conf ? conf.params : conf.data
+    //data.show = ""
     if (calcUrlLength(conf.url!, data) > settings.backendURLMaxLength) {
         conf.method = "POST"
         conf.data = data

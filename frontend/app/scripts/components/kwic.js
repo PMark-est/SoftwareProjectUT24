@@ -188,8 +188,11 @@ angular.module("korpApp").component("kwic", {
                 addKeydownHandler()
             }
 
+            console.log($ctrl.kwicInput)
+
             $ctrl.$onChanges = (changeObj) => {
                 if ("kwicInput" in changeObj && $ctrl.kwicInput != undefined) {
+                    console.log($ctrl.kwicInput)
                     $ctrl.kwic = massageData($ctrl.kwicInput)
                     $ctrl.useContext = $ctrl.isReading || $location.search()["in_order"] != null
                     if (!$ctrl.isReading) {
@@ -321,7 +324,6 @@ angular.module("korpApp").component("kwic", {
 
                 let prevCorpus = ""
                 const output = []
-
                 for (let i = 0; i < hitArray.length; i++) {
                     var corpus, linkCorpusId, mainCorpusId, matches
                     const hitContext = hitArray[i]

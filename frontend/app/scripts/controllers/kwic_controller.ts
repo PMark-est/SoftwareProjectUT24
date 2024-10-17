@@ -215,11 +215,17 @@ export class KwicCtrl implements IController {
 
             const ajaxParams = s.buildQueryOptions(isPaging)
 
+            console.log(ajaxParams)
+
             const req = s.getProxy().makeRequest(
                 { ajaxParams },
                 s.page,
                 (progressObj) => $timeout(() => s.onProgress(progressObj, isPaging)),
-                (data) => $timeout(() => s.renderResult(data))
+                (data) =>
+                    $timeout(() => {
+                        console.log(data)
+                        s.renderResult(data)
+                    })
             )
             req.done((data: KorpResponse<KorpQueryResponse>) => {
                 $timeout(() => {

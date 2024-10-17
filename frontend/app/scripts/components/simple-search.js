@@ -185,7 +185,6 @@ angular.module("korpApp").component("simpleSearch", {
                 if ($rootScope.globalFilter) {
                     val = stringify(mergeCqpExprs(parse(val || "[]"), $rootScope.globalFilter))
                 }
-
                 return val
             }
 
@@ -292,6 +291,7 @@ angular.module("korpApp").component("simpleSearch", {
                 const search = searches.activeSearch
                 ctrl.relatedObj = null
                 const cqp = ctrl.getCQP()
+                console.log(searches)
                 searches.kwicSearch(cqp)
 
                 if (search.type === "lemgram") {

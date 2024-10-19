@@ -40,6 +40,7 @@ function toBase64(str: string) {
 
 export const login = (usr: string, pass: string, saveLogin: boolean): JQueryDeferred<LoginResponseData> => {
     const auth = toBase64(usr + ":" + pass)
+    console.log(usr, pass)
 
     const dfd = $.Deferred()
 

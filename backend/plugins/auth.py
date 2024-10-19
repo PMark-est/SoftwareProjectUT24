@@ -12,7 +12,6 @@ from korp import utils
 
 bp = utils.Plugin("authenticate", __name__)
 
-
 @bp.route("/authenticate", methods=["GET", "POST"])
 @utils.main_handler
 def authenticate(_=None):

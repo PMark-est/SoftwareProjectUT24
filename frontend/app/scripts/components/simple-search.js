@@ -185,7 +185,6 @@ angular.module("korpApp").component("simpleSearch", {
                 if ($rootScope.globalFilter) {
                     val = stringify(mergeCqpExprs(parse(val || "[]"), $rootScope.globalFilter))
                 }
-
                 return val
             }
 

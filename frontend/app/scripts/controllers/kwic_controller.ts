@@ -72,19 +72,6 @@ export class KwicCtrl implements IController {
     }
     setupListeners() {
         this.$rootScope.$on("make_request", (msg, cqp) => {
-            // võta sõna jutumärkidest välja
-            // muidu on formaadis [word = "sona"]
-            /*
-            function extractQuotedWord(text) {
-                const regex = /\[word\s*=\s*"([^"]*)"]/
-                const match = text.match(regex)
-
-                if (match && match[1]) {
-                    return `'${match[1]}'`
-                }
-
-                return undefined // Return null if no match is found
-            }*/
             this.scope.cqp = cqp
             // only set this on the initial search, not when paging
             this.scope.hitsPerPage = this.location.search()["hpp"] || settings["hits_per_page_default"]
@@ -232,7 +219,10 @@ export class KwicCtrl implements IController {
                 { ajaxParams },
                 s.page,
                 (progressObj) => $timeout(() => s.onProgress(progressObj, isPaging)),
-                (data) => $timeout(() => s.renderResult(data))
+                (data) =>
+                    $timeout(() => {
+                        s.renderResult(data)
+                    })
             )
             req.done((data: KorpResponse<KorpQueryResponse>) => {
                 $timeout(() => {

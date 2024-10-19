@@ -4,6 +4,8 @@ import os
 import random
 import uuid
 import zlib
+import re
+
 from collections import defaultdict, OrderedDict
 from concurrent import futures
 from concurrent.futures import ThreadPoolExecutor
@@ -531,7 +533,6 @@ def query_corpus(corpus, cqp, within=None, cut=None, context=None, show=None, sh
             os.rename(cache_filename_temp, cache_filename)
         except FileNotFoundError:
             pass
-
     return lines, nr_hits, attrs
 
 
@@ -564,7 +565,7 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
             match["position"] = int(header)
 
         # Handle PrintStructures
-        if ls_attrs and not aligned:
+        if ls_attrs and not aligned: #skipib esimesel otsingul
             if ":  " in line:
                 lineattr, line = line.rsplit(":  ", 1)
             else:
@@ -593,12 +594,19 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
 
                 linestructs[s_key] = s_val
 
+        words = re.split(r'(?<!<)\/', line)
+        start = 8
+        while(start < len(words)):
+            words[start] = words[start].replace(" ", "_")
+            start += 14
+        line = "/".join(words)
         words = line.split()
         tokens = []
         n = 0
         structs = {}
         struct = None
         struct_value = []
+        phrase_with_errors = False
 
         try:
             for word in words:
@@ -626,7 +634,7 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
 
                 # We read all structural attributes that are opening (from the left)
                 while word[0] == "<":
-                    if word[1:] in s_attrs:
+                    if word[1:] in s_attrs: 
                         # We have found a structural attribute with a value (<s_n 123>).
                         # We continue to the next word to get the value
                         struct = word[1:]
@@ -639,11 +647,15 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
                     else:
                         # What we've found is not a structural attribute
                         break
+                
 
                 if struct:
                     # If we stopped in the middle of a struct (<s_n 123>),
                     # we need to continue with the next word
                     continue
+                
+                if phrase_with_errors:
+                    phrase_token += word
 
                 # Now we read all s-attrs that are closing (from the right)
                 while word[-1] == ">" and "</" in word:

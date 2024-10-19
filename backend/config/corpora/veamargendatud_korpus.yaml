@@ -1,0 +1,46 @@
+id: veamargendatud_korpus
+title: Veamärgendatud korpus
+description: Vigadega korpus
+mode:
+  - name: default
+within:
+  - label:
+      eng: sentence
+    value: sentence
+  - label:
+      eng: phrase_with_errors
+      value: phrase_with_errors
+  - label:
+      eng: text
+    value: text
+  - label:
+      eng: corpus
+    value: corpus
+context:
+  - label:
+      eng: 1 sentence
+    value: 1 sentence
+  - label:
+      eng: 1 phrase_with_errors
+      value: 1 phrase_with_errors
+  - label:
+      eng: 1 text
+    value: 1 text
+  - label:
+      eng: 1 corpus
+    value: 1 corpus
+pos_attributes:
+  - word_id: word_id
+  - word_tokens: word_tokens
+  - grammatical_number: grammatical_number
+  - POS: POS
+  - lemma: lemma
+  - correction_status: correction_status
+  - annotator_code: annotator_code
+  - error_correction: error_correction
+  - error_tag: error_tag
+  - dependency_relation: dependency_relation
+  - dependency_head: dependency_head
+  - verb_morpho: verb_morpho
+  - case: case
+  - error_type: error_type

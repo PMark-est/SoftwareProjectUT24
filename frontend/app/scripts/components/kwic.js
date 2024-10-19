@@ -492,20 +492,25 @@ angular.module("korpApp").component("kwic", {
                     selectWord(word, scope)
                 }
 
-                $ctrl.isTooltipVisible = true
-                if (obj.error_correction != "_") {
-                    var correction_status = obj.correction_status == "true" ? "soovituslik" : "kohustuslik";
-                    tooltip.innerHTML = "<b>" + obj.error_correction + "</b>: " + correction_status + ", " + obj.error_tag + ", " + obj.error_type
+                if (obj.error_type != "_") {
+                    $ctrl.isTooltipVisible = true
+                    if (obj.error_correction != "_") {
+                        var correction_status = obj.correction_status == "true" ? "soovituslik" : "kohustuslik";
+                        tooltip.innerHTML = "<b>" + obj.error_correction + "</b>: " + correction_status + ", " + obj.error_tag + ", " + obj.error_type
+                    }
+                    else {
+                        tooltip.innerHTML = "_"
+                    }
+                    var wordRect = word[0].getBoundingClientRect();
+                    var tableRect = tooltip.parentElement.getBoundingClientRect();
+                    var scrollLeft = tooltip.parentElement.scrollLeft;
+                    var left = wordRect.left - tableRect.left + (word[0].offsetWidth / 2) + scrollLeft - (tooltip.offsetWidth / 2)
+                    tooltip.style.left = Math.max(left, tableRect.left) + "px"
+                    tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
                 }
                 else {
-                    tooltip.innerHTML = "_"
+                    $ctrl.isTooltipVisible = false
                 }
-                var wordRect = word[0].getBoundingClientRect();
-                var tableRect = tooltip.parentElement.getBoundingClientRect();
-                var scrollLeft = tooltip.parentElement.scrollLeft;
-                var left = wordRect.left - tableRect.left + (word[0].offsetWidth / 2) + scrollLeft - (tooltip.offsetWidth / 2)
-                tooltip.style.left = Math.max(left, tableRect.left) + "px"
-                tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
             }
 
             function selectWord(word, scope) {

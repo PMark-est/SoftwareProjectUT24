@@ -3,7 +3,7 @@ import angular from "angular"
 import { html } from "@/util"
 
 angular.module("korpApp").component("kwicWord", {
-    template: html`<span class="word" ng-class="$ctrl.getClass()"> {{::$ctrl.word.word}} </span> `,
+    template: html`<span class="word {{::$ctrl.word.error_type}}" ng-class="$ctrl.getClass()"> {{::$ctrl.word.word}} </span> `,
     bindings: {
         word: "<",
         sentence: "<",
@@ -27,6 +27,7 @@ angular.module("korpApp").component("kwicWord", {
                     match_sentence: this.word._matchSentence,
                     link_selected: this.word._link_selected,
                     open_sentence: "_open_sentence" in this.word,
+                    has_error: this.word.error_type != "_",
                 }
             }
         },

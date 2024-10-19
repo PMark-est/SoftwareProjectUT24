@@ -708,9 +708,20 @@ table {
   color : white !important;
 }
 
+.word.has_error {
+  background-color: rgb(238, 168, 168);
+  border-radius: 5px;
+  &.token_selected {
+    background-color: #666;
+    border-radius: 10px;
+    padding-left: 3px;
+    margin-left: -3px;
+  }
+}
+
 .token_selected {
   color: #fff !important;
-  background-color: #666;
+  background-color: #666 !important;
 }
 
 .aux_selected {
@@ -2186,6 +2197,7 @@ li.active a span .num-to-find {
 .tooltip.active {
   opacity: 1;
 }
+
 
 @keyframes blinker {
   from { opacity: 1.0; }

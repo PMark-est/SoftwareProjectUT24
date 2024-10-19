@@ -8,7 +8,7 @@ import { makeDownload } from "@/kwic_download"
 import { SelectionManager, html, setDownloadLinks } from "@/util"
 import "@/components/kwic-pager"
 import "@/components/kwic-word"
-import "@/components/mycomp"
+import "@/components/filter"
 
 angular.module("korpApp").component("kwic", {
     template: html`
@@ -46,7 +46,11 @@ angular.module("korpApp").component("kwic", {
                 page-change="$ctrl.pageEvent(page)"
                 hits-per-page="$ctrl.hitsPerPage"
             ></kwic-pager>
-            <mycomp kwic-hits="$ctrl.kwic"></mycomp>
+            <filter
+                search="$ctrl.performedSearch"
+                on-kwic-change="$ctrl.handleKwicChange(newKwic)"
+                kwic-hits="$ctrl.kwic"
+            ></filter>
             <span ng-if="$ctrl.hits" class="reading_btn link" ng-click="$ctrl.toggleReading()">
                 <span ng-if="!$ctrl.isReading">{{'show_reading' | loc:$root.lang}}</span>
                 <span ng-if="$ctrl.isReading">{{'show_kwic' | loc:$root.lang}}</span>
@@ -188,11 +192,13 @@ angular.module("korpApp").component("kwic", {
                 addKeydownHandler()
             }
 
-            console.log($ctrl.kwicInput)
+            $ctrl.handleKwicChange = function (newKwic) {
+                $ctrl.kwic = newKwic
+            }
 
             $ctrl.$onChanges = (changeObj) => {
+                $ctrl.performedSearch = false
                 if ("kwicInput" in changeObj && $ctrl.kwicInput != undefined) {
-                    console.log($ctrl.kwicInput)
                     $ctrl.kwic = massageData($ctrl.kwicInput)
                     $ctrl.useContext = $ctrl.isReading || $location.search()["in_order"] != null
                     if (!$ctrl.isReading) {
@@ -216,6 +222,9 @@ angular.module("korpApp").component("kwic", {
                         selectionManager.deselect()
                         statemachine.send("DESELECT_WORD")
                     }
+                    $timeout(() => {
+                        $ctrl.performedSearch = true
+                    }, 500)
                 }
                 if ("corpusHits" in changeObj && $ctrl.corpusHits) {
                     let items = _.map($ctrl.corpusOrder, (obj) => ({

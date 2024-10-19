@@ -291,7 +291,6 @@ angular.module("korpApp").component("simpleSearch", {
                 const search = searches.activeSearch
                 ctrl.relatedObj = null
                 const cqp = ctrl.getCQP()
-                console.log(searches)
                 searches.kwicSearch(cqp)
 
                 if (search.type === "lemgram") {

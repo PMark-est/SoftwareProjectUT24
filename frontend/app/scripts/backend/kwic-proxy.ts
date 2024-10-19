@@ -70,7 +70,6 @@ export class KwicProxy extends BaseProxy<KorpQueryResponse> {
                 show.push(key)
             }
 
-            console.log(corpus)
             if (corpus["struct_attributes"] != null) {
                 $.each(corpus["struct_attributes"], function (key, val) {
                     if ($.inArray(key, show_struct) === -1) {
@@ -96,7 +95,6 @@ export class KwicProxy extends BaseProxy<KorpQueryResponse> {
 
         this.prevRequest = data
         this.prevParams = data
-        console.log(data)
         const ajaxSettings: AjaxSettings = {
             url: settings.korp_backend_url + "/" + command,
             data: data,
@@ -104,7 +102,6 @@ export class KwicProxy extends BaseProxy<KorpQueryResponse> {
                 self.prevRequest = settings
                 self.addAuthorizationHeader(req)
                 self.prevUrl = self.makeUrlWithParams(this.url, data)
-                console.log(self.prevUrl)
             },
 
             success(data: KorpQueryResponse, status, jqxhr) {

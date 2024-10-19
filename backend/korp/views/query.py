@@ -255,9 +255,6 @@ def query(args, abort_event=None):
         # saved_statistics is missing or incomplete, so we need to query the corpora in
         # serial until we have the needed rows, and then query the remaining corpora
         # in parallel to get number of hits.
-        print()
-        print("WTF")
-        print()
         if incremental:
             yield {"progress_corpora": corpora}
         ns.progress_count = 0
@@ -281,7 +278,6 @@ def query(args, abort_event=None):
                 kwic, nr_hits = query_and_parse(corpus, within=within[corpus], context=context[corpus],
                                                 start=ns.start_local, end=ns.end_local, abort_event=abort_event,
                                                 **queryparams)
-                #print(kwic)
 
             statistics[corpus] = nr_hits
             ns.total_hits += nr_hits
@@ -507,9 +503,6 @@ def query_corpus(corpus, cqp, within=None, cut=None, context=None, show=None, sh
 
     ######################################################################
     # Then we call the CQP binary, and read the results
-    print("_____")
-    print(" ".join(x for x in cmd))
-    print("_____")
     lines = cwb.run_cqp(cmd, attr_ignore=True, abort_event=abort_event)
 
     # Skip the CQP version
@@ -547,7 +540,6 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
     """Parse concordance lines from CWB."""
 
     # Filter out unavailable attributes
-    print(attrs)
     p_attrs = [attr for attr in attrs["p"] if attr in show]
     nr_splits = len(p_attrs) - 1
     s_attrs = set(attr for attr in attrs["s"] if attr in show)
@@ -564,9 +556,6 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
         match = {}
 
         header, line = line.split(":", 1)
-        print(header)
-        print(line)
-        print()
         if header[:3] == "-->":
             # For aligned corpora, every other line is the aligned result
             aligned = header[3:]
@@ -621,7 +610,6 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
 
         try:
             for word in words:
-                print(word)
                 if struct:
                     # Structural attrs can be split in the middle (<s_n 123>),
                     # so we need to finish the structure here

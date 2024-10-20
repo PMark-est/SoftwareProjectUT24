@@ -79,9 +79,7 @@ angular.module("korpApp").component("kwic", {
                                 sentence-index="$parent.$index"
                             />
                         </td>
-                        <div class="tooltip" ng-class="{'active': $ctrl.isTooltipVisible}">
-                            This is the tooltip content!
-                        </div>
+                        <div class="tooltip"/>
 
                         <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="left">
                             <kwic-word
@@ -171,7 +169,6 @@ angular.module("korpApp").component("kwic", {
         prevParams: "<",
         prevRequest: "<",
         corpusOrder: "<",
-        isTooltipVisible: "<",
         /** Current page of results. */
         kwicInput: "<",
         corpusHits: "<",
@@ -260,7 +257,7 @@ angular.module("korpApp").component("kwic", {
                 if (event.target.classList.contains("word")) {
                     onWordClick(event)
                 } else {
-                    $ctrl.isTooltipVisible = false
+                    $(".tooltip")[0].style.display = "none"
                     if (
                         event.target.id === "frontendDownloadLinks" ||
                         event.target.classList.contains("kwicDownloadLink") ||
@@ -493,7 +490,7 @@ angular.module("korpApp").component("kwic", {
                 }
 
                 if (obj.error_type != "_") {
-                    $ctrl.isTooltipVisible = true
+                    tooltip.style.display = "block"
                     if (obj.error_correction != "_") {
                         var correction_status = obj.correction_status == "true" ? "soovituslik" : "kohustuslik";
                         tooltip.innerHTML = "<b>" + obj.error_correction + "</b>: " + correction_status + ", " + obj.error_tag + ", " + obj.error_type
@@ -509,7 +506,7 @@ angular.module("korpApp").component("kwic", {
                     tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
                 }
                 else {
-                    $ctrl.isTooltipVisible = false
+                    tooltip.style.display = "none"
                 }
             }
 

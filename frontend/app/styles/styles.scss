@@ -2190,14 +2190,10 @@ li.active a span .num-to-find {
   color: white;
   padding: 5px;
   border-radius: 5px;
-  opacity: 0;
   white-space: nowrap;
-}
-
-.tooltip.active {
   opacity: 1;
+  display: none;
 }
-
 
 @keyframes blinker {
   from { opacity: 1.0; }

@@ -240,7 +240,6 @@ export async function fetchInitialData(authDef: Promise<boolean>) {
         console.error('"korp_backend_url" in config.yml must start with http:// or https://')
         return
     }
-
     // Start fetching locales asap. Await and read it later, in the Angular context.
     initLocales()
 

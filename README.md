@@ -1,11 +1,9 @@
 # Korp corpus annotation system
 
-## Setting up cwb
+Right now the app is pre-configured to work with a backend running on our server.
 
-In the cwb folder create a directory 'corpora'. Go into that folder and create two more directories 'data' and 'registry'. Add the vrt file into the data directory. After that
-1. ``
-cwb-encode -d absolute/path/to/corpus/data -f absolute/path/to/corpus/data/universal_dev.vrt -R absolute/path/to/registry/universal -S corpus -S text -S sentence -c utf8
-``
-2. ``cwb-makeall -r absolute/path/to/registry universal``
+## Running the frontend
 
-The steps above assume the provided vrt file is used. 
+1. Go into frontend directory
+2. Install dependencies by running `yarn`
+3. Start the frontend by running `yarn start`

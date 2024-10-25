@@ -9,6 +9,7 @@ import { SelectionManager, html, setDownloadLinks } from "@/util"
 import "@/components/kwic-pager"
 import "@/components/kwic-word"
 import "@/components/filter"
+import {generateColors} from "@/colors"
 
 angular.module("korpApp").component("kwic", {
     template: html`
@@ -187,12 +188,15 @@ angular.module("korpApp").component("kwic", {
 
             const selectionManager = new SelectionManager()
 
+            const errorTypes = new Set()
+
             $ctrl.$onInit = () => {
                 addKeydownHandler()
             }
 
             $ctrl.handleKwicChange = function (newKwic) {
                 $ctrl.kwic = newKwic
+                addColors()
             }
 
             $ctrl.$onChanges = (changeObj) => {
@@ -251,6 +255,8 @@ angular.module("korpApp").component("kwic", {
                         statemachine.send("DESELECT_WORD")
                     }
                 }
+
+                addColors()
             }
 
             $ctrl.onKwicClick = (event) => {
@@ -326,6 +332,35 @@ angular.module("korpApp").component("kwic", {
                 const from = sentence.match.end
                 const len = sentence.tokens.length
                 return sentence.tokens.slice(from, len)
+            }
+
+            function addColors() {
+                //Adding custom colors to words with errors
+                $timeout(() => {
+                    if ($ctrl.kwic === undefined) return
+                    for (const [index, kwicHit] of $ctrl.kwic.entries()) {
+                        if (kwicHit.match === undefined) continue
+                        kwicHit.tokens.forEach((token) => {
+                            if (token.error_type === undefined || token.error_type === "_") return
+                            token.error_type.split("|").forEach((type) => {
+                                errorTypes.add(type)
+                            })
+                        })
+                    }
+                    //console.log(errorTypes)
+                    //console.log(errorTypes.size)
+                    let colors = generateColors("#FA9189", "#D1BDFF", parseInt(errorTypes.size / 2)).concat(generateColors("#7AD6EB", "#46E079", errorTypes.size - parseInt(errorTypes.size / 2)))
+                    let index = 0
+                    for (const error of errorTypes) {
+                        //console.log(error)
+                        let tag = "background-color:".concat(colors[index], ";")
+                        let words = document.getElementsByClassName(error)
+                        for (const word of words) {
+                            word.setAttribute("style", tag);
+                        }
+                        index += 1
+                    }
+                }, 1000)
             }
 
             function massageData(hitArray) {

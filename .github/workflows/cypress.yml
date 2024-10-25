@@ -1,0 +1,26 @@
+name: Run Cypress Tests
+
+on:
+  push:
+    branches:
+      - main  # Run tests on pushes to the main branch (adjust if necessary)
+  pull_request:  # Run tests on PRs as well if desired
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # or the version of Node you are using
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Cypress Tests
+        run: npx cypress run  # Adjust command if you have specific test options

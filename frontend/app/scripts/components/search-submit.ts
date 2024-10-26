@@ -137,7 +137,9 @@ angular.module("korpApp").component("searchSubmit", {
                 $ctrl.onSearchSave({ name: $scope.name })
             }
 
-            $scope.onSendClick = () => $ctrl.onSearch()
+            $scope.onSendClick = () => {
+                $ctrl.onSearch()
+            }
         },
     ],
 })

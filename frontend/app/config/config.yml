@@ -168,7 +168,7 @@ default_options:
   matches: '*='
   matches_not: '!*='
 
-korp_backend_url: 'https://41e9-90-190-36-175.ngrok-free.app' ## SEDA TULEB MUUTA
+korp_backend_url: 'andmebaas.zapto.org:8080'
 
 map_center:
   lat: 62.99515845212052

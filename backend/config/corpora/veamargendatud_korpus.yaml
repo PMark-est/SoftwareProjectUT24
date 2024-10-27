@@ -9,7 +9,7 @@ within:
     value: sentence
   - label:
       eng: phrase_with_errors
-      value: phrase_with_errors
+    value: phrase_with_errors
   - label:
       eng: text
     value: text
@@ -22,7 +22,7 @@ context:
     value: 1 sentence
   - label:
       eng: 1 phrase_with_errors
-      value: 1 phrase_with_errors
+    value: 1 phrase_with_errors
   - label:
       eng: 1 text
     value: 1 text

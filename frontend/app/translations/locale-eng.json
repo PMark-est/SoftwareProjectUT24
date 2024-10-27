@@ -197,6 +197,8 @@
     "only_support": "Only for supported corpora.",
     "no_context_support": "does not support extended context",
     "within_sentence": "sentence",
+    "within_phrase_with_errors": "phrase_with_errors",
+    "within_corpus": "corpus",
     "within_paragraph": "up to paragraph",
     "within_text": "up to text",
     "within_5 sentence": "5 sentences",

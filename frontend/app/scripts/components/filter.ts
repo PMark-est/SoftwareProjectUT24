@@ -28,8 +28,8 @@ export default angular.module("korpApp").component("filter", {
         function ($timeout, $scope) {
             let $ctrl: any = this
             $ctrl.selected = "kõik"
-            const kwicHitsByType: Map<string, Map<number, Object>> = new Map()
-            const mapOfAll: Map<number, Object> = new Map()
+            let kwicHitsByType: Map<string, Map<number, Object>> = new Map()
+            let mapOfAll: Map<number, Object> = new Map()
 
             $ctrl.selectItem = function (item) {
                 $ctrl.selected = item
@@ -39,6 +39,9 @@ export default angular.module("korpApp").component("filter", {
 
             $ctrl.$onChanges = (changes) => {
                 if ($ctrl.search) return
+                kwicHitsByType = new Map()
+                mapOfAll = new Map()
+                kwicHitsByType.clear()
                 $ctrl.selected = "kõik"
                 $timeout(() => {
                     if ($ctrl.kwicHits === undefined) return

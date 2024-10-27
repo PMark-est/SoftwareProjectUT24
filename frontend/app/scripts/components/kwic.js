@@ -9,7 +9,7 @@ import { SelectionManager, html, setDownloadLinks } from "@/util"
 import "@/components/kwic-pager"
 import "@/components/kwic-word"
 import "@/components/filter"
-import {generateColors} from "@/colors"
+import { generateColors } from "@/colors"
 
 angular.module("korpApp").component("kwic", {
     template: html`
@@ -80,7 +80,7 @@ angular.module("korpApp").component("kwic", {
                                 sentence-index="$parent.$index"
                             />
                         </td>
-                        <div class="tooltip"/>
+                        <div class="tooltip" />
 
                         <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="left">
                             <kwic-word
@@ -96,7 +96,8 @@ angular.module("korpApp").component("kwic", {
                                 word="word"
                                 sentence="sentence"
                                 sentence-index="$parent.$index"
-                            /> </td>
+                            />
+                        </td>
                         <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="right">
                             <kwic-word
                                 ng-repeat="word in $ctrl.selectRight(sentence)"
@@ -349,14 +350,16 @@ angular.module("korpApp").component("kwic", {
                     }
                     //console.log(errorTypes)
                     //console.log(errorTypes.size)
-                    let colors = generateColors("#FA9189", "#D1BDFF", parseInt(errorTypes.size / 2)).concat(generateColors("#7AD6EB", "#46E079", errorTypes.size - parseInt(errorTypes.size / 2)))
+                    let colors = generateColors("#FA9189", "#D1BDFF", parseInt(errorTypes.size / 2)).concat(
+                        generateColors("#7AD6EB", "#46E079", errorTypes.size - parseInt(errorTypes.size / 2))
+                    )
                     let index = 0
                     for (const error of errorTypes) {
                         //console.log(error)
                         let tag = "background-color:".concat(colors[index], ";")
                         let words = document.getElementsByClassName(error)
                         for (const word of words) {
-                            word.setAttribute("style", tag);
+                            word.setAttribute("style", tag)
                         }
                         index += 1
                     }
@@ -506,7 +509,7 @@ angular.module("korpApp").component("kwic", {
                 const obj = scope.word
                 const sent = scope.sentence
                 const word = $(event.target)
-                const tooltip = $('.tooltip')[0]
+                const tooltip = $(".tooltip")[0]
 
                 if ($ctrl.active) {
                     statemachine.send("SELECT_WORD", {
@@ -527,20 +530,27 @@ angular.module("korpApp").component("kwic", {
                 if (obj.error_type != "_") {
                     tooltip.style.display = "block"
                     if (obj.error_correction != "_") {
-                        var correction_status = obj.correction_status == "true" ? "soovituslik" : "kohustuslik";
-                        tooltip.innerHTML = "<b>" + obj.error_correction + "</b>: " + correction_status + ", " + obj.error_tag + ", " + obj.error_type
-                    }
-                    else {
+                        var correction_status = obj.correction_status == "true" ? "soovituslik" : "kohustuslik"
+                        tooltip.innerHTML =
+                            "<b>" +
+                            obj.error_correction +
+                            "</b>: " +
+                            correction_status +
+                            ", " +
+                            obj.error_tag +
+                            ", " +
+                            obj.error_type
+                    } else {
                         tooltip.innerHTML = "_"
                     }
-                    var wordRect = word[0].getBoundingClientRect();
-                    var tableRect = tooltip.parentElement.getBoundingClientRect();
-                    var scrollLeft = tooltip.parentElement.scrollLeft;
-                    var left = wordRect.left - tableRect.left + (word[0].offsetWidth / 2) + scrollLeft - (tooltip.offsetWidth / 2)
+                    var wordRect = word[0].getBoundingClientRect()
+                    var tableRect = tooltip.parentElement.getBoundingClientRect()
+                    var scrollLeft = tooltip.parentElement.scrollLeft
+                    var left =
+                        wordRect.left - tableRect.left + word[0].offsetWidth / 2 + scrollLeft - tooltip.offsetWidth / 2
                     tooltip.style.left = Math.max(left, tableRect.left) + "px"
                     tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
-                }
-                else {
+                } else {
                     tooltip.style.display = "none"
                 }
             }

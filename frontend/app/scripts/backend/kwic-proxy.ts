@@ -61,11 +61,9 @@ export class KwicProxy extends BaseProxy<KorpQueryResponse> {
         for (let corpus of settings.corpusListing.selected) {
             for (let key in corpus.within) {
                 // val = corpus.within[key]
-                if (key === "undefined") key = "phrase_with_errors"
                 show.push(key.split(" ").pop()!)
             }
             for (let key in corpus.attributes) {
-                if (key === "undefined") key = "phrase_with_errors"
                 // val = corpus.attributes[key]
                 show.push(key)
             }

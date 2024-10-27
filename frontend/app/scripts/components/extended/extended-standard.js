@@ -154,7 +154,12 @@ angular.module("korpApp").component("extendedStandard", {
 
             $rootScope.$on("corpuschooserchange", function () {
                 ctrl.withins = ctrl.getWithins()
-                ctrl.within = ctrl.withins[0] && ctrl.withins[0].value
+                if (ctrl.withins.find((elem) => elem.value === "sentence") === undefined)
+                    ctrl.within = ctrl.withins[0] && ctrl.withins[0].value
+                else
+                    ctrl.within =
+                        ctrl.withins.find((elem) => elem.value === "sentence") &&
+                        ctrl.withins.find((elem) => elem.value === "sentence").value
             })
         },
     ],

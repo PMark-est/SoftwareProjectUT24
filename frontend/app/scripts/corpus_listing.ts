@@ -255,7 +255,6 @@ export class CorpusListing {
 
     getWithinParameters(): WithinParameters {
         const defaultWithin = locationSearchGet("within") || _.keys(settings.default_within)[0]
-
         const output: string[] = []
         for (let corpus of this.selected) {
             const withins = _.keys(corpus.within)

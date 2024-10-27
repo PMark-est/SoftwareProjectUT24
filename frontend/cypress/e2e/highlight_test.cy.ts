@@ -1,7 +1,7 @@
 describe('Search test', () => {
   it('should type a period and click search button', () => {
     // Visit the page with the input field and search button
-    cy.visit('http://localhost:9111');
+    cy.visit('andmebaas.zapto.org');
 
     // Type '.' into the input field
     cy.get('#simple_text > div > div:nth-child(2) > div > input')

@@ -70,7 +70,6 @@ angular.module("korpApp").component("extendedTokens", {
             }
 
             ctrl.$onChanges = (changeObj) => {
-                
                 if (changeObj.cqp && ctrl.cqp != ctrl.prev) {
                     ctrl.data = parse(ctrl.cqp || "[]")
                 }

@@ -4,7 +4,8 @@ import os
 import random
 import uuid
 import zlib
-import re
+import json
+
 
 from collections import defaultdict, OrderedDict
 from concurrent import futures
@@ -535,13 +536,23 @@ def query_corpus(corpus, cqp, within=None, cut=None, context=None, show=None, sh
             pass
     return lines, nr_hits, attrs
 
+def write_dict_to_json(data_dict, file_path):
+    """Write a dictionary to a JSON file.
+
+    Args:
+        data_dict (dict): The dictionary to write.
+        file_path (str): The path to the file where the JSON will be saved.
+    """
+    with open(file_path, 'w') as json_file:
+        json.dump(data_dict, json_file, indent=4)
+
 
 def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=False, abort_event=None):
     """Parse concordance lines from CWB."""
 
     # Filter out unavailable attributes
     p_attrs = [attr for attr in attrs["p"] if attr in show]
-    nr_splits = len(p_attrs) - 1
+    nr_splits = len(p_attrs)
     s_attrs = set(attr for attr in attrs["s"] if attr in show)
     ls_attrs = set(attr for attr in attrs["s"] if attr in show_structs)
     # a_attrs = set(attr for attr in attrs["a"] if attr in shown)
@@ -549,6 +560,7 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
     last_line_span = ()
 
     kwic = []
+    matchestemp = []
     for line in lines:
         if abort_event and abort_event.is_set():
             return
@@ -594,125 +606,79 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
 
                 linestructs[s_key] = s_val
 
-        words = re.split(r'(?<!<)\/', line)
-        start = 8
-        while(start < len(words)):
-            words[start] = words[start].replace(" ", "_")
-            start += 14
-        line = "/".join(words)
-        words = line.split()
-        tokens = []
-        n = 0
-        structs = {}
-        struct = None
-        struct_value = []
-        phrase_with_errors = False
+        words = utils.split_response(line, nr_splits)
+        kwic_row = []             # Stores tokens for the current match
+        phrase_tokens = []           # Temporary storage for tokens within a phrase
+        phrase_mode = False          # Flag for whether we're in a "phrase_with_errors" block
+        error_attributes = {}        # Temporary storage for error-related attributes within a phrase
+        current_token_position = 0
+        current_token_position_outside_of_phrase = 0
 
         try:
             for word in words:
-                if struct:
-                    # Structural attrs can be split in the middle (<s_n 123>),
-                    # so we need to finish the structure here
-                    if ">" not in word:
-                        struct_value.append(word)
-                        continue
-
-                    struct_v, word = word.split(">", 1)
-                    struct_tag, struct_attr = struct.split("_", 1)
-                    structs.setdefault("open", OrderedDict()).setdefault(struct_tag, {})
-                    structs["open"][struct_tag][struct_attr] = " ".join(struct_value + [struct_v])
-                    struct = None
-                    struct_value = []
-
-                # We use special delimiters to see when we enter and leave the match region
-                if word == utils.LEFT_DELIM:
-                    match["start"] = n
-                    continue
-                elif word == utils.RIGHT_DELIM:
-                    match["end"] = n
+                # Check if the word is a special string (delimiter or tag)
+                if isinstance(word, str):
+                    if word == utils.LEFT_DELIM:
+                        match["start"] = current_token_position
+                        if phrase_mode:
+                            match["phrase"] = current_token_position_outside_of_phrase
+                    elif word == utils.RIGHT_DELIM:
+                        match["end"] = current_token_position
+                    elif word[1:-1] == "phrase_with_errors":  # Start of phrase block
+                        phrase_mode = True
+                    elif word[2:-1] == "phrase_with_errors":  # End of phrase block
+                        phrase_mode = False
+                        kwic_row.append({"error": error_attributes, "phrase": {"tokens": phrase_tokens}})
+                        error_attributes = {}
+                        phrase_tokens = []
+                        current_token_position_outside_of_phrase += 1
                     continue
 
-                # We read all structural attributes that are opening (from the left)
-                while word[0] == "<":
-                    if word[1:] in s_attrs: 
-                        # We have found a structural attribute with a value (<s_n 123>).
-                        # We continue to the next word to get the value
-                        struct = word[1:]
-                        break
-                    elif ">" in word and word[1:word.find(">")] in s_attrs:
-                        # We have found a structural attribute without a value (<s>)
-                        struct, word = word[1:].split(">", 1)
-                        structs.setdefault("open", OrderedDict()).setdefault(struct, {})
-                        struct = None
-                    else:
-                        # What we've found is not a structural attribute
-                        break
+                # Process each token based on whether we're in a phrase or not
+                tokens = {}
+                if phrase_mode:
+                    tokens = process_phrase_token(word, p_attrs, error_attributes)
+                    phrase_tokens.append(tokens)
+                else:
+                    tokens = process_regular_token(word, p_attrs)
+                    kwic_row.append(tokens)
+                    current_token_position_outside_of_phrase += 1
                 
+                current_token_position += 1  # Move to the next token position
+            # Append the completed match information to the list of processed matches
+            kwic.append({"corpus": corpus, "match": match, "structs": {}, "tokens": kwic_row})
 
-                if struct:
-                    # If we stopped in the middle of a struct (<s_n 123>),
-                    # we need to continue with the next word
-                    continue
-                
-                if phrase_with_errors:
-                    phrase_token += word
-
-                # Now we read all s-attrs that are closing (from the right)
-                while word[-1] == ">" and "</" in word:
-                    tempword, struct = word[:-1].rsplit("</", 1)
-                    if not tempword or struct not in s_attrs:
-                        struct = None
-                        break
-                    elif struct in s_attrs:
-                        word = tempword
-                        structs.setdefault("close", [])
-                        struct = struct.split("_")[0]
-                        if struct not in structs["close"]:
-                            structs["close"].insert(0, struct)
-                        struct = None
-
-                # What's left is the word with its p-attrs
-                values = word.rsplit("/", nr_splits)
-                token = dict((attr, utils.translate_undef(val)) for (attr, val) in zip(p_attrs, values))
-                if structs:
-                    # Convert OrderedDict into list
-                    if "open" in structs:
-                        structs["open"] = [{k: structs["open"][k]} for k in structs["open"]]
-                    token["structs"] = structs
-                    structs = {}
-                tokens.append(token)
-
-                n += 1
-        except IndexError:
-            # Attributes containing ">" or "<" can make some lines unparseable. We skip them
-            # until we come up with better a solution.
+        except RuntimeError as e:
+            print(e)
+            # Skip lines with unparseable attributes due to special characters
             continue
 
-        if aligned:
-            # If this was an aligned row, we add it to the previous kwic row
-            if words != ["(no", "alignment", "found)"]:
-                kwic[-1].setdefault("aligned", {})[aligned] = tokens
-        else:
-            if "start" not in match:
-                # TODO: CQP bug - CQP can't handle too long sentences, skipping
-                continue
-            # Otherwise we add a new kwic row
-            kwic_row = {"corpus": corpus, "match": match if not free_matches else [match]}
-            if linestructs:
-                kwic_row["structs"] = linestructs
-            kwic_row["tokens"] = tokens
-
-            if free_matches:
-                line_span = (match["position"] - match["start"], match["position"] - match["start"] + len(tokens) - 1)
-                if line_span == last_line_span:
-                    kwic[-1]["match"].append(match)
-                else:
-                    kwic.append(kwic_row)
-                last_line_span = line_span
-            else:
-                kwic.append(kwic_row)
-
     return kwic
+
+
+def process_phrase_token(word_data, attribute_list, error_attributes):
+    """
+    Process a token within a phrase_with_errors.
+    Updates error_attributes for entries containing "error" or "correction_status".
+    """
+    phrase_token = {}
+    for index, attribute in enumerate(attribute_list):
+        if "error" in attribute or attribute == "correction_status":
+            corrections = word_data[index].split("|")
+            error_attributes[attribute] = word_data[index]
+            phrase_token[attribute] = "|".join(corrections[1:]) if len(corrections) > 1 else "_"
+        else:
+            phrase_token[attribute] = word_data[index]
+    return phrase_token
+
+
+def process_regular_token(word_data, attribute_list):
+    """
+    Process a token that is not within a phrase_with_errors.
+    Assigns attributes based on attribute_list.
+    """
+    return {attribute: word_data[index] for index, attribute in enumerate(attribute_list)}
+
 
 
 def query_and_parse(corpus, cqp, within=None, cut=None, context=None, show=None, show_structs=None, start=0, end=10,

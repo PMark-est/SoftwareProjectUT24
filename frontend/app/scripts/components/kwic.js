@@ -82,29 +82,8 @@ angular.module("korpApp").component("kwic", {
                         </td>
                         <div class="tooltip" />
 
-                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="left">
-                            <kwic-word
-                                ng-repeat="word in $ctrl.selectLeft(sentence)"
-                                word="word"
-                                sentence="sentence"
-                                sentence-index="$parent.$index"
-                            />
-                        </td>
-                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="match">
-                            <kwic-word
-                                ng-repeat="word in $ctrl.selectMatch(sentence)"
-                                word="word"
-                                sentence="sentence"
-                                sentence-index="$parent.$index"
-                            />
-                        </td>
-                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="right">
-                            <kwic-word
-                                ng-repeat="word in $ctrl.selectRight(sentence)"
-                                word="word"
-                                sentence="sentence"
-                                sentence-index="$parent.$index"
-                            />
+                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked">
+                            <kwic-word sentence="sentence" sentence-index="$parent.$index" />
                         </td>
                     </tr>
                 </table>
@@ -315,6 +294,7 @@ angular.module("korpApp").component("kwic", {
                 if (!sentence.match) {
                     return
                 }
+                if (sentence.match.phrase) return sentence.tokens.slice(0, sentence.match.phrase)
                 return sentence.tokens.slice(0, sentence.match.start)
             }
 
@@ -330,177 +310,190 @@ angular.module("korpApp").component("kwic", {
                 if (!sentence.match) {
                     return
                 }
-                const from = sentence.match.end
                 const len = sentence.tokens.length
+                if (sentence.match.phrase) return sentence.tokens.slice(sentence.match.phrase + 1, len)
+                const from = sentence.match.end
                 return sentence.tokens.slice(from, len)
             }
 
             function addColors() {
-                //Adding custom colors to words with errors
                 $timeout(() => {
-                    if ($ctrl.kwic === undefined) return
-                    for (const [index, kwicHit] of $ctrl.kwic.entries()) {
-                        if (kwicHit.match === undefined) continue
-                        kwicHit.tokens.forEach((token) => {
-                            if (token.error_type === undefined || token.error_type === "_") return
-                            token.error_type.split("|").forEach((type) => {
-                                errorTypes.add(type)
+                    if (!$ctrl.kwic) return
+
+                    const errorTypes = new Set()
+
+                    // Collect unique error types from tokens
+                    $ctrl.kwic.forEach((kwicHit) => {
+                        if (kwicHit.match) {
+                            kwicHit.tokens.forEach((token) => {
+                                if (token.phrase !== undefined) {
+                                    token.error.error_type
+                                        .split("|")
+                                        .forEach((type) => (type !== "_" ? errorTypes.add(type) : null))
+                                } else {
+                                    token.error_type
+                                        ?.split("|")
+                                        .forEach((type) => (type !== "_" ? errorTypes.add(type) : null))
+                                }
                             })
-                        })
-                    }
-                    //console.log(errorTypes)
-                    //console.log(errorTypes.size)
-                    let colors = generateColors("#FA9189", "#D1BDFF", parseInt(errorTypes.size / 2)).concat(
-                        generateColors("#7AD6EB", "#46E079", errorTypes.size - parseInt(errorTypes.size / 2))
-                    )
-                    let index = 0
-                    for (const error of errorTypes) {
-                        //console.log(error)
-                        let tag = "background-color:".concat(colors[index], ";")
-                        let words = document.getElementsByClassName(error)
-                        for (const word of words) {
-                            word.setAttribute("style", tag)
                         }
-                        index += 1
-                    }
+                    })
+
+                    // Generate color gradient based on error types
+                    const colors = [
+                        ...generateColors("#FA9189", "#D1BDFF", Math.floor(errorTypes.size / 2)),
+                        ...generateColors("#7AD6EB", "#46E079", errorTypes.size - Math.floor(errorTypes.size / 2)),
+                    ]
+
+                    // Apply color styles to each error type
+                    ;[...errorTypes].forEach((error, index) => {
+                        const tag = `background-color:${colors[index]};`
+                        ;[...document.getElementsByClassName(error)].forEach((word) => word.setAttribute("style", tag))
+                    })
                 }, 1000)
             }
 
             function massageData(hitArray) {
                 const punctArray = [",", ".", ";", ":", "!", "?", "..."]
+                let prevCorpus = "" // Tracks the previous corpus to handle corpus changes
+                const output = [] // Stores the transformed data for output
 
-                let prevCorpus = ""
-                const output = []
-                for (let i = 0; i < hitArray.length; i++) {
-                    var corpus, linkCorpusId, mainCorpusId, matches
-                    const hitContext = hitArray[i]
-                    if (currentMode === "parallel") {
-                        mainCorpusId = hitContext.corpus.split("|")[0].toLowerCase()
-                        linkCorpusId = hitContext.corpus.split("|")[1].toLowerCase()
-                    } else {
-                        mainCorpusId = hitContext.corpus.toLowerCase()
-                    }
+                // Process each item in hitArray (each item represents a 'hit' with context data)
+                hitArray.forEach((hitContext) => {
+                    // Get the corpus ID and main corpus ID, based on the mode (parallel or single corpus)
+                    const { corpusId, mainCorpusId } = getCorpusIds(hitContext)
 
-                    const id = linkCorpusId || mainCorpusId
+                    // Determine the match start and end positions
+                    const matches = getMatchRanges(hitContext)
 
-                    const [matchSentenceStart, matchSentenceEnd] = findMatchSentence(hitContext)
-
-                    if (!(hitContext.match instanceof Array)) {
-                        matches = [{ start: hitContext.match.start, end: hitContext.match.end }]
-                    } else {
-                        matches = hitContext.match
-                    }
-
+                    // Initialize object for tracking open structs during token processing
                     const currentStruct = {}
-                    for (let i in _.range(0, hitContext.tokens.length)) {
-                        const wd = hitContext.tokens[i]
-                        wd.position = i
 
-                        for (let { start, end } of matches) {
-                            if (start <= i && i < end) {
-                                _.extend(wd, { _match: true })
-                            }
-                        }
+                    // Process each token (either a word or a phrase) in the hit context
+                    hitContext.tokens.forEach((token, index) => {
+                        token.position = index // Set position for each token
+                        processToken(token, matches, punctArray, currentStruct, corpusId)
+                    })
 
-                        if (matchSentenceStart <= i && i <= matchSentenceEnd) {
-                            _.extend(wd, { _matchSentence: true })
-                        }
-                        if (punctArray.includes(wd.word)) {
-                            _.extend(wd, { _punct: true })
-                        }
-
-                        wd.structs = wd.structs || {}
-
-                        for (let structItem of wd.structs.open || []) {
-                            const structKey = _.keys(structItem)[0]
-                            if (structKey == "sentence") {
-                                wd._open_sentence = true
-                            }
-
-                            currentStruct[structKey] = {}
-                            const attrs = _.toPairs(structItem[structKey]).map(([key, val]) => [
-                                structKey + "_" + key,
-                                val,
-                            ])
-                            for (let [key, val] of _.concat([[structKey, ""]], attrs)) {
-                                if (key in settings.corpora[id].attributes) {
-                                    currentStruct[structKey][key] = val
-                                }
-                            }
-                        }
-
-                        const attrs = _.reduce(_.values(currentStruct), (val, ack) => _.merge(val, ack), {})
-                        _.extend(wd, attrs)
-
-                        for (let structItem of wd.structs.close || []) {
-                            delete currentStruct[structItem]
-                        }
+                    // Handle new corpus headers if corpus changes
+                    if (prevCorpus !== corpusId) {
+                        const corpus = settings.corpora[corpusId]
+                        output.push(createCorpusHeader(corpus))
                     }
 
-                    if (prevCorpus !== id) {
-                        corpus = settings.corpora[id]
-                        const newSent = {
-                            newCorpus: corpus.title,
-                            noContext: _.keys(corpus.context).length === 1,
-                        }
-                        output.push(newSent)
-                    }
+                    hitContext.corpus = mainCorpusId // Set main corpus ID for consistency in output
+                    output.push(hitContext) // Add processed hit context to output
 
-                    hitContext.corpus = mainCorpusId
-
-                    output.push(hitContext)
+                    // Process aligned tokens if they exist, especially for parallel mode
                     if (hitContext.aligned) {
-                        // just check for sentence opened, no other structs
-                        const alignedTokens = Object.values(hitContext.aligned)[0]
-                        for (let wd of alignedTokens) {
-                            if (wd.structs && wd.structs.open) {
-                                for (let structItem of wd.structs.open) {
-                                    if (_.keys(structItem)[0] == "sentence") {
-                                        wd._open_sentence = true
-                                    }
-                                }
-                            }
-                        }
-
-                        const [corpus_aligned, tokens] = _.toPairs(hitContext.aligned)[0]
+                        const [alignedCorpus, alignedTokens] = Object.entries(hitContext.aligned)[0]
+                        markOpenSentencesInAligned(alignedTokens) // Mark open sentences in aligned tokens
                         output.push({
-                            tokens,
+                            tokens: alignedTokens,
                             isLinked: true,
-                            corpus: corpus_aligned,
+                            corpus: alignedCorpus,
                         })
                     }
 
-                    prevCorpus = id
-                }
+                    prevCorpus = corpusId // Update prevCorpus to current corpus ID for next iteration
+                })
 
-                return output
+                return output // Return the final transformed output array
             }
 
-            function findMatchSentence(hitContext) {
-                const span = []
-                const { start, end } = hitContext.match
-                let decr = start
-                let incr = end
-                while (decr >= 0) {
-                    const token = hitContext.tokens[decr]
-                    const sentenceOpen = _.filter((token.structs && token.structs.open) || [], (attr) => attr.sentence)
-                    if (sentenceOpen.length > 0) {
-                        span[0] = decr
-                        break
-                    }
-                    decr--
+            // Helper function to determine corpus IDs, handling parallel mode if necessary
+            function getCorpusIds(hitContext) {
+                let mainCorpusId, linkCorpusId
+                if (currentMode === "parallel") {
+                    ;[mainCorpusId, linkCorpusId] = hitContext.corpus.toLowerCase().split("|")
+                } else {
+                    mainCorpusId = hitContext.corpus.toLowerCase()
                 }
-                while (incr < hitContext.tokens.length) {
-                    const token = hitContext.tokens[incr]
-                    const closed = (token.structs && token.structs.close) || []
-                    if (closed.includes("sentence")) {
-                        span[1] = incr
-                        break
+                return { corpusId: linkCorpusId || mainCorpusId, mainCorpusId }
+            }
+
+            // Helper function to get match ranges from hitContext, supporting multiple matches
+            function getMatchRanges(hitContext) {
+                if (Array.isArray(hitContext.match)) {
+                    return hitContext.match.map(({ start, end }) => ({ start, end }))
+                } else {
+                    return [{ start: hitContext.match.start, end: hitContext.match.end }]
+                }
+            }
+
+            // Process each token in hitContext, marking matches, punctuation, and structures
+            function processToken(token, matches, punctArray, currentStruct, corpusId) {
+                // Mark token if it's within any match range
+                matches.forEach(({ start, end }) => {
+                    if (start <= token.position && token.position < end) {
+                        token._match = true
                     }
-                    incr++
+                })
+
+                // Mark if token is punctuation
+                if (punctArray.includes(token.word)) {
+                    token._punct = true
                 }
 
-                return span
+                // Initialize structs if not already
+                token.structs = token.structs || {}
+
+                // Handle struct 'open' and 'close' attributes
+                handleStructs(token, currentStruct, corpusId)
+
+                // Apply accumulated attributes from current struct to token
+                const structAttributes = Object.values(currentStruct).reduce(
+                    (acc, struct) => Object.assign(acc, struct),
+                    {}
+                )
+                Object.assign(token, structAttributes)
+            }
+
+            // Handles struct 'open' and 'close' for tokens, updating currentStruct
+            function handleStructs(token, currentStruct, corpusId) {
+                token.structs.open?.forEach((structItem) => {
+                    const structKey = Object.keys(structItem)[0]
+                    currentStruct[structKey] = createStructAttributes(structItem, structKey, corpusId)
+                    if (structKey === "sentence") {
+                        token._open_sentence = true
+                    }
+                })
+
+                // Close structs as necessary
+                token.structs.close?.forEach((structKey) => {
+                    delete currentStruct[structKey]
+                })
+            }
+
+            // Helper function to create structured attributes for a struct item based on corpus settings
+            function createStructAttributes(structItem, structKey, corpusId) {
+                const attrs = Object.entries(structItem[structKey]).map(([key, value]) => [
+                    `${structKey}_${key}`,
+                    value,
+                ])
+                const corpusAttributes = settings.corpora[corpusId].attributes
+                return Object.fromEntries(attrs.filter(([key]) => key in corpusAttributes))
+            }
+
+            // Helper function to create a new corpus header for output
+            function createCorpusHeader(corpus) {
+                return {
+                    newCorpus: corpus.title,
+                    noContext: Object.keys(corpus.context).length === 1,
+                }
+            }
+
+            // Marks sentences as open in aligned tokens
+            function markOpenSentencesInAligned(alignedTokens) {
+                alignedTokens.forEach((token) => {
+                    if (token.structs?.open) {
+                        token.structs.open.forEach((structItem) => {
+                            if (Object.keys(structItem)[0] === "sentence") {
+                                token._open_sentence = true
+                            }
+                        })
+                    }
+                })
             }
 
             function onWordClick(event) {

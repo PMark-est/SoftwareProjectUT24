@@ -681,6 +681,18 @@ table {
   }
 }
 
+.phrase {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 0 4px;
+  &.punct {
+    margin-left : -3px;
+  }
+  &:hover {
+    color: indianred;
+  }
+}
+
 .match_sentence {
   color: black !important;
 }
@@ -711,6 +723,7 @@ table {
 .word.has_error {
   background-color: rgb(238, 168, 168);
   border-radius: 5px;
+  margin: 0 2px;
   &.token_selected {
     background-color: #666;
     border-radius: 10px;

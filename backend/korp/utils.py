@@ -10,6 +10,7 @@ import re
 import sys
 import time
 import traceback
+import re
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from typing import List, Tuple, Optional, Union, Dict
@@ -28,6 +29,8 @@ from korp.memcached import memcached
 END_OF_LINE = "-::-EOL-::-"
 LEFT_DELIM = "---:::"
 RIGHT_DELIM = ":::---"
+LEFT_DELIM_SPLIT = " ---::: "
+RIGHT_DELIM_SPLIT = " :::--- "
 
 # Regular expressions for parsing parameters
 IS_NUMBER = re.compile(r"^\d+$")
@@ -37,6 +40,49 @@ QUERY_DELIM = ","
 
 authorizer: Optional["Authorizer"] = None
 
+def split_response(text, attr_count):
+    # Use regex with capturing groups to include tags in the result
+    attr_count = attr_count-1
+    parts = re.split(r'(<[^>]+>)', text)
+    
+    parts_split_words = []
+    for part in parts:
+        part = part.strip(" ")
+        if not part: continue
+        if part[0] == '<':
+            parts_split_words.append(part)
+            continue
+        for word in re.split(f'({RIGHT_DELIM_SPLIT}|{LEFT_DELIM_SPLIT})', part):
+            n = 0
+            end = 0
+            start = 0
+            if word == RIGHT_DELIM_SPLIT:
+                parts_split_words.append(RIGHT_DELIM)
+                continue
+            elif word == LEFT_DELIM_SPLIT:
+                parts_split_words.append(LEFT_DELIM)
+                continue
+            for char in word:
+                if char == '/': n+=1
+                if n == attr_count:
+                    if char == "_":
+                        end += 1
+                        parts_split_words.append(word[start:end].split("/"))
+                        start = end + 1
+                        n = 0
+                        continue
+                    elif char == ' ':
+                        parts_split_words.append(word[start:end].split("/"))
+                        end += 1
+                        start = end
+                        n = 0
+                        continue
+                end += 1
+            if n == attr_count:
+                parts_split_words.append(word[start:end].split("/"))
+                n = 0
+    # Filter out empty strings from the result
+    return parts_split_words
 
 def main_handler(generator):
     """Decorator wrapping all WSGI endpoints, handling errors and formatting.

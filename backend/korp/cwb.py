@@ -15,10 +15,11 @@ class CWB:
         self.locale = None
         self.encoding = None
 
-    def init(self, executable, scan_executable, registry, locale, encoding):
+    def init(self, executable, scan_executable, registry, data, locale, encoding):
         self.executable = executable
         self.scan_executable = scan_executable
         self.registry = registry
+        self.data = data
         self.locale = locale
         self.encoding = encoding
 

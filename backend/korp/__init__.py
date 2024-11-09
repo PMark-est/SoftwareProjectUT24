@@ -36,6 +36,7 @@ def create_app():
         executable=app.config["CQP_EXECUTABLE"],
         scan_executable=app.config["CWB_SCAN_EXECUTABLE"],
         registry=app.config["CWB_REGISTRY"],
+        data=app.config["CWB_DATA"],
         locale=app.config["LC_COLLATE"],
         encoding=app.config["CQP_ENCODING"]
     )
@@ -67,6 +68,7 @@ def create_app():
     from .views import (
         cache,
         corpus_config,
+        lexicon,
         count,
         info,
         lemgram_count,
@@ -81,6 +83,7 @@ def create_app():
     app.register_blueprint(corpus_config.bp)
     app.register_blueprint(count.bp)
     app.register_blueprint(info.bp)
+    app.register_blueprint(lexicon.bp)
     app.register_blueprint(lemgram_count.bp)
     app.register_blueprint(loglike.bp)
     app.register_blueprint(misc.bp)

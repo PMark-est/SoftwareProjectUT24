@@ -19,11 +19,14 @@ if (process.env.KORP_HTTPS) {
     server = "http"
 }
 
+allowedHosts = ["andmebaas.zapto.org"]
+
 module.exports = merge(common, {
     devServer: {
         host,
         port,
         server,
+        allowedHosts,
     },
     devtool: "inline-source-map",
     optimization: {

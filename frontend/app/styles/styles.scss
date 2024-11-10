@@ -561,6 +561,8 @@ table {
 .table_scrollarea {
   position: relative;
   clear: both;
+  overflow: auto;
+  overflow-y: visible;
   transition: opacity 200ms;
   &.paging {
     opacity : 0.5 !important;
@@ -673,6 +675,8 @@ table {
 
 .word {
   cursor: pointer;
+  display: inline-block;
+  text-align: center;
   &.punct {
     margin-left : -3px;
   }
@@ -683,6 +687,8 @@ table {
 
 .phrase {
   cursor: pointer;
+  display: inline-flex;
+  justify-content: space-evenly;
   border-radius: 5px;
   padding: 0 4px;
   &.punct {

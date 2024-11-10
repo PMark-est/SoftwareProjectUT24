@@ -9,6 +9,7 @@ import { SelectionManager, html, setDownloadLinks } from "@/util"
 import "@/components/kwic-pager"
 import "@/components/kwic-word"
 import "@/components/filter"
+import "@/services/popups"
 import { generateColors } from "@/colors"
 
 angular.module("korpApp").component("kwic", {
@@ -80,7 +81,6 @@ angular.module("korpApp").component("kwic", {
                                 sentence-index="$parent.$index"
                             />
                         </td>
-                        <div class="tooltip" />
 
                         <td ng-if="::!sentence.newCorpus && !sentence.isLinked">
                             <kwic-word sentence="sentence" sentence-index="$parent.$index" />
@@ -158,12 +158,13 @@ angular.module("korpApp").component("kwic", {
         "$location",
         "$element",
         "$timeout",
+        "popupService",
         /**
          * @param {import("angular").ILocationService} $location
          * @param {JQLite} $element
          * @param {import("angular").ITimeoutService} $timeout
          */
-        function ($location, $element, $timeout) {
+        function ($location, $element, $timeout, popupService) {
             let $ctrl = this
 
             const selectionManager = new SelectionManager()
@@ -243,7 +244,7 @@ angular.module("korpApp").component("kwic", {
                 if (event.target.classList.contains("word")) {
                     onWordClick(event)
                 } else {
-                    $(".tooltip")[0].style.display = "none"
+                    popupService.showPopups(-1)
                     if (
                         event.target.id === "frontendDownloadLinks" ||
                         event.target.classList.contains("kwicDownloadLink") ||
@@ -502,7 +503,6 @@ angular.module("korpApp").component("kwic", {
                 const obj = scope.word
                 const sent = scope.sentence
                 const word = $(event.target)
-                const tooltip = $(".tooltip")[0]
 
                 if ($ctrl.active) {
                     statemachine.send("SELECT_WORD", {
@@ -520,32 +520,7 @@ angular.module("korpApp").component("kwic", {
                     selectWord(word, scope)
                 }
 
-                if (obj.error_type != "_") {
-                    tooltip.style.display = "block"
-                    if (obj.error_correction != "_") {
-                        var correction_status = obj.correction_status == "true" ? "soovituslik" : "kohustuslik"
-                        tooltip.innerHTML =
-                            "<b>" +
-                            obj.error_correction +
-                            "</b>: " +
-                            correction_status +
-                            ", " +
-                            obj.error_tag +
-                            ", " +
-                            obj.error_type
-                    } else {
-                        tooltip.innerHTML = "_"
-                    }
-                    var wordRect = word[0].getBoundingClientRect()
-                    var tableRect = tooltip.parentElement.getBoundingClientRect()
-                    var scrollLeft = tooltip.parentElement.scrollLeft
-                    var left =
-                        wordRect.left - tableRect.left + word[0].offsetWidth / 2 + scrollLeft - tooltip.offsetWidth / 2
-                    tooltip.style.left = Math.max(left, tableRect.left) + "px"
-                    tooltip.style.top = wordRect.top - tableRect.top - 30 + "px"
-                } else {
-                    tooltip.style.display = "none"
-                }
+                popupService.showPopups(scope.sentenceIndex)
             }
 
             function selectWord(word, scope) {

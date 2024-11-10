@@ -2,47 +2,61 @@
 import angular from "angular"
 import { html } from "@/util"
 
-/*
-
-<span ng-if="$ctrl.word.phrase === undefined" class="word" ng-class="$ctrl.getClass()">
-            {{::$ctrl.word.word}}
-        </span>
-        <span ng-if="$ctrl.word.phrase !== undefined" class="phrase" ng-class="$ctrl.getClass()">
-            <span ng-repeat="word in $ctrl.word.phrase.tokens" class="word"> {{word.word}} </span>
-        </span>
-
-*/
-
 angular.module("korpApp").component("kwicWord", {
     template: html`
+        <div id="sentence_root">
         <span ng-repeat="word in $ctrl.left" class="left">
             <!-- Check if 'word' is a phrase or a single word -->
-            <span ng-if="!word.phrase" class="word" ng-class="$ctrl.getClass(word)"> {{ word.word }} </span>
+            <span ng-if="!word.phrase" class="word" ng-class="$ctrl.getClass(word)">
+                {{ word.word }}
+                <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
+            </span>
 
             <span ng-if="word.phrase" class="phrase" ng-class="$ctrl.getClass(word)">
-                <span ng-repeat="phraseWord in word.phrase.tokens" class="word"> {{ phraseWord.word }} </span>
+                <span ng-repeat="phraseWord in word.phrase.tokens" class="word word_in_phrase">
+                    {{ phraseWord.word }}
+                    <span ng-if="phraseWord.error_correction != '_'" class="tooltip"> {{ phraseWord.error_correction }} </span>
+                </span>
+                <span ng-if="word.error.error_correction != '_'" class="tooltip"> {{ word.error.error_correction }} </span>
             </span>
         </span>
 
-        <span ng-if="$ctrl.phrase != []" class="phrase" ng-class="$ctrl.getClass($ctrl.phrase)">
-            <span ng-repeat="word in $ctrl.phrase_left" class="word left" ng-class="$ctrl.getClass(word)"
-                >{{word.word}}
+        <span ng-if="$ctrl.phrase.length != 0" class="phrase" ng-class="$ctrl.getClass($ctrl.phrase)">
+            <span ng-repeat="word in $ctrl.phrase_left" class="word word_in_phrase left" ng-class="$ctrl.getClass(word)">
+                {{word.word}}
+                <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
             </span>
-            <span ng-repeat="word in $ctrl.word" class="word match">{{word.word}} </span>
-            <span ng-repeat="word in $ctrl.phrase_right" class="word right" ng-class="$ctrl.getClass(word)"
-                >{{word.word}}
+            <span ng-repeat="word in $ctrl.word" class="word word_in_phrase match">
+                {{word.word}}
+                <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
             </span>
+            <span ng-repeat="word in $ctrl.phrase_right" class="word word_in_phrase right" ng-class="$ctrl.getClass(word)">
+                {{word.word}}
+                <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
+            </span>
+            <span ng-if="$ctrl.phrase.error.error_correction != '_'" class="tooltip"> {{ $ctrl.phrase.error.error_correction }} </span>
         </span>
-        <span ng-if="$ctrl.phrase == []" ng-repeat="word in $ctrl.word" class="word match">{{word.word}} </span>
+        <span ng-if="$ctrl.phrase.length == 0" ng-repeat="word in $ctrl.word" class="word match">
+            {{word.word}}
+            <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
+        </span>
 
         <span ng-repeat="word in $ctrl.right" class="right">
             <!-- Check if 'word' is a phrase or a single word -->
-            <span ng-if="!word.phrase" class="word" ng-class="$ctrl.getClass(word)"> {{ word.word }} </span>
+            <span ng-if="!word.phrase" class="word" ng-class="$ctrl.getClass(word)">
+                {{ word.word }}
+                <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
+            </span>
 
             <span ng-if="word.phrase" class="phrase" ng-class="$ctrl.getClass(word)">
-                <span ng-repeat="phraseWord in word.phrase.tokens" class="word"> {{ phraseWord.word }} </span>
+                <span ng-repeat="phraseWord in word.phrase.tokens" class="word word_in_phrase">
+                    {{ phraseWord.word }}
+                    <span ng-if="phraseWord.error_correction != '_'" class="tooltip"> {{ phraseWord.error_correction }} </span>
+                </span>
+                <span ng-if="word.error.error_correction != '_'" class="tooltip"> {{ word.error.error_correction }} </span>
             </span>
         </span>
+        </div>
     `,
     bindings: {
         word: "<",
@@ -50,11 +64,12 @@ angular.module("korpApp").component("kwicWord", {
         sentenceIndex: "<",
     },
     controller: [
-        "$scope",
-        function ($scope) {
+        "$scope", "$element", "$window", "popupService",
+        function ($scope, $element, $window, popupService) {
+            let tooltipsVisible = false
+
             this.$onInit = () => {
                 // Add incoming values to local scope, to be used by click handlers in the Kwic component.
-                $scope.word = this.word
                 $scope.sentence = this.sentence
                 $scope.sentenceIndex = this.sentenceIndex
                 //console.log(this.sentence)
@@ -67,6 +82,7 @@ angular.module("korpApp").component("kwicWord", {
                 let matchSeen = false
                 for (let index = 0; index < this.sentence.tokens.length; index++) {
                     const token = this.sentence.tokens[index]
+                    //console.log(token)
                     const isMatchPhrase = token.word === undefined && index === this.sentence.match.phrase
                     if (isMatchPhrase) {
                         this.phrase = token
@@ -108,6 +124,55 @@ angular.module("korpApp").component("kwicWord", {
                         .map((elem) => elem.word)
                 }*/
             }
+
+            function showTooltips() {
+                if (tooltipsVisible) return
+                tooltipsVisible = true
+
+                const tooltipElements = $element[0].querySelectorAll(".tooltip")
+                if(tooltipElements.length == 0) return
+
+                const root = $element[0].querySelector("#sentence_root")
+                root.style.marginTop = "30px"
+
+                tooltipElements.forEach(obj => {
+                    obj.style.display = "block"
+                    const wordElement = obj.parentElement
+                    const tableElement = $(".table_scrollarea")[0]
+                    const tableRect = tableElement.getBoundingClientRect()
+                    const wordRect = wordElement.getBoundingClientRect()
+                    const tooltipRect = obj.getBoundingClientRect()
+                    const topOffset = wordElement.classList.contains("word_in_phrase") ? 60 : 30
+                    obj.style.top = wordRect.top - tableRect.top - topOffset + "px"
+                    wordElement.style.width = Math.max(tooltipRect.width, wordRect.width) + "px"
+                })
+            }
+
+            function hideTooltips() {
+                if (!tooltipsVisible) return
+                tooltipsVisible = false
+
+                const tooltipElements = $element[0].querySelectorAll(".tooltip")
+                if(tooltipElements.length == 0) return
+
+                const root = $element[0].querySelector("#sentence_root")
+                root.style.marginTop = "0px"
+
+                tooltipElements.forEach(obj => {
+                    obj.style.display = "none"
+                    const wordElement = obj.parentElement
+                    wordElement.style.width = "fit-content"
+                })
+            }
+
+            popupService.onShowPopups($scope, function (sentIndex) {
+                if(sentIndex == $scope.sentenceIndex) {
+                    showTooltips()
+                }
+                else {
+                    hideTooltips()
+                }
+            });
 
             /** Produce applicable class names depending on token data. */
             this.getClass = function (word) {

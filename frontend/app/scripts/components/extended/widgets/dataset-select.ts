@@ -7,6 +7,7 @@ import { LocMap } from "@/i18n/types"
 
 type DatasetSelectOptions = {
     sort?: boolean
+    attributes: [string, string][]
 }
 
 type DatasetSelectScope = WidgetScope & {
@@ -41,6 +42,7 @@ export const datasetSelect: WidgetWithOptions<DatasetSelectOptions> = (options) 
                 } else {
                     dataset = _.map(original, (v, k) => [k, locAttribute($scope.translation, v)])
                 }
+                dataset = options.attributes
                 if (options == undefined || options.sort == undefined || options.sort) {
                     $scope.dataset = _.sortBy(dataset, (tuple) => tuple[1])
                 } else {

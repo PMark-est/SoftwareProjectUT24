@@ -376,5 +376,6 @@
     "not_prefix": "börjar inte med",
     "not_suffix": "slutar inte med",
     "prefix": "börjar med",
-    "suffix": "slutar med"
+    "suffix": "slutar med",
+    "search_for_correction": "sökning baserat på korrigering"
 }

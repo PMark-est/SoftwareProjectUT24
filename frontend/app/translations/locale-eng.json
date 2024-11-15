@@ -380,5 +380,6 @@
     "not_prefix": "do not start with",
     "not_suffix": "do not end with",
     "prefix": "starts with",
-    "suffix": "ends with"
-}
+    "suffix": "ends with",
+    "search_for_correction": "search based on correction"
+}   

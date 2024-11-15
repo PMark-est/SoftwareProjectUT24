@@ -26,7 +26,7 @@ angular.module("korpApp").component("kwicWord", {
                 {{word.word}}
                 <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
             </span>
-            <span ng-repeat="word in $ctrl.word" class="word word_in_phrase match">
+            <span ng-repeat="word in $ctrl.word" class="word word_in_phrase match" ng-class="$ctrl.getClass(word)">
                 {{word.word}}
                 <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
             </span>
@@ -36,7 +36,7 @@ angular.module("korpApp").component("kwicWord", {
             </span>
             <span ng-if="$ctrl.phrase.error.error_correction != '_'" class="tooltip"> {{ $ctrl.phrase.error.error_correction }} </span>
         </span>
-        <span ng-if="$ctrl.phrase.length == 0" ng-repeat="word in $ctrl.word" class="word match">
+        <span ng-if="$ctrl.phrase.length == 0" ng-repeat="word in $ctrl.word" class="word match" ng-class="$ctrl.getClass(word)">
             {{word.word}}
             <span ng-if="word.error_correction != '_'" class="tooltip"> {{ word.error_correction }} </span>
         </span>

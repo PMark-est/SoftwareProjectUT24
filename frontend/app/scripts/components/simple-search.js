@@ -48,6 +48,8 @@ angular.module("korpApp").component("simpleSearch", {
                         <span> {{'and' | loc:$root.lang}} </span>
                         <input id="caseChk" type="checkbox" ng-model="$ctrl.isCaseInsensitive" />
                         <label for="caseChk"> {{'case_insensitive' | loc:$root.lang}} </label>
+                        <input id="searchForCorrection" type="checkbox" ng-model="$ctrl.searchForCorrection" />
+                        <label for="searchForCorrection"> {{'search_for_correction' | loc:$root.lang}} </label>
                     </div>
                 </form>
                 <div id="similar_wrapper" ng-show="$ctrl.relatedObj">
@@ -107,6 +109,7 @@ angular.module("korpApp").component("simpleSearch", {
             ctrl.mid_comp = false
             ctrl.suffix = false
             ctrl.isCaseInsensitive = false
+            ctrl.searchForCorrection = false
 
             if (settings["input_case_insensitive_default"]) {
                 $location.search("isCaseInsensitive", "")
@@ -119,6 +122,7 @@ angular.module("korpApp").component("simpleSearch", {
                 $location.search("mid_comp", ctrl.mid_comp ? true : null)
                 $location.search("suffix", ctrl.suffix ? true : null)
                 $location.search("isCaseInsensitive", ctrl.isCaseInsensitive ? true : null)
+                $location.search("searchForCorrection", ctrl.searchForCorrection ? true : null)
                 $location.search("within", null)
 
                 // Unset and set query in next time step in order to trigger changes correctly in `searches`.
@@ -157,8 +161,14 @@ angular.module("korpApp").component("simpleSearch", {
                                 orParts.push(regescape(token))
                             }
                         }
+                        console.log(orParts)
 
-                        const res = _.map(orParts, (orPart) => `word = "${orPart}"${suffix}`)
+                        let res = _.map(orParts, (orPart) => `word = "${orPart}"${suffix}`)
+                        if (ctrl.searchForCorrection) {
+                            //res = res.concat(_.map(orParts, (orPart) => `error_correction = "${orPart}"${suffix}`))
+                            res = _.map(orParts, (orPart) => `error_correction = "${orPart}"${suffix}`)
+                        } 
+                        console.log(res)
                         return `[${res.join(" | ")}]`
                     })
                     val = tokenArray.join(" ")
@@ -267,6 +277,7 @@ angular.module("korpApp").component("simpleSearch", {
                     ctrl.mid_comp = search.mid_comp != null
                     ctrl.suffix = search.suffix != null
                     ctrl.isCaseInsensitive = search.isCaseInsensitive != null
+                    ctrl.searchForCorrection = search.searchForCorrection != null
                 }
             )
 

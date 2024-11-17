@@ -608,10 +608,12 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
 
         words = utils.split_response(line, nr_splits)
         kwic_row = []             # Stores tokens for the current match
-        phrase_tokens = []           # Temporary storage for tokens within a phrase
-        phrase_mode = False          # Flag for whether we're in a "phrase_with_errors" block
-        error_attributes = {}        # Temporary storage for error-related attributes within a phrase
+        phrase_tokens = []        # Temporary storage for tokens within a phrase
+        phrase_mode = False       # Flag for whether we're in a "phrase_with_errors" block
+        error_attributes = {}     # Temporary storage for error-related attributes within a phrase
+        error_counts = {}         # For counting how many times an error is present in a phrase for recognizing what is the phrase error    
         current_token_position = 0
+        phrase_tokens_count = 0
         current_token_position_outside_of_phrase = 0
 
         try:
@@ -619,17 +621,26 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
                 # Check if the word is a special string (delimiter or tag)
                 if isinstance(word, str):
                     if word == utils.LEFT_DELIM:
-                        match["start"] = current_token_position
+                        match["start"] = current_token_position - phrase_tokens_count
                         if phrase_mode:
+                            match["start"] = current_token_position
                             match["phrase"] = current_token_position_outside_of_phrase
                     elif word == utils.RIGHT_DELIM:
-                        match["end"] = current_token_position
+                        match["end"] = current_token_position - phrase_tokens_count
+                        if phrase_mode:
+                            match["end"] = current_token_position
                     elif word[1:-1] == "phrase_with_errors":  # Start of phrase block
                         phrase_mode = True
                     elif word[2:-1] == "phrase_with_errors":  # End of phrase block
+                        current_token_position += 1
                         phrase_mode = False
+                        for error_attribute in error_counts:
+                            for error, count in error_counts[error_attribute].items():
+                                if count != len(phrase_tokens): continue
+                                error_attributes[error_attribute] = error
                         kwic_row.append({"error": error_attributes, "phrase": {"tokens": phrase_tokens}})
                         error_attributes = {}
+                        error_counts = {}
                         phrase_tokens = []
                         current_token_position_outside_of_phrase += 1
                     continue
@@ -637,7 +648,8 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
                 # Process each token based on whether we're in a phrase or not
                 tokens = {}
                 if phrase_mode:
-                    tokens = process_phrase_token(word, p_attrs, error_attributes)
+                    phrase_tokens_count += 1
+                    tokens = process_phrase_token(word, p_attrs , error_counts)
                     phrase_tokens.append(tokens)
                 else:
                     tokens = process_regular_token(word, p_attrs)
@@ -656,7 +668,7 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
     return kwic
 
 
-def process_phrase_token(word_data, attribute_list, error_attributes):
+def process_phrase_token(word_data, attribute_list, error_counts):
     """
     Process a token within a phrase_with_errors.
     Updates error_attributes for entries containing "error" or "correction_status".
@@ -665,7 +677,12 @@ def process_phrase_token(word_data, attribute_list, error_attributes):
     for index, attribute in enumerate(attribute_list):
         if "error" in attribute or attribute == "correction_status":
             corrections = word_data[index].split("|")
-            error_attributes[attribute] = word_data[index]
+            if attribute not in error_counts:
+                error_counts[attribute] = {}
+            for correction in corrections:
+                if correction not in error_counts[attribute]:
+                    error_counts[attribute][correction] = 0
+                error_counts[attribute][correction] += 1
             phrase_token[attribute] = "|".join(corrections[1:]) if len(corrections) > 1 else "_"
         else:
             phrase_token[attribute] = word_data[index]

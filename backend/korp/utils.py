@@ -52,14 +52,15 @@ def split_response(text, attr_count):
         if part[0] == '<':
             parts_split_words.append(part)
             continue
-        for word in re.split(f'({RIGHT_DELIM_SPLIT}|{LEFT_DELIM_SPLIT})', part):
+        for word in re.split(f'({RIGHT_DELIM}|{LEFT_DELIM})', part):
+            if word == '': continue
             n = 0
             end = 0
             start = 0
-            if word == RIGHT_DELIM_SPLIT:
+            if word == RIGHT_DELIM:
                 parts_split_words.append(RIGHT_DELIM)
                 continue
-            elif word == LEFT_DELIM_SPLIT:
+            elif word == LEFT_DELIM:
                 parts_split_words.append(LEFT_DELIM)
                 continue
             for char in word:

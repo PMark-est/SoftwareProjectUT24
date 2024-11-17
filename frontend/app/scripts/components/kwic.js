@@ -9,6 +9,7 @@ import { SelectionManager, html, setDownloadLinks } from "@/util"
 import "@/components/kwic-pager"
 import "@/components/kwic-word"
 import "@/components/filter"
+import "@/components/wordColorMeanings"
 import "@/services/popups"
 import { generateColors } from "@/colors"
 
@@ -57,36 +58,128 @@ angular.module("korpApp").component("kwic", {
                 <span ng-if="!$ctrl.isReading">{{'show_reading' | loc:$root.lang}}</span>
                 <span ng-if="$ctrl.isReading">{{'show_kwic' | loc:$root.lang}}</span>
             </span>
+            <span style="margin-left: 128px;"><word-color-meanings /></span>
             <div class="table_scrollarea">
-                <table class="results_table kwic" ng-if="!$ctrl.useContext" cellspacing="0">
+                <!--
+                <div class="results_table kwic">
+                    <span
+                        class="sentence"
+                        ng-repeat="sentence in $ctrl.kwic"
+                        ng-class="{corpus_info : sentence.newCorpus, linked_sentence : sentence.isLinked, even : $even, odd : $odd}"
+                    >
+                        <span ng-if="::!sentence.newCorpus && !sentence.isLinked" class="left">
+                            <kwic-word
+                                ng-repeat="word in $ctrl.selectLeft(sentence)"
+                                word="word"
+                                sentence="sentence"
+                                sentence-index="$parent.$index"
+                            />
+                        </span>
+                        <span
+                            ng-if="::!sentence.newCorpus && !sentence.isLinked"
+                            class="phrase match_phrase"
+                            id="sentence_root"
+                            ng-class="$ctrl.getClass(sentence)"
+                        >
+                            <span class="phrase_left">
+                                <kwic-word
+                                    ng-repeat="word in $ctrl.selectMatchPhraseLeft(sentence)"
+                                    word="word"
+                                    sentence="sentence"
+                                    sentence-index="$parent.$index"
+                                />
+                            </span>
+                            <span class="match">
+                                <kwic-word
+                                    ng-repeat="word in $ctrl.selectMatch(sentence)"
+                                    word="word"
+                                    sentence="sentence"
+                                    sentence-index="$parent.$index"
+                                />
+                            </span>
+                            <span class="phrase_right">
+                                <kwic-word
+                                    ng-repeat="word in $ctrl.selectMatchPhraseRight(sentence)"
+                                    word="word"
+                                    sentence="sentence"
+                                    sentence-index="$parent.$index"
+                                />
+                            </span>
+                            <span
+                                ng-if="sentence.match.phrase"
+                                class="phrase-tooltip"
+                                ng-class="sentence.tokens[sentence.match.phrase].error.error_correction"
+                            >
+                                <span class="tooltip">
+                                    {{ sentence.tokens[sentence.match.phrase].error.error_correction }}
+                                </span>
+                            </span>
+                        </span>
+                        <span ng-if="::!sentence.newCorpus && !sentence.isLinked" class="right">
+                            <kwic-word
+                                ng-repeat="word in $ctrl.selectRight(sentence)"
+                                word="word"
+                                sentence="sentence"
+                                sentence-index="$parent.$index"
+                            />
+                        </span>
+                    </span>
+                </div>-->
+                <table class="results_table kwic">
                     <tr
                         class="sentence"
                         ng-repeat="sentence in $ctrl.kwic"
                         ng-class="{corpus_info : sentence.newCorpus, linked_sentence : sentence.isLinked, even : $even, odd : $odd}"
                     >
-                        <td ng-if="::sentence.newCorpus" />
-                        <td ng-if="::sentence.newCorpus" colspan="2" class="text-gray-600 uppercase">
-                            <div class="w-0">
-                                {{sentence.newCorpus | locObj:$root.lang}}
-                                <span class="normal-case" ng-if="::sentence.noContext">
-                                    ({{'no_context_support' | loc:$root.lang}})
-                                </span>
-                            </div>
-                        </td>
-                        <td ng-if="::sentence.isLinked" colspan="3" class="lnk">
+                        <td class="left">
                             <kwic-word
-                                ng-repeat="word in sentence.tokens"
+                                ng-repeat="word in $ctrl.selectLeft(sentence)"
                                 word="word"
                                 sentence="sentence"
                                 sentence-index="$parent.$index"
                             />
                         </td>
-
-                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked">
-                            <kwic-word sentence="sentence" sentence-index="$parent.$index" />
+                        <td>
+                            <table class="phrase" id="sentence_root" ng-class="$ctrl.getClass(sentence)">
+                                <tr class="phrase_row">
+                                    <td>
+                                        <kwic-word
+                                            ng-repeat="word in $ctrl.selectMatchPhraseLeft(sentence)"
+                                            word="word"
+                                            sentence="sentence"
+                                            sentence-index="$parent.$index"
+                                        />
+                                    </td>
+                                    <td class="match">
+                                        <kwic-word
+                                            ng-repeat="word in $ctrl.selectMatch(sentence)"
+                                            word="word"
+                                            sentence="sentence"
+                                            sentence-index="$parent.$index"
+                                        />
+                                    </td>
+                                    <td>
+                                        <kwic-word
+                                            ng-repeat="word in $ctrl.selectMatchPhraseRight(sentence)"
+                                            word="word"
+                                            sentence="sentence"
+                                            sentence-index="$parent.$index"
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="right">
+                            <kwic-word
+                                ng-repeat="word in $ctrl.selectRight(sentence)"
+                                word="word"
+                                sentence="sentence"
+                                sentence-index="$parent.$index"
+                            />
                         </td>
                     </tr>
                 </table>
+
                 <div class="results_table reading" ng-if="$ctrl.useContext">
                     <p
                         class="sentence"
@@ -158,18 +251,37 @@ angular.module("korpApp").component("kwic", {
         "$location",
         "$element",
         "$timeout",
+        "$scope",
         "popupService",
+        "$http",
         /**
          * @param {import("angular").ILocationService} $location
          * @param {JQLite} $element
          * @param {import("angular").ITimeoutService} $timeout
          */
-        function ($location, $element, $timeout, popupService) {
+        function ($location, $element, $timeout, $scope, popupService, $http) {
             let $ctrl = this
 
             const selectionManager = new SelectionManager()
 
             const errorTypes = new Set()
+
+            let tooltipsVisible = false
+
+            //popupService.onShowPopups($scope, function () {})
+
+            $ctrl.getClass = (sentence) => {
+                if (!sentence.match) return
+                let classes = []
+                if (sentence.match.phrase) {
+                    classes.push({
+                        has_error: sentence.tokens[sentence.match.phrase].error.error_tag,
+                    })
+                    classes.push(sentence.tokens[sentence.match.phrase].error.error_type)
+                } else {
+                }
+                return classes
+            }
 
             $ctrl.$onInit = () => {
                 addKeydownHandler()
@@ -299,12 +411,65 @@ angular.module("korpApp").component("kwic", {
                 return sentence.tokens.slice(0, sentence.match.start)
             }
 
+            $ctrl.selectMatchPhraseLeft = function (sentence) {
+                if (!sentence.match) return
+                if (!sentence.match.phrase) {
+                    return
+                }
+                const phrase = sentence.tokens[sentence.match.phrase].phrase.tokens
+                const tokens = []
+                for (let index = 0; index < phrase.length; index++) {
+                    const element = phrase[index]
+                    if (Number(element.word_id) === sentence.match.start) {
+                        return tokens
+                    }
+                    tokens.push(element)
+                }
+                return tokens
+            }
+
             $ctrl.selectMatch = function (sentence) {
                 if (!sentence.match) {
                     return
                 }
+
+                if (sentence.match.phrase) {
+                    const phrase = sentence.tokens[sentence.match.phrase].phrase.tokens
+                    let start = 0
+                    for (let index = 0; index < phrase.length; index++) {
+                        const element = phrase[index]
+                        if (Number(element.word_id) === sentence.match.start) {
+                            start = index
+                            break
+                        }
+                    }
+                    return phrase.slice(start, start + 1)
+                }
                 const from = sentence.match.start
                 return sentence.tokens.slice(from, sentence.match.end)
+            }
+
+            $ctrl.selectMatchPhraseRight = function (sentence) {
+                if (!sentence.match) return
+                if (!sentence.match.phrase) {
+                    return
+                }
+                const phrase = sentence.tokens[sentence.match.phrase].phrase.tokens
+                const tokens = []
+                let start = 0
+                for (let index = 0; index < phrase.length; index++) {
+                    const element = phrase[index]
+                    if (Number(element.word_id) === sentence.match.start) {
+                        start = index
+                        break
+                    }
+                }
+
+                for (let index = start + 1; index < phrase.length; index++) {
+                    const element = phrase[index]
+                    tokens.push(element)
+                }
+                return tokens
             }
 
             $ctrl.selectRight = function (sentence) {
@@ -312,7 +477,9 @@ angular.module("korpApp").component("kwic", {
                     return
                 }
                 const len = sentence.tokens.length
-                if (sentence.match.phrase) return sentence.tokens.slice(sentence.match.phrase + 1, len)
+                if (sentence.match.phrase) {
+                    return sentence.tokens.slice(sentence.match.phrase + 1, len)
+                }
                 const from = sentence.match.end
                 return sentence.tokens.slice(from, len)
             }
@@ -322,36 +489,35 @@ angular.module("korpApp").component("kwic", {
                     if (!$ctrl.kwic) return
 
                     const errorTypes = new Set()
+                    const apiUrl = `http://andmebaas.zapto.org:8080/lexicon?positional_attribute=error_type`
 
-                    // Collect unique error types from tokens
-                    $ctrl.kwic.forEach((kwicHit) => {
-                        if (kwicHit.match) {
-                            kwicHit.tokens.forEach((token) => {
-                                if (token.phrase !== undefined) {
-                                    token.error.error_type
-                                        .split("|")
-                                        .forEach((type) => (type !== "_" ? errorTypes.add(type) : null))
-                                } else {
-                                    token.error_type
-                                        ?.split("|")
-                                        .forEach((type) => (type !== "_" ? errorTypes.add(type) : null))
-                                }
-                            })
+                    $http.get(apiUrl).then((response) => {
+                        const resp = response.data.Arguments
+                        for (let index = 0; index < resp.length; index++) {
+                            const error_type = resp[index]
+                            if (error_type === "_" || error_type === "__UNDEF__" || error_type === "") continue
+                            const parts = error_type.split("|")
+                            for (let index = 0; index < parts.length; index++) {
+                                const part = parts[index]
+                                errorTypes.add(part)
+                            }
                         }
-                    })
 
-                    // Generate color gradient based on error types
-                    const colors = [
-                        ...generateColors("#FA9189", "#D1BDFF", Math.floor(errorTypes.size / 2)),
-                        ...generateColors("#7AD6EB", "#46E079", errorTypes.size - Math.floor(errorTypes.size / 2)),
-                    ]
+                        // Generate color gradient based on error types
+                        const colors = [
+                            ...generateColors("#FA9189", "#D1BDFF", Math.floor(errorTypes.size / 2)),
+                            ...generateColors("#7AD6EB", "#46E079", errorTypes.size - Math.floor(errorTypes.size / 2)),
+                        ]
 
-                    // Apply color styles to each error type
-                    ;[...errorTypes].forEach((error, index) => {
-                        const tag = `background-color:${colors[index]};`
-                        ;[...document.getElementsByClassName(error)].forEach((word) => word.setAttribute("style", tag))
+                        // Apply color styles to each error type
+                        ;[...errorTypes].forEach((error, index) => {
+                            const tag = `background-color:${colors[index]};`
+                            ;[...document.getElementsByClassName(error)].forEach((word) =>
+                                word.setAttribute("style", tag)
+                            )
+                        })
                     })
-                }, 1000)
+                }, 50)
             }
 
             function massageData(hitArray) {
@@ -500,18 +666,42 @@ angular.module("korpApp").component("kwic", {
             function onWordClick(event) {
                 event.stopPropagation()
                 const scope = $(event.target).scope()
-                const obj = scope.word
+                let obj
+                if (scope.word.word) obj = scope.word
+                else obj = scope.word.phrase.tokens
                 const sent = scope.sentence
+                $ctrl.sent = sent
                 const word = $(event.target)
+                let root = word[0].parentElement.parentElement.parentElement.parentElement
+                if (root.classList.contains("phrase_row")) {
+                    root = root.parentElement.parentElement.parentElement.parentElement
+                } else if (root.tagName === "TD") root = root.parentElement
+                let tooltips = root.previousElementSibling
 
                 if ($ctrl.active) {
-                    statemachine.send("SELECT_WORD", {
-                        sentenceData: sent.structs,
-                        wordData: obj,
-                        corpus: sent.corpus.toLowerCase(),
-                        tokens: sent.tokens,
-                        inReadingMode: false,
-                    })
+                    if (scope.word.word)
+                        statemachine.send("SELECT_WORD", {
+                            sentenceData: sent.structs,
+                            wordData: obj,
+                            corpus: sent.corpus.toLowerCase(),
+                            tokens: sent.tokens,
+                            inReadingMode: false,
+                        })
+                    else {
+                        const clicked_word = word[0].innerText
+                        let token
+                        for (let index = 0; index < scope.word.phrase.tokens.length; index++) {
+                            const element = scope.word.phrase.tokens[index]
+                            if (element.word === clicked_word) token = element
+                        }
+                        statemachine.send("SELECT_WORD", {
+                            sentenceData: sent.structs,
+                            wordData: token,
+                            corpus: sent.corpus.toLowerCase(),
+                            tokens: sent.tokens,
+                            inReadingMode: false,
+                        })
+                    }
                 }
 
                 if (currentMode === "parallel") {

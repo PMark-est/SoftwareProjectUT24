@@ -16,10 +16,10 @@ angular.module("korpApp").component("kwicWord", {
                 <span ng-if="word.error" class="tooltip"> {{word.error.error_correction}} </span>
             </span>
             <span ng-if="$ctrl.word.word" class="word" ng-class="$ctrl.getClass(undefined, undefined)">
-                {{::$ctrl.word.word}}
                 <span ng-if="$ctrl.word.error_correction != '_'" class="tooltip">
                     {{ $ctrl.word.error_correction }}
                 </span>
+                {{::$ctrl.word.word}}
             </span>
         </span>
     `,
@@ -58,7 +58,7 @@ angular.module("korpApp").component("kwicWord", {
                     const wordRect = wordElement.getBoundingClientRect()
                     const tooltipRect = obj.getBoundingClientRect()
                     const topOffset = wordElement.classList.contains("word_in_phrase") ? 60 : 30
-                    obj.style.top = wordRect.top - tableRect.top - topOffset + "px"
+                    //obj.style.top = wordRect.top - tableRect.top - topOffset + "px"
                     wordElement.style.width = Math.max(tooltipRect.width, wordRect.width) + "px"
                 })
             }

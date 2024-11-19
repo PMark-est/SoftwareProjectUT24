@@ -46,7 +46,15 @@ angular.module("korpApp").component("kwicWord", {
             function showTooltips() {
                 if (tooltipsVisible) return
                 tooltipsVisible = true
-                const tooltipElements = $element[0].querySelectorAll(".tooltip")
+                let tooltipElements
+                if (
+                    $scope.sentence.match.phrase &&
+                    $scope.word.word_id >= $scope.sentence.tokens[$scope.sentence.match.phrase].phrase.tokens[0].word_id
+                ) {
+                    tooltipElements = $element[0].parentElement.parentElement.parentElement.querySelectorAll(".tooltip")
+                } else {
+                    tooltipElements = $element[0].querySelectorAll(".tooltip")
+                }
                 if (tooltipElements.length == 0) return
                 const root = $element[0].querySelector("#sentence_root")
                 root.style.marginTop = "30px"

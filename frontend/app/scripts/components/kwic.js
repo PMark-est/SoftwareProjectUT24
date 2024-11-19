@@ -58,80 +58,34 @@ angular.module("korpApp").component("kwic", {
                 <span ng-if="!$ctrl.isReading">{{'show_reading' | loc:$root.lang}}</span>
                 <span ng-if="$ctrl.isReading">{{'show_kwic' | loc:$root.lang}}</span>
             </span>
-            <span style="margin-left: 128px;"><word-color-meanings /></span>
+            <span><word-color-meanings /></span>
             <div class="table_scrollarea">
-                <!--
-                <div class="results_table kwic">
-                    <span
-                        class="sentence"
-                        ng-repeat="sentence in $ctrl.kwic"
-                        ng-class="{corpus_info : sentence.newCorpus, linked_sentence : sentence.isLinked, even : $even, odd : $odd}"
-                    >
-                        <span ng-if="::!sentence.newCorpus && !sentence.isLinked" class="left">
-                            <kwic-word
-                                ng-repeat="word in $ctrl.selectLeft(sentence)"
-                                word="word"
-                                sentence="sentence"
-                                sentence-index="$parent.$index"
-                            />
-                        </span>
-                        <span
-                            ng-if="::!sentence.newCorpus && !sentence.isLinked"
-                            class="phrase match_phrase"
-                            id="sentence_root"
-                            ng-class="$ctrl.getClass(sentence)"
-                        >
-                            <span class="phrase_left">
-                                <kwic-word
-                                    ng-repeat="word in $ctrl.selectMatchPhraseLeft(sentence)"
-                                    word="word"
-                                    sentence="sentence"
-                                    sentence-index="$parent.$index"
-                                />
-                            </span>
-                            <span class="match">
-                                <kwic-word
-                                    ng-repeat="word in $ctrl.selectMatch(sentence)"
-                                    word="word"
-                                    sentence="sentence"
-                                    sentence-index="$parent.$index"
-                                />
-                            </span>
-                            <span class="phrase_right">
-                                <kwic-word
-                                    ng-repeat="word in $ctrl.selectMatchPhraseRight(sentence)"
-                                    word="word"
-                                    sentence="sentence"
-                                    sentence-index="$parent.$index"
-                                />
-                            </span>
-                            <span
-                                ng-if="sentence.match.phrase"
-                                class="phrase-tooltip"
-                                ng-class="sentence.tokens[sentence.match.phrase].error.error_correction"
-                            >
-                                <span class="tooltip">
-                                    {{ sentence.tokens[sentence.match.phrase].error.error_correction }}
-                                </span>
-                            </span>
-                        </span>
-                        <span ng-if="::!sentence.newCorpus && !sentence.isLinked" class="right">
-                            <kwic-word
-                                ng-repeat="word in $ctrl.selectRight(sentence)"
-                                word="word"
-                                sentence="sentence"
-                                sentence-index="$parent.$index"
-                            />
-                        </span>
-                    </span>
-                </div>-->
                 <table class="results_table kwic">
                     <tr
                         class="sentence"
                         ng-repeat="sentence in $ctrl.kwic"
                         ng-class="{corpus_info : sentence.newCorpus, linked_sentence : sentence.isLinked, even : $even, odd : $odd}"
                     >
-                        <td class="left">
+                        <td ng-if="::sentence.newCorpus" />
+                        <td ng-if="::sentence.newCorpus" colspan="2" class="text-gray-600 uppercase">
+                            <div class="w-0">
+                                {{sentence.newCorpus | locObj:$root.lang}}
+                                <span class="normal-case" ng-if="::sentence.noContext">
+                                    ({{'no_context_support' | loc:$root.lang}})
+                                </span>
+                            </div>
+                        </td>
+
+                        <td ng-if="::sentence.isLinked" colspan="3" class="lnk">
+                            <kwic-word
+                                ng-repeat="word in sentence.tokens"
+                                word="word"
+                                sentence="sentence"
+                                sentence-index="$parent.$index"
+                            />
+                        </td>
+
+                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="left">
                             <kwic-word
                                 ng-repeat="word in $ctrl.selectLeft(sentence)"
                                 word="word"
@@ -139,8 +93,11 @@ angular.module("korpApp").component("kwic", {
                                 sentence-index="$parent.$index"
                             />
                         </td>
-                        <td>
+                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked">
                             <table class="phrase" id="sentence_root" ng-class="$ctrl.getClass(sentence)">
+                                <tr ng-if="sentence.match.phrase" class="tooltip">
+                                    <td>{{ sentence.tokens[sentence.match.phrase].error.error_correction }}</td>
+                                </tr>
                                 <tr class="phrase_row">
                                     <td>
                                         <kwic-word
@@ -169,7 +126,7 @@ angular.module("korpApp").component("kwic", {
                                 </tr>
                             </table>
                         </td>
-                        <td class="right">
+                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="right">
                             <kwic-word
                                 ng-repeat="word in $ctrl.selectRight(sentence)"
                                 word="word"
@@ -670,13 +627,7 @@ angular.module("korpApp").component("kwic", {
                 if (scope.word.word) obj = scope.word
                 else obj = scope.word.phrase.tokens
                 const sent = scope.sentence
-                $ctrl.sent = sent
                 const word = $(event.target)
-                let root = word[0].parentElement.parentElement.parentElement.parentElement
-                if (root.classList.contains("phrase_row")) {
-                    root = root.parentElement.parentElement.parentElement.parentElement
-                } else if (root.tagName === "TD") root = root.parentElement
-                let tooltips = root.previousElementSibling
 
                 if ($ctrl.active) {
                     if (scope.word.word)

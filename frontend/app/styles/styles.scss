@@ -1501,12 +1501,25 @@ slider {
   }
 }
 
+.attr_select {
+  width: 255px;
+}
+
+.attr_select option{
+  word-break: break-all;
+  white-space: wrap;
+}
+
+select option {
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis for long text */
+  display: block; /* Ensure options respect CSS properties */
+}
+
 
 .arg_val_container {
   margin-top : 2px;
-  select {
-    max-width : 100%;
-  }
 }
 
 .ui-autocomplete-category {

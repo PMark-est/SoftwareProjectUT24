@@ -159,6 +159,11 @@ def get_mode(mode_name: str, corpora: list, cache: bool):
         corpus_id = corpus_def["id"]
 
         # Check if corpus is included in selected mode
+    #    attr_types = {
+    #    "positional": "pos_attributes",
+    #    "structural": "struct_attributes",
+    #    "custom": "custom_attributes"
+    #}  
         if corpora or mode_name in [m["name"] for m in corpus_def.get("mode", [])]:
             for attr_type_name, attr_type in attr_types.items():
                 if attr_type in corpus_def:
@@ -174,7 +179,6 @@ def get_mode(mode_name: str, corpora: list, cache: bool):
                                     preset_name = attr_val["preset"]
                                     attr_hash = utils.get_hash(
                                         (attr_name, json.dumps(attr_val, sort_keys=True), attr_type))
-
                                 if attr_hash in hash_to_attr:  # Preset already loaded and ready to use
                                     corpus_def[attr_type][i] = hash_to_attr[attr_hash]
                                 else:
@@ -204,7 +208,6 @@ def get_mode(mode_name: str, corpora: list, cache: bool):
                                         del attr_val["preset"]
                                         mode["attributes"][attr_type][attr_id].update(attr_val)
                                     corpus_def[attr_type][i] = attr_id
-
                             # Inline attribute definition
                             elif isinstance(attr_val, dict):
                                 attr_hash = utils.get_hash((attr_name, json.dumps(attr_val, sort_keys=True), attr_type))

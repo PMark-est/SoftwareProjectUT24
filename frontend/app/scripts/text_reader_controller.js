@@ -28,6 +28,7 @@ korpApp.directive("textReaderCtrl", [
 
                 const corpus = s.inData.corpus
                 s.corpusObj = settings.corpora[corpus]
+                console.log(s.corpusObj)
                 const textId = s.inData.sentenceData["text__id"]
                 backend.getDataForReadingMode(corpus, textId).then(function (data) {
                     new Promise((resolve, reject) => {

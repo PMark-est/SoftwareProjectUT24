@@ -57,11 +57,13 @@ angular.module("korpApp").component("depTree", {
 
                                 $timeout(() => {
                                     draw_deptree($ctrl.tokens, function (msg) {
+                                        /*
                                         const [type, val] = _.head(_.toPairs(msg))
                                         $scope.$apply((s) => {
-                                            s.label = locObj($ctrl.corpus.attributes[type].label)
-                                            s.value = $ctrl.corpus.attributes[type].translation[val]
+                                            s.label = ""
+                                            s.value = ""
                                         })
+                                            */
                                     })
                                 }, 0)
                             },
@@ -140,7 +142,7 @@ angular.module("korpApp").component("depTree", {
                 const added_rel = []
 
                 const add_word = function (word, start, stop) {
-                    const _ref = ["pos", "ref", "dephead", "deprel"].map((attr) => {
+                    const _ref = ["word_id", "word_id", "dependency_head", "dependency_relation"].map((attr) => {
                         return word[attr]
                     })
 
@@ -176,6 +178,7 @@ angular.module("korpApp").component("depTree", {
                 for (let _i = 0; _i < words.length; _i++) {
                     const word = words[_i]
                     const len = word.word.length
+                    console.log(word)
                     add_word(word, ix, ix + len)
                     ix += len + 1
                 }

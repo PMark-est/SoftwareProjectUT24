@@ -636,7 +636,7 @@ angular.module("korpApp").component("kwic", {
                             wordData: obj,
                             corpus: sent.corpus.toLowerCase(),
                             tokens: sent.tokens,
-                            inReadingMode: false,
+                            inReadingMode: true,
                         })
                     else {
                         const clicked_word = word[0].innerText
@@ -650,7 +650,7 @@ angular.module("korpApp").component("kwic", {
                             wordData: token,
                             corpus: sent.corpus.toLowerCase(),
                             tokens: sent.tokens,
-                            inReadingMode: false,
+                            inReadingMode: true,
                         })
                     }
                 }

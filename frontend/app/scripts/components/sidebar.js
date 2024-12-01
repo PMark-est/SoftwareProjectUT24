@@ -33,8 +33,12 @@ angular.module("korpApp").component("sidebar", {
             <div id="selected_sentence"></div>
             <div id="selected_word"></div>
 
-            <div ng-show="$ctrl.corpusObj.attributes.deprel" ng-click="$ctrl.openDepTree()" class="link show_deptree">
-                {{'show_deptree' | loc:$root.lang}}
+            <div
+                ng-show="$ctrl.corpusObj.attributes.dependency_relation"
+                ng-click="$ctrl.openDepTree()"
+                class="link show_deptree"
+            >
+                Näita lausepuud
             </div>
             <dep-tree
                 ng-if="$ctrl.showDepTree"
@@ -101,6 +105,8 @@ angular.module("korpApp").component("sidebar", {
                     // TODO: this is pretty broken
                     const corpusObj = settings.corpora[corpus] || settings.corpusListing.get(corpus)
                     $ctrl.corpusObj = corpusObj
+                    console.log(corpusObj)
+                    console.log(inReadingMode)
                     $ctrl.sentenceData = sentenceData
                     $ctrl.inReadingMode = inReadingMode
                     $ctrl.tokens = tokens

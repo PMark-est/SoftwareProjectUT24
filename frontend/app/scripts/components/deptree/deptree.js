@@ -9,7 +9,7 @@ angular.module("korpApp").component("depTree", {
         <div>
             <script type="text/ng-template" id="deptreeModal.html">
                 <div class="modal-header py-0">
-                    <h3 class="modal-title">{{ 'dep_tree' | loc:$root.lang }}</h3>
+                    <h3 class="modal-title">Lausepuu</h3>
                     <span ng-click="clickX()" class="close-x">×</span>
                 </div>
                 <div class="modal-body">
@@ -173,12 +173,24 @@ angular.module("korpApp").component("depTree", {
                     }
                 }
 
-                const text = words.map((word) => word.word).join(" ")
+                const wordsWithoutPhrases = []
+                for (let i = 0; i < words.length; i++) {
+                    const word = words[i]
+                    if (word.word !== undefined) {
+                        wordsWithoutPhrases.push(word)
+                        continue
+                    }
+                    for (let j = 0; j < word.phrase.tokens.length; j++) {
+                        const phraseWord = word.phrase.tokens[j]
+                        wordsWithoutPhrases.push(phraseWord)
+                    }
+                }
+
+                const text = wordsWithoutPhrases.map((word) => word.word).join(" ")
                 let ix = 0
-                for (let _i = 0; _i < words.length; _i++) {
-                    const word = words[_i]
+                for (let _i = 0; _i < wordsWithoutPhrases.length; _i++) {
+                    const word = wordsWithoutPhrases[_i]
                     const len = word.word.length
-                    console.log(word)
                     add_word(word, ix, ix + len)
                     ix += len + 1
                 }

@@ -77,7 +77,8 @@ def create_app():
         query,
         relations,
         attr_values,
-        timespan
+        timespan,
+        upload
     )
     app.register_blueprint(cache.bp)
     app.register_blueprint(corpus_config.bp)
@@ -91,6 +92,7 @@ def create_app():
     app.register_blueprint(relations.bp)
     app.register_blueprint(attr_values.bp)
     app.register_blueprint(timespan.bp)
+    app.register_blueprint(upload.bp)
 
     # Load plugins
     for plugin in app.config["PLUGINS"]:

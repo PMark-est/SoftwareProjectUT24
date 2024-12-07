@@ -2285,3 +2285,18 @@ li.active a span .num-to-find {
     @extend .fa-chevron-down;
   }
 }
+
+#addCorpusBtn{
+  background-color: #eee;
+  padding: 4px;
+  margin: 0 20px 0 0;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  outline: none;
+  &:hover{
+    background-color: #ddd;
+  }
+  &:focus{
+    outline: none;
+  }
+}

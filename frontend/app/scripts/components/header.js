@@ -1,6 +1,6 @@
 /** @format */
 import angular from "angular"
-import _ from "lodash"
+import _, { findLastIndex } from "lodash"
 import korpLogo from "../../img/korp_slogan.svg"
 import korpLogoEn from "../../img/korp_slogan_en.svg"
 import sbxLogo from "../../img/sprakbanken_text_slogan.svg"
@@ -105,7 +105,11 @@ angular.module("korpApp").component("header", {
                 </div>
 
                 <div class="grow min-[1150px]_hidden"></div>
-                <corpus-chooser></corpus-chooser>
+                <form id="corpusForm" ng-submit="$ctrl.onSubmit()">
+                    <input name="corpus" type="file" />
+                    <button type="submit" id="addCorpusBtn">LISA KORPUS</button>
+                    <corpus-chooser></corpus-chooser>
+                </form>
                 <div class="grow hidden min-[1150px]_block"></div>
 
                 <a
@@ -156,6 +160,25 @@ angular.module("korpApp").component("header", {
 
             $ctrl.citeClick = () => {
                 $rootScope.show_modal = "about"
+            }
+
+            $ctrl.onSubmit = () => {
+                const formElement = document.getElementById("corpusForm")
+                const formData = new FormData(formElement)
+                const payload = Object.fromEntries(formData)
+                const file = payload.corpus
+
+                console.log(formData)
+
+                if (file.name === "") return
+
+                if (file.name.slice(file.name.lastIndexOf("."), file.name.length) !== ".vrt") return
+
+                //TODO post backendi
+                fetch("http://localhost:1234/upload", {
+                    method: "POST",
+                    body: formData,
+                })
             }
 
             $rootScope.show_modal = false

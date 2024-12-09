@@ -65,7 +65,7 @@ angular.module("korpApp").component("extendedCqpValue", {
                 const attr = ctrl.attributeDefinition.value
                 if (attributes[attr] && attributes[attr].dropdown) {
                     // Fetch the dataset from the server
-                    const apiUrl = `http://andmebaas.zapto.org:8080/lexicon?positional_attribute=${encodeURIComponent(
+                    const apiUrl = `${settings.korp_backend_url}/lexicon?positional_attribute=${encodeURIComponent(
                         ctrl.attributeDefinition.value
                     )}`
 

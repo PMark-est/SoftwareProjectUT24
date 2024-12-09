@@ -93,38 +93,13 @@ angular.module("korpApp").component("kwic", {
                                 sentence-index="$parent.$index"
                             />
                         </td>
-                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked">
-                            <table class="phrase" id="sentence_root" ng-class="$ctrl.getClass(sentence)">
-                                <tr ng-if="sentence.match.phrase" class="tooltip">
-                                    <td>{{ sentence.tokens[sentence.match.phrase].error.error_correction }}</td>
-                                </tr>
-                                <tr class="phrase_row">
-                                    <td>
-                                        <kwic-word
-                                            ng-repeat="word in $ctrl.selectMatchPhraseLeft(sentence)"
-                                            word="word"
-                                            sentence="sentence"
-                                            sentence-index="$parent.$index"
-                                        />
-                                    </td>
-                                    <td class="match">
-                                        <kwic-word
-                                            ng-repeat="word in $ctrl.selectMatch(sentence)"
-                                            word="word"
-                                            sentence="sentence"
-                                            sentence-index="$parent.$index"
-                                        />
-                                    </td>
-                                    <td>
-                                        <kwic-word
-                                            ng-repeat="word in $ctrl.selectMatchPhraseRight(sentence)"
-                                            word="word"
-                                            sentence="sentence"
-                                            sentence-index="$parent.$index"
-                                        />
-                                    </td>
-                                </tr>
-                            </table>
+                        <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="center">
+                            <kwic-word
+                                ng-repeat="word in $ctrl.selectMatch(sentence)"
+                                word="word"
+                                sentence="sentence"
+                                sentence-index="$parent.$index"
+                            />
                         </td>
                         <td ng-if="::!sentence.newCorpus && !sentence.isLinked" class="right">
                             <kwic-word
@@ -364,15 +339,11 @@ angular.module("korpApp").component("kwic", {
                 if (!sentence.match) {
                     return
                 }
-                if (sentence.match.phrase) return sentence.tokens.slice(0, sentence.match.phrase)
-                return sentence.tokens.slice(0, sentence.match.start)
+                return sentence.tokens.slice(0, sentence.match.start[0])
             }
 
             $ctrl.selectMatchPhraseLeft = function (sentence) {
                 if (!sentence.match) return
-                if (!sentence.match.phrase) {
-                    return
-                }
                 const phrase = sentence.tokens[sentence.match.phrase].phrase.tokens
                 const tokens = []
                 for (let index = 0; index < phrase.length; index++) {
@@ -389,21 +360,24 @@ angular.module("korpApp").component("kwic", {
                 if (!sentence.match) {
                     return
                 }
-
-                if (sentence.match.phrase) {
-                    const phrase = sentence.tokens[sentence.match.phrase].phrase.tokens
-                    let start = 0
-                    for (let index = 0; index < phrase.length; index++) {
-                        const element = phrase[index]
-                        if (Number(element.word_id) === sentence.match.start) {
-                            start = index
-                            break
-                        }
-                    }
-                    return phrase.slice(start, start + 1)
+                const from = sentence.match.start[0]
+                let end = sentence.match.end[0]
+                if (sentence.match.start.length != 1) {
+                    end += 1
                 }
-                const from = sentence.match.start
-                return sentence.tokens.slice(from, sentence.match.end)
+                return sentence.tokens.slice(from, end)
+            }
+
+            $ctrl.selectRight = function (sentence) {
+                if (!sentence.match) {
+                    return
+                }
+                const len = sentence.tokens.length
+                let from = sentence.match.end[0]
+                if (sentence.match.start.length != 1) {
+                    from += 1
+                }
+                return sentence.tokens.slice(from, len)
             }
 
             $ctrl.selectMatchPhraseRight = function (sentence) {
@@ -429,24 +403,12 @@ angular.module("korpApp").component("kwic", {
                 return tokens
             }
 
-            $ctrl.selectRight = function (sentence) {
-                if (!sentence.match) {
-                    return
-                }
-                const len = sentence.tokens.length
-                if (sentence.match.phrase) {
-                    return sentence.tokens.slice(sentence.match.phrase + 1, len)
-                }
-                const from = sentence.match.end
-                return sentence.tokens.slice(from, len)
-            }
-
             function addColors() {
                 $timeout(() => {
                     if (!$ctrl.kwic) return
 
                     const errorTypes = new Set()
-                    const apiUrl = `http://andmebaas.zapto.org:8080/lexicon?positional_attribute=error_type`
+                    const apiUrl = `${settings.korp_backend_url}/lexicon?positional_attribute=error_type`
 
                     $http.get(apiUrl).then((response) => {
                         const resp = response.data.Arguments
@@ -625,7 +587,7 @@ angular.module("korpApp").component("kwic", {
                 const scope = $(event.target).scope()
                 let obj
                 if (scope.word.word) obj = scope.word
-                else obj = scope.word.phrase.tokens
+                else obj = scope.word.phrase_tokens
                 const sent = scope.sentence
                 const word = $(event.target)
 
@@ -641,8 +603,8 @@ angular.module("korpApp").component("kwic", {
                     else {
                         const clicked_word = word[0].innerText
                         let token
-                        for (let index = 0; index < scope.word.phrase.tokens.length; index++) {
-                            const element = scope.word.phrase.tokens[index]
+                        for (let index = 0; index < scope.word.phrase_tokens.length; index++) {
+                            const element = scope.word.phrase_tokens[index]
                             if (element.word === clicked_word) token = element
                         }
                         statemachine.send("SELECT_WORD", {

@@ -5,17 +5,28 @@ import { html } from "@/util"
 angular.module("korpApp").component("kwicWord", {
     template: html`
         <span id="sentence_root">
-            <span ng-if="!$ctrl.word.word" class="phrase" ng-class="$ctrl.getClass(undefined, undefined)">
-                <span
-                    ng-repeat="phraseWord in $ctrl.word.phrase.tokens"
-                    class="word"
-                    ng-class="$ctrl.getClass(phraseWord, $ctrl.sentence.match.phrase)"
-                >
-                    {{phraseWord.word}}
+            <span ng-if="!$ctrl.word.word" class="phrase" ng-class="$ctrl.getClass($ctrl.word)">
+                    <span ng-if="word.error" class="tooltip"> {{word.error.error_correction}} </span>
+                    <span style="display:flex;gap:4px;">
+                        <span ng-repeat="phraseWord in $ctrl.word.phrase_tokens">
+                            <span ng-if="phraseWord.error_correction !== '_'" class="tooltip"> {{phraseWord.error_correction}} </span>
+                            <span class="word" ng-if"phraseWord.word" ng-class="$ctrl.getClass(phraseWord)">{{phraseWord.word}}</span>
+                            <span ng-if="!phraseWord.word" class="phrase" ng-class="$ctrl.getClass(phraseWord)">
+                                <span ng-if="phraseWord.error" class="tooltip"> {{phraseWord.error.error_correction}} </span>
+                                <span>
+                                    <kwic-word
+                                    ng-repeat="nestedPhraseWord in phraseWord.phrase_tokens"
+                                    word="nestedPhraseWord"
+                                    sentence="$ctrl.sentence"
+                                    sentence-index="$ctrl.sentenceIndex"
+                                    />
+                                </span>
+                            </span>
+                        </span>
+                    </span>
                 </span>
-                <span ng-if="word.error" class="tooltip"> {{word.error.error_correction}} </span>
             </span>
-            <span ng-if="$ctrl.word.word" class="word" ng-class="$ctrl.getClass(undefined, undefined)">
+            <span ng-if="$ctrl.word.word" class="word" ng-class="$ctrl.getClass($ctrl.word)">
                 <span ng-if="$ctrl.word.error_correction != '_'" class="tooltip">
                     {{ $ctrl.word.error_correction }}
                 </span>
@@ -56,18 +67,8 @@ angular.module("korpApp").component("kwicWord", {
                     tooltipElements = $element[0].querySelectorAll(".tooltip")
                 }
                 if (tooltipElements.length == 0) return
-                const root = $element[0].querySelector("#sentence_root")
-                root.style.marginTop = "30px"
                 tooltipElements.forEach((obj) => {
                     obj.style.display = "block"
-                    const wordElement = obj.parentElement
-                    const tableElement = $(".table_scrollarea")[0]
-                    const tableRect = tableElement.getBoundingClientRect()
-                    const wordRect = wordElement.getBoundingClientRect()
-                    const tooltipRect = obj.getBoundingClientRect()
-                    const topOffset = wordElement.classList.contains("word_in_phrase") ? 60 : 30
-                    //obj.style.top = wordRect.top - tableRect.top - topOffset + "px"
-                    wordElement.style.width = Math.max(tooltipRect.width, wordRect.width) + "px"
                 })
             }
             function hideTooltips() {
@@ -75,12 +76,8 @@ angular.module("korpApp").component("kwicWord", {
                 tooltipsVisible = false
                 const tooltipElements = $element[0].querySelectorAll(".tooltip")
                 if (tooltipElements.length == 0) return
-                const root = $element[0].querySelector("#sentence_root")
-                root.style.marginTop = "0px"
                 tooltipElements.forEach((obj) => {
                     obj.style.display = "none"
-                    const wordElement = obj.parentElement
-                    wordElement.style.width = "fit-content"
                 })
             }
             popupService.onShowPopups($scope, function (sentIndex) {
@@ -92,13 +89,12 @@ angular.module("korpApp").component("kwicWord", {
             })
 
             /** Produce applicable class names depending on token data. */
-            this.getClass = function (word, matchInPhrase) {
+            this.getClass = function (word) {
                 let errorType = ["_"]
-                if (this.word.word) {
-                    errorType = this.word.error_type
+                if (word.word) {
+                    errorType = word.error_type
                 } else {
-                    errorType = this.word.error.error_type
-                    //console.log($element[0].parentElement.parentElement.querySelectorAll(".tooltip"))
+                    errorType = word.error.error_type
                 }
                 let classes = []
                 classes.push({
@@ -109,13 +105,11 @@ angular.module("korpApp").component("kwicWord", {
                     open_sentence: "_open_sentence" in this.word,
                     has_error: this.word.error_tag && this.word.error_tag != "_",
                 })
-                if (matchInPhrase && Number(word.word_id) === this.sentence.match.start + 1) {
-                    classes.push({
-                        match: word,
-                    })
+                if (word !== undefined) {
+                    if (this.sentence.match.start_id === word.word_id) classes = classes.concat("match")
                 }
-                classes = classes.concat(errorType)
                 //console.log(classes)
+                classes = classes.concat(errorType)
                 return classes
             }
         },

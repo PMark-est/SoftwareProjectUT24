@@ -643,8 +643,10 @@ td {
 .match {
   font-weight: bold;
   vertical-align: text-top;
+}
+
+.center{
   text-align: center;
-  padding: 0 4px;
 }
 
 .corpus_info {
@@ -685,28 +687,24 @@ td {
     margin-left : -3px;
   }
   &:hover {
-    color: #777;
+    color: #777777;
   }
 }
 
 .phrase {
   display: inline-flex;
-  gap: 2px;
+  flex-direction: column;
   cursor: pointer;
   border-radius: 5px;
-  padding: 0 4px;
   &.punct {
     margin-left : -3px;
   }
   &:hover {
-    color: #fff;
+    color: #c90692;
   }
 }
 
 .sentence{
-  display:grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
   position: relative;
 }
 
@@ -729,9 +727,6 @@ td {
 }
 
 .word_selected {
-  border-radius: 10px;
-  padding-left: 3px;
-  margin-left: -3px;
   &:hover {
     color: indianred;
   }
@@ -744,20 +739,19 @@ td {
 }
 
 .word.has_error {
+  display: inline-flex;
+  flex-direction: column;
   background-color: rgb(238, 168, 168);
   border-radius: 5px;
   margin: 0 2px;
   &.token_selected {
     background-color: #666;
-    border-radius: 10px;
-    padding-left: 3px;
-    margin-left: -3px;
   }
 }
 
 .token_selected {
   color: #fff !important;
-  background-color: #666 !important;
+  background-color: #0006 !important;
 }
 
 .aux_selected {
@@ -2235,13 +2229,10 @@ li.active a span .num-to-find {
 .tooltip {
   display: none;
   position: relative;
-  width: fit-content;
-  background-color: #0f0;
-  color: #000;
-  padding: 4px;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 1;
+  text-align: center;
+  width: 100%;
+  background-color:lightgreen;
+  color: #000;  
 }
 
 .wordColors{

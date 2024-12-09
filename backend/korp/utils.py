@@ -57,6 +57,7 @@ def split_response(text, attr_count):
             n = 0
             end = 0
             start = 0
+            if word[0] == ' ': start = 1
             if word == RIGHT_DELIM:
                 parts_split_words.append(RIGHT_DELIM)
                 continue

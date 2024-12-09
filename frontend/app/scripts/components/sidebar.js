@@ -105,8 +105,6 @@ angular.module("korpApp").component("sidebar", {
                     // TODO: this is pretty broken
                     const corpusObj = settings.corpora[corpus] || settings.corpusListing.get(corpus)
                     $ctrl.corpusObj = corpusObj
-                    console.log(corpusObj)
-                    console.log(inReadingMode)
                     $ctrl.sentenceData = sentenceData
                     $ctrl.inReadingMode = inReadingMode
                     $ctrl.tokens = tokens

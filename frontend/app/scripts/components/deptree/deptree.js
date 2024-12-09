@@ -133,6 +133,20 @@ angular.module("korpApp").component("depTree", {
                 return !isNaN(parseFloat(n)) && isFinite(n)
             }
 
+            const getWordsWithoutPhrases = (sent) => {
+                let words = []
+                console.log(sent)
+                for (let index = 0; index < sent.length; index++) {
+                    const word = sent[index]
+                    if (word.word === undefined) {
+                        words = words.concat(getWordsWithoutPhrases(word.phrase_tokens))
+                    } else {
+                        words.push(word)
+                    }
+                }
+                return words
+            }
+
             const draw_brat_tree = function (words, to_div, hover_fun) {
                 const entity_types = []
                 const relation_types = []
@@ -173,18 +187,9 @@ angular.module("korpApp").component("depTree", {
                     }
                 }
 
-                const wordsWithoutPhrases = []
-                for (let i = 0; i < words.length; i++) {
-                    const word = words[i]
-                    if (word.word !== undefined) {
-                        wordsWithoutPhrases.push(word)
-                        continue
-                    }
-                    for (let j = 0; j < word.phrase.tokens.length; j++) {
-                        const phraseWord = word.phrase.tokens[j]
-                        wordsWithoutPhrases.push(phraseWord)
-                    }
-                }
+                const wordsWithoutPhrases = getWordsWithoutPhrases(words)
+
+                console.log(wordsWithoutPhrases)
 
                 const text = wordsWithoutPhrases.map((word) => word.word).join(" ")
                 let ix = 0

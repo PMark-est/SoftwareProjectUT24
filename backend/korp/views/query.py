@@ -648,22 +648,22 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
                                     else: errors[x][cor] = 1
                         
                         for x in ["error_correction", "error_type"]:
-                            phraseErrs = set()
-                            errs = set()
+                            phraseErrs = []
+                            errs = []
                             for phraseWord in currentPhrase:
                                 if "phrase_tokens" in phraseWord: continue
                                 corrections = phraseWord[x].split("|")
                                 for cor in corrections:
                                     cor = re.sub(r'\[\d+\]$', '', cor)
                                     if errors[x][cor] == phraseWordCount:
-                                        phraseErrs.add(cor)
+                                        if cor not in phraseErrs: phraseErrs.append(cor)
                                     else:
-                                        errs.add(cor)
+                                        if cor not in errs: errs.append(cor)
                                 if len(errs) == 0: phraseWord[x] = "_"
                                 else: phraseWord[x] = "|".join(errs)
-                            errors[x] = list(phraseErrs)
+                            errors[x] = phraseErrs
                             if x == "error_correction":
-                                errors[x] = list(phraseErrs)[-1]
+                                errors[x] = phraseErrs[-1]
 
                         lastPhrase = phraseStack.pop()
                         lastPhrase.append({'phrase_tokens': currentPhrase, 'error': errors})

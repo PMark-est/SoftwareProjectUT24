@@ -135,7 +135,6 @@ angular.module("korpApp").component("depTree", {
 
             const getWordsWithoutPhrases = (sent) => {
                 let words = []
-                console.log(sent)
                 for (let index = 0; index < sent.length; index++) {
                     const word = sent[index]
                     if (word.word === undefined) {
@@ -188,8 +187,6 @@ angular.module("korpApp").component("depTree", {
                 }
 
                 const wordsWithoutPhrases = getWordsWithoutPhrases(words)
-
-                console.log(wordsWithoutPhrases)
 
                 const text = wordsWithoutPhrases.map((word) => word.word).join(" ")
                 let ix = 0

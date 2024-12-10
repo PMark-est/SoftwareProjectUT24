@@ -168,7 +168,7 @@ default_options:
   matches: '*='
   matches_not: '!*='
 
-korp_backend_url: 'http://localhost:3000'
+korp_backend_url: 'http://andmebaas.zapto.org:8080'
 
 map_center:
   lat: 62.99515845212052

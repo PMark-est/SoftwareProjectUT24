@@ -1,6 +1,7 @@
 /** @format */
 import { html } from "@/util"
-import { Widget, WidgetScope } from "./common"
+import { IController } from "angular"
+import { WidgetScope } from "./common"
 
 type DefaultWidgetScope = WidgetScope & {
     case: "sensitive" | "insensitive"
@@ -8,17 +9,20 @@ type DefaultWidgetScope = WidgetScope & {
     makeInsensitive: () => void
 }
 
-export const defaultWidget: Widget = {
+export type DefaultWidget = {
+    template: (vars: Record<string, any>) => string
+    controller: IController
+}
+
+export const defaultWidget: DefaultWidget = {
     template: ({ placeholder }) => html`
-        <select
-            ng-model="selectedOption"
+        <input
+            ng-model="input"
             class="arg_value"
             escaper
             ng-model-options='{debounce : {default : 300, blur : 0}, updateOn: "default blur"}'
-            ng-options="option.value as option.label for option in options"
-        >
-            <option value="" disabled hidden>${placeholder}</option>
-        </select>
+            placeholder="${placeholder}"
+        />
 
         <span uib-dropdown>
             <span

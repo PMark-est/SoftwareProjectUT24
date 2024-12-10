@@ -109,12 +109,6 @@ angular.module("korpApp").component("kwicWord", {
                     if (this.sentence.match.start_id === word.word_id) classes = classes.concat("match")
                 }
                 //console.log(classes)
-                if (errorType !== "_") {
-                    classes = classes.concat("colored")
-                    if (errorType.length > 1) {
-                        classes = classes.concat(["-".join(errorType)])
-                    }
-                }
                 classes = classes.concat(errorType)
                 return classes
             }

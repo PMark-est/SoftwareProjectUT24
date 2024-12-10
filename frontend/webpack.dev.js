@@ -3,7 +3,7 @@ const { merge } = require("webpack-merge")
 const common = require("./webpack.common.js")
 
 const host = process.env.KORP_HOST || "localhost"
-const port = process.env.KORP_PORT || 9000
+const port = process.env.KORP_PORT || 9111
 
 let server
 if (process.env.KORP_HTTPS) {

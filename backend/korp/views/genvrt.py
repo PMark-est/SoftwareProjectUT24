@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask import current_app as app
 
 from korp import utils
 from html.parser import HTMLParser

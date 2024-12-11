@@ -78,7 +78,8 @@ def create_app():
         relations,
         attr_values,
         timespan,
-        upload
+        upload,
+        genvrt
     )
     app.register_blueprint(cache.bp)
     app.register_blueprint(corpus_config.bp)
@@ -93,6 +94,7 @@ def create_app():
     app.register_blueprint(attr_values.bp)
     app.register_blueprint(timespan.bp)
     app.register_blueprint(upload.bp)
+    app.register_blueprint(genvrt.bp)
 
     # Load plugins
     for plugin in app.config["PLUGINS"]:

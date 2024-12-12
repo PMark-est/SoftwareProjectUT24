@@ -68,10 +68,11 @@ def upload():
                 if sAttr == "sentence":
                     contextLength = 2
                 for i in range(sAttrMax):
-                    if i == 0:
-                        corpusYaml.write(f"  - label:\n      eng: {contextLength} {sAttr}\n    value: {contextLength} {sAttr}\n")
-                    else:
-                        corpusYaml.write(f"  - label:\n      eng: {contextLength} {sAttr+str(i)}\n    value: {contextLength} {sAttr+str(i)}\n")
+                    for j in range(contextLength):
+                        if i == 0:
+                            corpusYaml.write(f"  - label:\n      eng: {j} {sAttr}\n    value: {j} {sAttr}\n")
+                        else:
+                            corpusYaml.write(f"  - label:\n      eng: {j} {sAttr+str(i)}\n    value: {j} {sAttr+str(i)}\n")
 
             corpusYaml.write("pos_attributes:\n")
             for pAttr in pAttrs:

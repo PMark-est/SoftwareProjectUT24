@@ -1,0 +1,856 @@
+#word word_id word_tokens grammatical_number POS lemma correction_status annotator_code error_correction error_tag dependency_relation dependency_head verb_morpho case error_type
+<corpus>
+<text id="Teema_1_2">
+<sentence id="Teema_1_2_1">
+Sotsiaalmeedia	1	0-14	sg	S	sotsiaalmeedia	_	_	_	_	nmod	2	_	g	_
+mõju	2	15-19	sg	S	mõju	_	_	_	_	root	2	_	g	_
+inimese	3	20-27	sg	S	inimene	_	_	_	_	nmod	4	_	g	_
+enesetundele	4	28-40	sg	S	enesetunne	_	_	_	_	nmod	2	_	all	_
+ja	5	41-43	_	J	ja	_	_	_	_	cc	7	_	_	_
+sotsiaalsetele	6	44-58	pl	A	sotsiaalne	_	_	_	_	amod	7	_	all	_
+suhetele	7	59-67	pl	S	suhe	_	_	_	_	conj	4	_	all	_
+</sentence>
+<sentence id="Teema_1_2_2">
+Sotsiaalmeediata	1	68-84	sg	S	sotsiaalmeedia	_	_	_	_	obl	3	_	ab	_
+on	2	85-87	_	V	olema	_	_	_	_	cop	3	b	_	_
+<phrase_with_errors id="R:WO[1]">
+raske	3	88-93	sg	A	raske	true[1]	1	tänapäeva elu raske ette kujutada[1]	R:WO[1]	root	3	_	n	sõnajärg
+ette	4	94-98	_	D	ette	true[1]	1	tänapäeva elu raske ette kujutada[1]	R:WO[1]	compound:prt	5	_	_	sõnajärg
+kujutada	5	99-107	_	V	kujutama	true[1]	1	tänapäeva elu raske ette kujutada[1]	R:WO[1]	csubj:cop	3	da	_	sõnajärg
+tänapäeva	6	108-117	sg	S	tänapäev	true[1]	1	tänapäeva elu raske ette kujutada[1]	R:WO[1]	nmod	7	_	g	sõnajärg
+elu	7	118-121	sg	S	elu	true[1]	1	tänapäeva elu raske ette kujutada[1]	R:WO[1]	obj	5	_	p	sõnajärg
+</phrase_with_errors id="R:WO[1]">
+.	8	122-123	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_1_2_3">
+inimesed	1	124-132	pl	S	inimene	false	1	Inimesed	R:CASE	nsubj	2	_	n	suurtähestus
+kasutavad	2	133-142	_	V	kasutama	_	_	_	_	root	2	vad	_	_
+seda	3	143-147	sg	P	see	_	_	_	_	obj	2	_	p	_
+tööks	4	148-153	sg	S	töö	_	_	_	_	xcomp	2	_	tr	_
+,	5	154-155	_	Z	,	_	_	_	_	punct	6	_	_	_
+suhtlemiseks	6	156-168	sg	S	suhtlemine	_	_	_	_	conj	4	_	tr	_
+ja	7	169-171	_	J	ja	_	_	_	_	cc	10	_	_	_
+vaba	8	172-176	sg	A	vaba	_	_	_	_	amod	9	_	g	_
+aja	9	177-180	sg	S	aeg	_	_	_	_	nmod	10	_	g	_
+veetmiseks	10	181-191	sg	S	veetmine	_	_	_	_	conj	4	_	tr	_
+.	11	192-193	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_1_2_4">
+sotsiaalmeedia	1	194-208	sg	S	sotsiaalmeedia	false	1	Sotsiaalmeedia	R:CASE	nsubj	2	_	n	suurtähestus
+aitab	2	209-214	_	V	aitama	_	_	_	_	root	2	b	_	_
+hoida	3	215-220	_	V	hoidma	_	_	_	_	xcomp	2	da	_	_
+<phrase_with_errors id="R:WO:NOM:FORM[2]">
+kontakt	4	221-228	sg	S	kontakt	false[2]	1	sõpradega kontakti[2]	R:WO:NOM:FORM[2]	obj	3	_	n	vorm|sõnajärg
+sõpradega	5	229-238	pl	S	sõber	false[2]	1	sõpradega kontakti[2]	R:WO:NOM:FORM[2]	obl	3	_	kom	vorm|sõnajärg
+</phrase_with_errors id="R:WO:NOM:FORM[2]">
+,	6	239-240	_	Z	,	_	_	_	_	punct	10	_	_	_
+aga	7	241-244	_	J	aga	_	_	_	_	cc	10	_	_	_
+see	8	245-248	sg	P	see	_	_	_	_	nsubj	10	_	n	_
+võib	9	249-253	_	V	võima	_	_	_	_	aux	10	b	_	_
+tekitada	10	254-262	_	V	tekitama	_	_	_	_	conj	2	da	_	_
+ka	11	263-265	_	D	ka	_	_	_	_	advmod	12	_	_	_
+üksindus	12	266-274	sg	S	üksindus	false	1	üksindust	R:NOM:FORM	nsubj	10	_	n	vorm
+.	13	275-276	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_1_2_5">
+Kui	1	277-280	_	J	kui	_	_	_	_	mark	2	_	_	_
+veeta	2	281-286	_	V	veetma	_	_	_	_	advcl	9	da	_	_
+liiga	3	287-292	_	D	liiga	_	_	_	_	advmod	4	_	_	_
+palju	4	293-298	_	D	palju	_	_	_	_	advmod	5	_	_	_
+aeg	5	299-302	sg	S	aeg	false	1	aega	R:NOM:FORM	obl	2	_	n	vorm
+internetis	6	303-313	sg	S	internet	false	1	Internetis	R:CASE	nmod	5	_	in	suurtähestus
+,	7	314-315	_	Z	,	_	_	_	_	punct	2	_	_	_
+võib	8	316-320	_	V	võima	_	_	_	_	aux	9	b	_	_
+hakata	9	321-327	_	V	hakkama	_	_	_	_	root	9	da	_	_
+tunduma	10	328-335	_	V	tunduma	_	_	_	_	xcomp	9	ma	_	_
+,	11	336-337	_	Z	,	_	_	_	_	punct	15	_	_	_
+et	12	338-340	_	J	et	_	_	_	_	mark	15	_	_	_
+päris	13	341-346	_	A	päris	_	_	_	_	amod	14	_	_	_
+sõpradega	14	347-356	pl	S	sõber	_	_	_	_	obl	15	_	kom	_
+polegi	15	357-363	neg	V	olema	_	_	_	_	ccomp	9	_	o	_
+vaja	16	364-368	_	D	vaja	_	_	_	_	compound:prt	15	_	_	_
+kokku	17	369-374	_	D	kokku	_	_	_	_	compound:prt	18	_	_	_
+saada	18	375-380	_	V	saama	_	_	_	_	csubj	15	da	_	_
+.	19	381-382	_	Z	.	_	_	_	_	punct	9	_	_	_
+</sentence>
+<sentence id="Teema_1_2_6">
+Samuti	1	383-389	_	D	samuti	_	_	_	_	advmod	8	_	_	_
+võib	2	390-394	_	V	võima	_	_	_	_	aux	8	b	_	_
+pidev	3	395-400	sg	A	pidev	_	_	_	_	amod	4	_	n	_
+laike	4	401-406	pl	S	laik	false	1	laikide	R:NOM:FORM	nsubj	8	_	p	vorm
+ja	5	407-409	_	J	ja	_	_	_	_	cc	7	_	_	_
+kommentaaride	6	410-423	pl	S	kommentaar	_	_	_	_	nmod	7	_	g	_
+ootamine	7	424-432	sg	S	ootamine	_	_	_	_	conj	4	_	n	_
+tekitada	8	433-441	_	V	tekitama	_	_	_	_	root	8	da	_	_
+närvilisust	9	442-453	sg	S	närvilisus	_	_	_	_	obj	8	_	p	_
+.	10	454-455	_	Z	.	_	_	_	_	punct	8	_	_	_
+</sentence>
+<sentence id="Teema_1_2_7">
+Seetõttu	1	456-464	_	D	seetõttu	_	_	_	_	advmod	3	_	_	_
+on	2	465-467	_	V	olema	_	_	_	_	cop	3	vad	_	_
+oluline	3	468-475	sg	A	oluline	_	_	_	_	root	3	_	n	_
+leidma	4	476-482	_	V	leidma	false	1	leida	R:VERB:FORM	csubj:cop	3	ma	_	vorm
+tasakaal	5	483-491	sg	S	tasakaal	_	_	_	_	obj	4	_	n	_
+sotsiaalmeedia	6	492-506	sg	S	sotsiaalmeedia	_	_	_	_	obl	4	_	g	_
+ja	7	507-509	_	J	ja	_	_	_	_	cc	8	_	_	_
+päriselu	8	510-518	sg	S	päriselu	_	_	_	_	conj	6	_	g	_
+vahel	9	519-524	_	K	vahel	_	_	_	_	case	6	_	_	_
+.	10	525-526	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+</text>
+<text id="Teema_2_2">
+<sentence id="Teema_2_2_1">
+Kliimamuutused	1	0-14	pl	S	kliimamuutus	_	_	_	_	root	1	_	n	_
+ja	2	15-17	_	J	ja	_	_	_	_	cc	4	_	_	_
+nende	3	18-23	pl	P	see	_	_	_	_	nmod	4	_	g	_
+mõju	4	24-28	sg	S	mõju	_	_	_	_	conj	1	_	g	_
+tulevastele	5	29-40	pl	A	tulevane	_	_	_	_	amod	6	_	all	_
+põlvkondadele	6	41-54	pl	S	põlvkond	_	_	_	_	nmod	4	_	all	_
+</sentence>
+<sentence id="Teema_2_2_2">
+Kliimamuutused	1	55-69	pl	S	kliimamuutus	_	_	_	_	nsubj	2	_	n	_
+mõjutavad	2	70-79	_	V	mõjutama	_	_	_	_	root	2	vad	_	_
+meie	3	80-84	pl	P	mina	_	_	_	_	nmod	4	_	g	_
+lapsi	4	85-90	pl	S	laps	_	_	_	_	obj	2	_	p	_
+ja	5	91-93	_	J	ja	_	_	_	_	cc	6	_	_	_
+lapselapsi	6	94-104	pl	S	lapselaps	_	_	_	_	conj	4	_	p	_
+.	7	105-106	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_2_2_3">
+Inimesed	1	107-115	pl	S	inimene	_	_	_	_	nsubj	3	_	n	_
+<phrase_with_errors id="R:VERB:FORM[1]">
+on	2	116-118	_	V	olema	false[1]	1	põhjustavad[1]	R:VERB:FORM[1]	aux	3	b	_	vorm
+põhjustanud	3	119-130	_	V	põhjustama	false[1]	1	põhjustavad[1]	R:VERB:FORM[1]	root	3	nud	_	vorm
+</phrase_with_errors id="R:VERB:FORM[1]">
+kliimamuutusi	4	131-144	pl	S	kliimamuutus	_	_	_	_	obj	3	_	p	_
+,	5	145-146	_	Z	,	_	_	_	_	punct	8	_	_	_
+sest	6	147-151	_	J	sest	_	_	_	_	mark	8	_	_	_
+nad	7	152-155	pl	P	tema	_	_	_	_	nsubj	8	_	n	_
+<phrase_with_errors id="R:WO[2]">
+põletavad	8	156-165	_	V	põletama	false[2]	1	põletavad fossiilkütuseid ja raiuvaid metsi liiga palju[2]	R:WO[2]	advcl	3	vad	_	sõnajärg
+liiga	9	166-171	_	D	liiga	false[2]	1	põletavad fossiilkütuseid ja raiuvaid metsi liiga palju[2]	R:WO[2]	advmod	10	_	_	sõnajärg
+palju	10	172-177	_	D	palju	false[2]	1	põletavad fossiilkütuseid ja raiuvaid metsi liiga palju[2]	R:WO[2]	advmod	11	_	_	sõnajärg
+fossiilkütuseid	11	178-193	pl	S	fossiilkütus	false[2]	1	põletavad fossiilkütuseid ja raiuvaid metsi liiga palju[2]	R:WO[2]	obj	8	_	p	sõnajärg
+ja	12	194-196	_	J	ja	false[2]	1	põletavad fossiilkütuseid ja raiuvaid metsi liiga palju[2]	R:WO[2]	cc	13	_	_	sõnajärg
+raiuvad	13	197-204	_	V	raiuma	false[2]	1	põletavad fossiilkütuseid ja raiuvaid metsi liiga palju[2]	R:WO[2]	conj	3	vad	_	sõnajärg
+metsad	14	205-211	pl	S	mets	false[2]|false[3]	1	põletavad fossiilkütuseid ja raiuvaid metsi liiga palju[2]|metsi[3]	R:WO[2]|R:NOM:FORM[3]	nsubj	13	_	n	sõnajärg|vorm
+</phrase_with_errors id="R:WO[2]">
+.	15	212-213	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_2_2_4">
+Kui	1	214-217	_	J	kui	_	_	_	_	mark	4	_	_	_
+me	2	218-220	pl	P	mina	_	_	_	_	nsubj	4	_	n	_
+ei	3	221-223	_	V	ei	_	_	_	_	aux	4	neg	_	_
+tee	4	224-227	_	V	tegema	_	_	_	_	advcl	9	o	_	_
+mitte	5	228-233	_	D	mitte	_	_	_	_	advmod	6	_	_	_
+midagi	6	234-240	sg	P	miski	_	_	_	_	obj	4	_	p	_
+,	7	241-242	_	Z	,	_	_	_	_	punct	4	_	_	_
+siis	8	243-247	_	J	siis	_	_	_	_	advmod	9	_	_	_
+tulevikus	9	248-257	sg	S	tulevik	_	_	_	_	root	9	_	in	_
+on	10	258-260	_	V	olema	false	1	ootavad ees	R:LEX	cop	9	b	_	sõnavalik
+palju	11	261-266	_	D	palju	false	1	sagedased	R:LEX	advmod	12	_	_	sõnavalik
+looduskatastroofid	12	267-285	pl	S	looduskatastroof	_	_	_	_	nsubj:cop	9	_	n	_
+ja	13	286-288	_	J	ja	false	1	laialdane	M:LEX	cc	14	_	_	sõnavalik
+toitupuudus	14	289-300	sg	S	toitupuudus	false	1	toidupuudus	R:SPELL	conj	12	_	n	ortograafia
+.	15	301-302	_	Z	.	_	_	_	_	punct	9	_	_	_
+</sentence>
+<sentence id="Teema_2_2_5">
+Tänased	1	303-310	pl	A	tänane	_	_	_	_	amod	2	_	n	_
+noored	2	311-317	pl	S	noor	_	_	_	_	nsubj	4	_	n	_
+peavad	3	318-324	_	V	pidama	_	_	_	_	aux	4	vad	_	_
+elama	4	325-330	_	V	elama	_	_	_	_	root	4	ma	_	_
+maailmas	5	331-339	sg	S	maailm	_	_	_	_	obl	4	_	in	_
+,	6	340-341	_	Z	,	_	_	_	_	punct	9	_	_	_
+mis	7	342-345	sg	P	mis	_	_	_	_	nsubj	9	_	n	_
+on	8	346-348	_	V	olema	_	_	_	_	aux	9	vad	_	_
+muutunud	9	349-357	pl	V	muutuma	_	_	_	_	acl:relcl	5	_	n	_
+<phrase_with_errors id="R:LEX:WO[4]">
+nende	10	358-363	pl	P	see	false[4]	1	paremaks tänu nende vanemate tegevusele[4]	R:LEX:WO[4]	nmod	11	_	g	sõnavalik|sõnajärg
+vanemate	11	364-372	pl	S	vanem	false[4]	1	paremaks tänu nende vanemate tegevusele[4]	R:LEX:WO[4]	nmod	12	_	g	sõnavalik|sõnajärg
+tegevuse	12	373-381	sg	S	tegevus	false[4]	1	paremaks tänu nende vanemate tegevusele[4]	R:LEX:WO[4]	obl	9	_	g	sõnavalik|sõnajärg
+tõttu	13	382-387	_	K	tõttu	false[4]	1	paremaks tänu nende vanemate tegevusele[4]	R:LEX:WO[4]	case	12	_	_	sõnavalik|sõnajärg
+</phrase_with_errors id="R:LEX:WO[4]">
+.	14	388-389	_	Z	.	_	_	_	_	punct	4	_	_	_
+</sentence>
+<sentence id="Teema_2_2_6">
+Meie	1	390-394	pl	P	mina	_	_	_	_	nmod	2	_	g	_
+ülesanne	2	395-403	sg	S	ülesanne	_	_	_	_	nsubj:cop	4	_	n	_
+on	3	404-406	_	V	olema	_	_	_	_	cop	4	vad	_	_
+teeme	4	407-412	_	V	tegema	false	1	teha	R:VERB:FORM	root	4	me	_	vorm
+kõik	5	413-417	sg	P	kõik	_	_	_	_	obj	4	_	n	_
+,	6	418-419	_	Z	,	_	_	_	_	punct	10	_	_	_
+et	7	420-422	_	J	et	_	_	_	_	mark	10	_	_	_
+tulevik	8	423-430	sg	S	tulevik	_	_	_	_	nsubj:cop	10	_	n	_
+oleks	9	431-436	_	V	olema	_	_	_	_	cop	10	ks	_	_
+parem	10	437-442	sg	C	parem	_	_	_	_	acl:relcl	5	_	n	_
+ja	11	443-445	_	J	ja	_	_	_	_	cc	12	_	_	_
+jätkusuutlik	12	446-458	sg	A	jätkusuutlik	_	_	_	_	conj	10	_	n	_
+.	13	459-460	_	Z	.	_	_	_	_	punct	4	_	_	_
+</sentence>
+</text>
+<text id="Teema_1_1">
+<sentence id="Teema_1_1_1">
+Sotsiaalmeedia	1	0-14	sg	S	sotsiaalmeedia	_	_	_	_	nmod	2	_	g	_
+mõju	2	15-19	sg	S	mõju	_	_	_	_	root	2	_	g	_
+inimese	3	20-27	sg	S	inimene	_	_	_	_	nmod	4	_	g	_
+enesetundele	4	28-40	sg	S	enesetunne	_	_	_	_	nmod	2	_	all	_
+ja	5	41-43	_	J	ja	_	_	_	_	cc	7	_	_	_
+sotsiaalsetele	6	44-58	pl	A	sotsiaalne	_	_	_	_	amod	7	_	all	_
+suhetele	7	59-67	pl	S	suhe	_	_	_	_	conj	4	_	all	_
+</sentence>
+<sentence id="Teema_1_1_2">
+Sotsiaalmeedia	1	68-82	sg	S	sotsiaalmeedia	_	_	_	_	nsubj	2	_	n	_
+aitab	2	83-88	_	V	aitama	_	_	_	_	root	2	b	_	_
+inimesi	3	89-96	pl	S	inimene	false	1	inimestel	R:NOM:FORM	obj	2	_	p	vorm
+üksteisega	4	97-107	sg	P	üksteise	_	_	_	_	obl	5	_	kom	_
+suhtlema	5	108-116	_	V	suhtlema	false	1	suhelda	R:NOM:ROOT:FORM	xcomp	2	ma	_	vorm
+ja	6	117-119	_	J	ja	_	_	_	_	cc	7	_	_	_
+jagada	7	120-126	_	V	jagama	_	_	_	_	conj	2	da	_	_
+oma	8	127-130	sg	P	oma	_	_	_	_	nmod	9	_	g	_
+elu	9	131-134	sg	S	elu	_	_	_	_	obj	7	_	p	_
+.	10	135-136	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_1_1_3">
+aga	1	137-140	_	J	aga	false	1	Aga	R:CASE	cc	4	_	_	suurtähestus
+kui	2	141-144	_	J	kui	_	_	_	_	mark	4	_	_	_
+<phrase_with_errors id="R:WO:VERB:FORM[1]">
+keegi	3	145-150	sg	P	keegi	false[1]	1	sotsiaalmeediat liiga palju kasutada[1]	R:WO:VERB:FORM[1]	nsubj	4	_	n	vorm|sõnajärg
+kasutab	4	151-158	_	V	kasutama	false[1]	1	sotsiaalmeediat liiga palju kasutada[1]	R:WO:VERB:FORM[1]	advcl	12	b	_	vorm|sõnajärg
+liiga	5	159-164	_	D	liiga	false[1]	1	sotsiaalmeediat liiga palju kasutada[1]	R:WO:VERB:FORM[1]	advmod	8	_	_	vorm|sõnajärg
+palju	6	165-170	_	D	palju	false[1]	1	sotsiaalmeediat liiga palju kasutada[1]	R:WO:VERB:FORM[1]	advmod	8	_	_	vorm|sõnajärg
+<phrase_with_errors id="R:WS[2]">
+sotsiaal	7	171-179	sg	S	sotsiaal	false[1]|false[2]	1	sotsiaalmeediat liiga palju kasutada[1]|sotsiaalmeediat[2]	R:WO:VERB:FORM[1]|R:WS[2]	nmod	8	_	n	vorm|sõnajärg|kokku-lahkukirjutus
+meediat	8	180-187	sg	S	meedia	false[1]|false[2]	1	sotsiaalmeediat liiga palju kasutada[1]|sotsiaalmeediat[2]	R:WO:VERB:FORM[1]|R:WS[2]	obj	4	_	p	vorm|sõnajärg|kokku-lahkukirjutus
+</phrase_with_errors id="R:WO:VERB:FORM[1]">
+</phrase_with_errors id="R:WS[2]">
+,	9	188-189	_	Z	,	_	_	_	_	punct	12	_	_	_
+võib	10	190-194	_	V	võima	_	_	_	_	aux	12	b	_	_
+<phrase_with_errors id="R:WO:VERB:FORM[3]">
+see	11	195-198	sg	P	see	true[3]	1	sellest inimese tuju muutuda halvaks[3]	R:WO:VERB:FORM[3]	nsubj	12	_	n	vorm|sõnajärg
+muuta	12	199-204	_	V	muutma	true[3]	1	sellest inimese tuju muutuda halvaks[3]	R:WO:VERB:FORM[3]	root	12	da	_	vorm|sõnajärg
+inimese	13	205-212	sg	S	inimene	true[3]	1	sellest inimese tuju muutuda halvaks[3]	R:WO:VERB:FORM[3]	nmod	14	_	g	vorm|sõnajärg
+tuju	14	213-217	sg	S	tuju	true[3]	1	sellest inimese tuju muutuda halvaks[3]	R:WO:VERB:FORM[3]	obj	12	_	n	vorm|sõnajärg
+halvaks	15	218-225	sg	A	halb	true[3]	1	sellest inimese tuju muutuda halvaks[3]	R:WO:VERB:FORM[3]	xcomp	12	_	tr	vorm|sõnajärg
+</phrase_with_errors id="R:WO:VERB:FORM[3]">
+.	16	226-227	_	Z	.	_	_	_	_	punct	12	_	_	_
+</sentence>
+<sentence id="Teema_1_1_4">
+Näiteks	1	228-235	sg	S	näide	_	_	_	_	advmod	5	_	tr	_
+,	2	236-237	_	Z	,	_	_	_	_	punct	5	_	_	_
+kui	3	238-241	_	J	kui	_	_	_	_	mark	5	_	_	_
+sa	4	242-244	sg	P	sina	_	_	_	_	nsubj	5	_	n	_
+näed	5	245-249	_	V	nägema	_	_	_	_	root	5	d	_	_
+teiste	6	250-256	pl	P	teine	_	_	_	_	det	7	_	g	_
+inimesete	7	257-266	sg	S	inimesete	false	1	inimeste	R:NOM:ROOT:FORM	nmod	8	_	g	vorm
+piltid	8	267-273	sg	S	pilt	false	1	pilte	R:NOM:FORM	obj	5	_	n	vorm
+ja	9	274-276	_	J	ja	_	_	_	_	cc	14	_	_	_
+nende	10	277-282	pl	P	tema	_	_	_	_	nmod	11	_	g	_
+elu	11	283-286	sg	S	elu	_	_	_	_	nsubj:cop	14	_	n	_
+tundub	12	287-293	_	V	tunduma	_	_	_	_	aux	14	b	_	_
+palju	13	294-299	_	D	palju	_	_	_	_	advmod	14	_	_	_
+huvitavam	14	300-309	sg	C	huvitavam	_	_	_	_	conj	8	_	n	_
+kui	15	310-313	_	J	kui	_	_	_	_	mark	17	_	_	_
+sinu	16	314-318	sg	P	sina	_	_	_	_	nmod	17	_	g	_
+oma	17	319-322	sg	P	oma	_	_	_	_	advcl	14	_	g	_
+,	18	323-324	_	Z	,	_	_	_	_	punct	22	_	_	_
+siis	19	325-329	_	D	siis	_	_	_	_	advmod	22	_	_	_
+võid	20	330-334	_	V	võima	_	_	_	_	aux	22	d	_	_
+sa	21	335-337	sg	P	sina	_	_	_	_	nsubj	22	_	n	_
+tunda	22	338-343	_	V	tundma	_	_	_	_	conj	14	da	_	_
+ennast	23	344-350	sg	P	ise	_	_	_	_	obj	22	_	p	_
+halvasti	24	351-359	_	D	halvasti	_	_	_	_	advmod	22	_	_	_
+.	25	360-361	_	Z	.	_	_	_	_	punct	5	_	_	_
+</sentence>
+<sentence id="Teema_1_1_5">
+See	1	362-365	sg	P	see	_	_	_	_	nsubj	2	_	n	_
+teeb	2	366-370	_	V	tegema	_	_	_	_	root	2	b	_	_
+inimesi	3	371-378	pl	S	inimene	_	_	_	_	obj	2	_	p	_
+kurbaks	4	379-386	sg	S	kurbaks	false	1	kurvaks	R:NOM:ROOT:FORM	obl	2	_	n	vorm
+ja	5	387-389	_	J	ja	_	_	_	_	cc	6	_	_	_
+rahulolematus	6	390-403	sg	S	rahulolematus	false	1	rahulolematuks	R:NOM:FORM	conj	4	_	n	vorm
+.	7	404-405	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_1_1_6">
+Kui	1	406-409	_	J	kui	_	_	_	_	mark	5	_	_	_
+aga	2	410-413	_	J	aga	_	_	_	_	advmod	5	_	_	_
+kasutada	3	414-422	_	V	kasutama	_	_	_	_	xcomp	5	da	_	_
+sotsiaalmeediat	4	423-438	sg	S	sotsiaalmeedia	_	_	_	_	obj	3	_	p	_
+mõistlik	5	439-447	sg	A	mõistlik	false	1	mõistlikult	R:NOM:FORM	advcl	9	_	n	vorm
+,	6	448-449	_	Z	,	_	_	_	_	punct	5	_	_	_
+siis	7	450-454	_	J	siis	_	_	_	_	advmod	9	_	_	_
+see	8	455-458	sg	P	see	_	_	_	_	nsubj	9	_	n	_
+aitab	9	459-464	_	V	aitama	_	_	_	_	root	9	b	_	_
+sõprade	10	465-472	pl	S	sõber	_	_	_	_	nmod	13	_	g	_
+ja	11	473-475	_	J	ja	_	_	_	_	cc	12	_	_	_
+peredega	12	476-484	pl	S	pere	false	1	perega	R:NOM:FORM	conj	10	_	kom	vorm
+kontaktis	13	485-494	sg	S	kontakt	_	_	_	_	obl	9	_	in	_
+olla	14	495-499	_	V	olema	_	_	_	_	xcomp	9	da	_	_
+.	15	500-501	_	Z	.	_	_	_	_	punct	9	_	_	_
+</sentence>
+<sentence id="Teema_1_1_7">
+Oluline	1	502-509	sg	A	oluline	_	_	_	_	root	1	_	n	_
+on	2	510-512	_	V	olema	_	_	_	_	cop	1	vad	_	_
+kasutada	3	513-521	_	V	kasutama	_	_	_	_	csubj:cop	1	da	_	_
+sotsiaalmeedia	4	522-536	sg	S	sotsiaalmeedia	false	1	sotsiaalmeediat	R:NOM:FORM	obj	3	_	g	vorm
+õigel	5	537-542	sg	A	õige	_	_	_	_	amod	6	_	ad	_
+viisil	6	543-549	sg	S	viis	_	_	_	_	obl	3	_	ad	_
+,	7	550-551	_	Z	,	_	_	_	_	punct	11	_	_	_
+et	8	552-554	_	J	et	_	_	_	_	mark	11	_	_	_
+see	9	555-558	sg	P	see	_	_	_	_	nsubj	11	_	n	_
+ei	10	559-561	_	V	ei	_	_	_	_	aux	11	neg	_	_
+teeks	11	562-567	_	V	tegema	_	_	_	_	advcl	1	ks	_	_
+kahju	12	568-573	sg	S	kahju	_	_	_	_	obj	11	_	p	_
+.	13	574-575	_	Z	.	_	_	_	_	punct	1	_	_	_
+</sentence>
+</text>
+<text id="Teema_3_1">
+<sentence id="Teema_3_1_1">
+Linnas	1	0-6	sg	S	linn	_	_	_	_	nmod	3	_	in	_
+elamise	2	7-14	sg	S	elamine	_	_	_	_	nmod	3	_	g	_
+plussid	3	15-22	pl	S	pluss	_	_	_	_	root	3	_	n	_
+ja	4	23-25	_	J	ja	_	_	_	_	cc	5	_	_	_
+miinused	5	26-34	pl	S	miinus	_	_	_	_	conj	3	_	n	_
+</sentence>
+<sentence id="Teema_3_1_2">
+Linnas	1	35-41	sg	S	linn	_	_	_	_	root	1	_	in	_
+on	2	42-44	_	V	olema	_	_	_	_	cop	1	vad	_	_
+palju	3	45-50	_	D	palju	_	_	_	_	advmod	4	_	_	_
+mugavusi	4	51-59	pl	S	mugavus	_	_	_	_	nsubj:cop	1	_	p	_
+.	5	60-61	_	Z	.	_	_	_	_	punct	1	_	_	_
+</sentence>
+<sentence id="Teema_3_1_3">
+Kõik	1	62-66	pl	P	kõik	_	_	_	_	nsubj:cop	2	_	n	_
+vajalikud	2	67-76	pl	A	vajalik	false	1	vajalik	R:NOM:FORM	root	2	_	n	vorm
+,	3	77-78	_	Z	,	_	_	_	_	punct	5	_	_	_
+nagu	4	79-83	_	J	nagu	_	_	_	_	mark	5	_	_	_
+poed	5	84-88	pl	S	pood	_	_	_	_	advcl	2	_	n	_
+,	6	89-90	_	Z	,	_	_	_	_	punct	7	_	_	_
+töö	7	91-94	sg	S	töö	_	_	_	_	conj	5	_	n	_
+ja	8	95-97	_	J	ja	_	_	_	_	cc	9	_	_	_
+meelelahutus	9	98-110	sg	S	meelelahutus	_	_	_	_	conj	5	_	n	_
+,	10	111-112	_	Z	,	_	_	_	_	punct	12	_	_	_
+on	11	113-115	_	V	olema	_	_	_	_	cop	12	b	_	_
+lähedal	12	116-123	_	D	lähedal	_	_	_	_	conj	2	_	_	_
+.	13	124-125	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_3_1_4">
+Linnas	1	126-132	sg	S	linn	_	_	_	_	root	1	_	in	_
+on	2	133-135	_	V	olema	_	_	_	_	cop	1	b	_	_
+rohkem	3	136-142	_	D	rohkem	_	_	_	_	advmod	4	_	_	_
+töövõimalus	4	143-154	sg	S	töövõimalus	false	1	töövõimalusi	R:NOM:FORM	nsubj:cop	1	_	n	vorm
+ja	5	155-157	_	J	ja	_	_	_	_	cc	7	_	_	_
+paremad	6	158-165	pl	C	parem	_	_	_	_	amod	7	_	n	_
+palgad	7	166-172	pl	S	palk	_	_	_	_	conj	4	_	n	_
+.	8	173-174	_	Z	.	_	_	_	_	punct	1	_	_	_
+</sentence>
+<sentence id="Teema_3_1_5">
+Aga	1	175-178	_	J	aga	_	_	_	_	cc	2	_	_	_
+linnas	2	179-185	sg	S	linn	_	_	_	_	root	2	_	in	_
+on	3	186-188	_	V	olema	_	_	_	_	cop	2	b	_	_
+ka	4	189-191	_	D	ka	_	_	_	_	advmod	5	_	_	_
+miinus	5	192-198	sg	S	miinus	false	1	miinuseid	R:NOM:FORM	nsubj:cop	2	_	n	vorm
+.	6	199-200	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_3_1_6">
+Seal	1	201-205	_	D	seal	_	_	_	_	root	1	_	_	_
+on	2	206-208	_	V	olema	_	_	_	_	cop	1	b	_	_
+palju	3	209-214	_	D	palju	_	_	_	_	advmod	4	_	_	_
+müra	4	215-219	sg	S	müra	_	_	_	_	nsubj:cop	1	_	p	_
+,	5	220-221	_	Z	,	_	_	_	_	punct	7	_	_	_
+rohkem	6	222-228	_	D	rohkem	_	_	_	_	advmod	7	_	_	_
+inimes	7	229-235	sg	S	inime	false	1	inimesi	R:NOM:FORM	conj	1	_	in	vorm
+ja	8	236-238	_	J	ja	_	_	_	_	cc	9	_	_	_
+tihti	9	239-244	_	D	tihti	_	_	_	_	conj	1	_	_	_
+on	10	245-247	_	V	olema	true	1	ka	R:LEX	cop	12	b	_	sõnavalik
+õhk	11	248-251	sg	S	õhk	_	_	_	_	nsubj:cop	12	_	n	_
+must	12	252-256	sg	A	must	false	1	saastunud	R:LEX	conj	1	_	n	sõnavalik
+.	13	257-258	_	Z	.	_	_	_	_	punct	1	_	_	_
+</sentence>
+<sentence id="Teema_3_1_7">
+linnas	1	259-265	sg	S	linn	false	1	Linnas	R:CASE	nmod	2	_	in	suurtähestus
+elu	2	266-269	sg	S	elu	_	_	_	_	nsubj:cop	4	_	n	_
+on	3	270-272	_	V	olema	_	_	_	_	cop	4	vad	_	_
+kiire	4	273-278	sg	A	kiire	_	_	_	_	root	4	_	n	_
+ja	5	279-281	_	J	ja	_	_	_	_	cc	7	_	_	_
+mõnikord	6	282-290	_	D	mõnikord	_	_	_	_	advmod	7	_	_	_
+tekitab	7	291-298	_	V	tekitama	_	_	_	_	conj	4	b	_	_
+stressi	8	299-306	sg	S	stress	_	_	_	_	obj	7	_	p	_
+.	9	307-308	_	Z	.	_	_	_	_	punct	4	_	_	_
+</sentence>
+<sentence id="Teema_3_1_8">
+Sellepärast	1	309-320	_	D	sellepärast	_	_	_	_	advmod	4	_	_	_
+mõned	2	321-326	pl	P	mõni	_	_	_	_	det	3	_	n	_
+inimesed	3	327-335	pl	S	inimene	_	_	_	_	nsubj	4	_	n	_
+eelistavad	4	336-346	_	V	eelistama	_	_	_	_	root	4	vad	_	_
+elada	5	347-352	_	V	elama	_	_	_	_	xcomp	4	da	_	_
+maal	6	353-357	sg	S	maa	_	_	_	_	obl	5	_	ad	_
+,	7	358-359	_	Z	,	_	_	_	_	punct	11	_	_	_
+kus	8	360-363	_	D	kus	_	_	_	_	mark	11	_	_	_
+elu	9	364-367	sg	S	elu	_	_	_	_	nsubj:cop	11	_	n	_
+on	10	368-370	_	V	olema	_	_	_	_	cop	11	vad	_	_
+rahulikum	11	371-380	sg	C	rahulikum	_	_	_	_	acl:relcl	6	_	n	_
+ja	12	381-383	_	J	ja	_	_	_	_	cc	15	_	_	_
+õhk	13	384-387	sg	S	õhk	_	_	_	_	nsubj:cop	15	_	n	_
+on	14	388-390	_	V	olema	_	_	_	_	cop	15	vad	_	_
+puhas	15	391-396	sg	A	puhas	_	_	_	_	conj	11	_	n	_
+.	16	397-398	_	Z	.	_	_	_	_	punct	4	_	_	_
+</sentence>
+</text>
+<text id="Teema_1_3">
+<sentence id="Teema_1_3_1">
+Sotsiaalmeedia	1	0-14	sg	S	sotsiaalmeedia	_	_	_	_	nmod	2	_	g	_
+mõju	2	15-19	sg	S	mõju	_	_	_	_	root	2	_	g	_
+inimese	3	20-27	sg	S	inimene	_	_	_	_	nmod	4	_	g	_
+enesetundele	4	28-40	sg	S	enesetunne	_	_	_	_	nmod	2	_	all	_
+ja	5	41-43	_	J	ja	_	_	_	_	cc	7	_	_	_
+sotsiaalsetele	6	44-58	pl	A	sotsiaalne	_	_	_	_	amod	7	_	all	_
+suhetele	7	59-67	pl	S	suhe	_	_	_	_	conj	4	_	all	_
+</sentence>
+<sentence id="Teema_1_3_2">
+Sotsiaalmeedia	1	68-82	sg	S	sotsiaalmeedia	_	_	_	_	nsubj:cop	5	_	n	_
+on	2	83-85	_	V	olema	_	_	_	_	cop	5	b	_	_
+väga	3	86-90	_	D	väga	_	_	_	_	advmod	4	_	_	_
+oluline	4	91-98	sg	A	oluline	_	_	_	_	amod	5	_	n	_
+osa	5	99-102	sg	S	osa	_	_	_	_	root	5	_	n	_
+meie	6	103-107	pl	P	mina	_	_	_	_	nmod	7	_	g	_
+elu	7	108-111	sg	S	elu	false	1	elust	R:NOM:FORM	nmod	5	_	p	vorm
+.	8	112-113	_	Z	.	_	_	_	_	punct	5	_	_	_
+</sentence>
+<sentence id="Teema_1_3_3">
+Me	1	114-116	pl	P	mina	_	_	_	_	nsubj	2	_	n	_
+saame	2	117-122	_	V	saama	_	_	_	_	aux	3	me	_	_
+jagada	3	123-129	_	V	jagama	_	_	_	_	root	3	da	_	_
+infot	4	130-135	sg	S	info	_	_	_	_	obj	3	_	p	_
+ja	5	136-138	_	J	ja	_	_	_	_	cc	6	_	_	_
+suhelda	6	139-146	_	V	suhtlema	_	_	_	_	conj	3	da	_	_
+sõpradega	7	147-156	pl	S	sõber	_	_	_	_	obl	6	_	kom	_
+.	8	157-158	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_1_3_4">
+Aga	1	159-162	_	J	aga	_	_	_	_	cc	3	_	_	_
+kui	2	163-166	_	J	kui	_	_	_	_	mark	3	_	_	_
+veeta	3	167-172	_	V	veetma	_	_	_	_	acl	9	da	_	_
+liiga	4	173-178	_	D	liiga	_	_	_	_	advmod	6	_	_	_
+palju	5	179-184	_	D	palju	_	_	_	_	advmod	6	_	_	_
+aega	6	185-189	sg	S	aeg	_	_	_	_	obl	3	_	p	_
+sotsiaalmeedia	7	190-204	sg	S	sotsiaalmeedia	false	1	sotsiaalmeedias	R:NOM:FORM	obl	3	_	g	vorm
+sees	8	205-209	_	K	sees	false	1	*	U:LEX	case	7	_	_	sõnavalik
+,	9	210-211	_	Z	,	_	_	_	_	punct	12	_	_	_
+võib	10	212-216	_	V	võima	_	_	_	_	aux	12	b	_	_
+see	11	217-220	sg	P	see	_	_	_	_	nsubj	12	_	n	_
+tekitada	12	221-229	_	V	tekitama	_	_	_	_	root	12	da	_	_
+halba	13	230-235	sg	A	halb	_	_	_	_	amod	14	_	p	_
+tunde	14	236-241	pl	S	tund	false	1	tunnet	R:NOM:FORM	obj	12	_	p	vorm
+.	15	242-243	_	Z	.	_	_	_	_	punct	12	_	_	_
+</sentence>
+<sentence id="Teema_1_3_5">
+Inimesed	1	244-252	pl	S	inimene	_	_	_	_	nsubj	2	_	n	_
+kerivad	2	253-260	_	V	kerima	_	_	_	_	root	2	vad	_	_
+palju	3	261-266	_	D	palju	false	1	läbi	R:LEX	advmod	4	_	_	sõnavalik
+postitused	4	267-277	pl	S	postitus	false	1	postituste	R:NOM:FORM	obj	2	_	n	vorm
+ja	5	278-280	_	J	ja	_	_	_	_	cc	6	_	_	_
+võrdlevad	6	281-290	_	V	võrdlema	_	_	_	_	conj	2	vad	_	_
+ennast	7	291-297	sg	P	ise	_	_	_	_	obj	6	_	p	_
+teistega	8	298-306	pl	P	teine	_	_	_	_	obl	6	_	kom	_
+.	9	307-308	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_1_3_6">
+See	1	309-312	sg	P	see	_	_	_	_	nsubj	3	_	n	_
+võib	2	313-317	_	V	võima	_	_	_	_	aux	3	b	_	_
+viia	3	318-322	_	V	viima	false	1	tekitada	R:LEX	root	3	da	_	sõnavalik
+tunde	4	323-328	pl	S	tund	_	_	_	_	obj	3	_	p	_
+,	5	329-330	_	Z	,	_	_	_	_	punct	11	_	_	_
+et	6	331-333	_	J	et	_	_	_	_	mark	11	_	_	_
+enda	7	334-338	sg	P	ise	_	_	_	_	nmod	8	_	g	_
+elu	8	339-342	sg	S	elu	_	_	_	_	nsubj:cop	11	_	n	_
+pole	9	343-347	neg	V	olema	_	_	_	_	cop	11	_	o	_
+piisav	10	348-354	sg	A	piisav	false	1	piisavalt	R:NOM:FORM	nsubj:cop	11	_	n	vorm
+huvitav	11	355-362	sg	A	huvitav	_	_	_	_	acl:relcl	4	_	n	_
+.	12	363-364	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_1_3_7">
+sotsiaalmeedia	1	365-379	sg	S	sotsiaalmeedia	false	1	Sotsiaalmeedia	R:CASE	nsubj	2	_	n	suurtähestus
+aitab	2	380-385	_	V	aitama	_	_	_	_	root	2	b	_	_
+ka	3	386-388	_	D	ka	_	_	_	_	advmod	4	_	_	_
+leida	4	389-394	_	V	leidma	_	_	_	_	xcomp	2	da	_	_
+uusi	5	395-399	pl	A	uus	_	_	_	_	amod	6	_	p	_
+sõprad	6	400-406	pl	S	sõpra	false	1	sõpru	R:NOM:FORM	obj	4	_	n	vorm
+ja	7	407-409	_	J	ja	_	_	_	_	cc	8	_	_	_
+ideed	8	410-415	pl	S	idee	false	1	ideid	R:NOM:FORM	conj	6	_	n	vorm
+.	9	416-417	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_1_3_8">
+On	1	418-420	_	V	olema	_	_	_	_	aux	3	vad	_	_
+oluline	2	421-428	sg	A	oluline	_	_	_	_	nsubj	3	_	n	_
+kasutama	3	429-437	_	V	kasutama	false	1	kasutada	R:VERB:FORM	root	3	ma	_	vorm
+sotsiaalmeediat	4	438-453	sg	S	sotsiaalmeedia	_	_	_	_	obj	3	_	p	_
+mõistlikult	5	454-465	_	D	mõistlikult	_	_	_	_	advmod	3	_	_	_
+,	6	466-467	_	Z	,	_	_	_	_	punct	9	_	_	_
+et	7	468-470	_	J	et	_	_	_	_	mark	9	_	_	_
+mitte	8	471-476	_	D	mitte	_	_	_	_	advmod	9	_	_	_
+lasta	9	477-482	_	V	laskma	_	_	_	_	advcl	3	da	_	_
+sellel	10	483-489	sg	P	see	_	_	_	_	obl	9	_	ad	_
+<phrase_with_errors id="R:LEX[1]">
+ennast	11	490-496	sg	P	ise	false[1]	1	põhjustada halba enesetunnet[1]	R:LEX[1]	obj	13	_	p	sõnavalik
+halvasti	12	497-505	_	D	halvasti	false[1]	1	põhjustada halba enesetunnet[1]	R:LEX[1]	advmod	13	_	_	sõnavalik
+tunda	13	506-511	_	V	tundma	false[1]	1	põhjustada halba enesetunnet[1]	R:LEX[1]	xcomp	9	da	_	sõnavalik
+</phrase_with_errors id="R:LEX[1]">
+.	14	512-513	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+</text>
+<text id="Teema_2_1">
+<sentence id="Teema_2_1_1">
+Kliimamuutused	1	0-14	pl	S	kliimamuutus	_	_	_	_	root	1	_	n	_
+ja	2	15-17	_	J	ja	_	_	_	_	cc	4	_	_	_
+nende	3	18-23	pl	P	see	_	_	_	_	nmod	4	_	g	_
+mõju	4	24-28	sg	S	mõju	_	_	_	_	conj	1	_	g	_
+tulevastele	5	29-40	pl	A	tulevane	_	_	_	_	amod	6	_	all	_
+põlvkondadele	6	41-54	pl	S	põlvkond	_	_	_	_	nmod	4	_	all	_
+</sentence>
+<sentence id="Teema_2_1_2">
+Kliimamuutused	1	55-69	pl	S	kliimamuutus	_	_	_	_	nsubj:cop	5	_	n	_
+on	2	70-72	_	V	olema	_	_	_	_	cop	5	b	_	_
+täna	3	73-77	_	D	täna	false	1	tänapäeval	R:LEX	advmod	5	_	_	sõnavalik
+suur	4	78-82	sg	A	suur	_	_	_	_	amod	5	_	n	_
+probleem	5	83-91	sg	S	probleem	_	_	_	_	root	5	_	n	_
+.	6	92-93	_	Z	.	_	_	_	_	punct	5	_	_	_
+</sentence>
+<sentence id="Teema_2_1_3">
+Kui	1	94-97	_	J	kui	_	_	_	_	mark	4	_	_	_
+me	2	98-100	pl	P	mina	_	_	_	_	nsubj	4	_	n	_
+ei	3	101-103	_	V	ei	_	_	_	_	aux	4	neg	_	_
+hakka	4	104-109	_	V	hakkama	_	_	_	_	advcl	11	o	_	_
+tegutsema	5	110-119	_	V	tegutsema	true	1	kliimamuutuste pidurdamiseks	M:LEX	xcomp	4	ma	_	sõnavalik
+,	6	120-121	_	Z	,	_	_	_	_	punct	4	_	_	_
+<phrase_with_errors id="R:LEX[1]">
+on	7	122-124	_	V	olema	true[1]	1	ootavad tulevast põlvkonda rasked väljakutsed[1]	R:LEX[1]	cop	11	b	_	sõnavalik
+tulevasel	8	125-134	sg	A	tulevane	true[1]	1	ootavad tulevast põlvkonda rasked väljakutsed[1]	R:LEX[1]	amod	9	_	ad	sõnavalik
+põlvkonnal	9	135-145	sg	S	põlvkond	true[1]	1	ootavad tulevast põlvkonda rasked väljakutsed[1]	R:LEX[1]	obl	11	_	ad	sõnavalik
+raske	10	146-151	sg	A	raske	true[1]	1	ootavad tulevast põlvkonda rasked väljakutsed[1]	R:LEX[1]	amod	11	_	n	sõnavalik
+elu	11	152-155	sg	S	elu	true[1]	1	ootavad tulevast põlvkonda rasked väljakutsed[1]	R:LEX[1]	nsubj:cop	12	_	n	sõnavalik
+</phrase_with_errors id="R:LEX[1]">
+.	12	156-157	_	Z	.	_	_	_	_	root	12	_	_	_
+</sentence>
+<sentence id="Teema_2_1_4">
+Temperatuur	1	158-169	sg	S	temperatuur	false	1	Temperatuurid	R:NOM:FORM	nsubj	2	_	n	vorm
+tõusevad	2	170-178	_	V	tõusma	_	_	_	_	root	2	vad	_	_
+ja	3	179-181	_	J	ja	_	_	_	_	cc	5	_	_	_
+ilm	4	182-185	sg	S	ilm	false	1	ilmad	R:NOM:FORM	nsubj	5	_	n	vorm
+muutub	5	186-192	_	V	muutuma	false	1	muutuvad	R:VERB:FORM	conj	2	b	_	vorm
+hullem	6	193-199	sg	C	hullem	false	1	hullemaks	R:NOM:FORM	xcomp	5	_	n	vorm
+.	7	200-201	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_2_1_5">
+See	1	202-205	sg	P	see	_	_	_	_	nsubj	2	_	n	_
+tähendab	2	206-214	_	V	tähendama	_	_	_	_	root	2	b	_	_
+,	3	215-216	_	Z	,	_	_	_	_	punct	9	_	_	_
+et	4	217-219	_	J	et	_	_	_	_	mark	9	_	_	_
+tulevikus	5	220-229	sg	S	tulevik	_	_	_	_	obl	9	_	in	_
+võib	6	230-234	_	V	võima	_	_	_	_	aux	9	b	_	_
+olla	7	235-239	_	V	olema	_	_	_	_	cop	9	da	_	_
+vähem	8	240-245	_	D	vähem	_	_	_	_	advmod	9	_	_	_
+toit	9	246-250	sg	S	toit	false	1	toitu	R:NOM:FORM	ccomp	2	_	n	vorm
+ja	10	251-253	_	J	ja	_	_	_	_	cc	11	_	_	_
+vesi	11	254-258	sg	S	vesi	false	1	vett	R:NOM:FORM	conj	9	_	n	vorm
+.	12	259-260	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_2_1_6">
+Paljud	1	261-267	pl	P	palju	_	_	_	_	nmod	2	_	n	_
+inimesed	2	268-276	pl	S	inimene	_	_	_	_	nsubj	5	_	n	_
+võib	3	277-281	_	V	võima	false	1	võivad	R:VERB:FORM	aux	5	b	_	vorm
+olla	4	282-286	_	V	olema	_	_	_	_	aux	5	da	_	_
+pidama	5	287-293	_	V	pidama	false	1	sunnitud	R:LEX	root	5	ma	_	sõnavalik
+kolima	6	294-300	_	V	kolima	_	_	_	_	xcomp	7	ma	_	_
+mujale	7	301-307	_	D	mujale	_	_	_	_	advmod	5	_	_	_
+.	8	308-309	_	Z	.	_	_	_	_	punct	5	_	_	_
+</sentence>
+<sentence id="Teema_2_1_7">
+Me	1	310-312	pl	P	mina	_	_	_	_	nsubj	5	_	n	_
+peame	2	313-318	_	V	pidama	_	_	_	_	aux	5	me	_	_
+juba	3	319-323	_	D	juba	_	_	_	_	advmod	5	_	_	_
+praegu	4	324-330	_	D	praegu	_	_	_	_	advmod	5	_	_	_
+tegema	5	331-337	_	V	tegema	_	_	_	_	root	5	ma	_	_
+õigeid	6	338-344	pl	A	õige	_	_	_	_	amod	7	_	p	_
+otsused	7	345-352	pl	S	otsus	false	1	otsuseid	R:NOM:FORM	obj	5	_	n	vorm
+,	8	353-354	_	Z	,	_	_	_	_	punct	10	_	_	_
+et	9	355-357	_	J	et	_	_	_	_	mark	10	_	_	_
+päästma	10	358-365	_	V	päästma	false	1	päästa	R:VERB:FORM	advcl	5	ma	_	vorm
+tuleviku	11	366-374	sg	S	tulevik	false	1	tulevikku	R:NOM:FORM	obj	10	_	g	vorm
+.	12	375-376	_	Z	.	_	_	_	_	punct	5	_	_	_
+</sentence>
+<sentence id="Teema_2_1_8">
+Me	1	377-379	pl	P	mina	_	_	_	_	nsubj	3	_	n	_
+peame	2	380-385	_	V	pidama	_	_	_	_	aux	3	me	_	_
+vähendada	3	386-395	_	V	vähendama	false	1	vähendama	R:VERB:FORM	root	3	da	_	vorm
+süsinikdioksiidi	4	396-412	sg	S	süsinikdioksiid	_	_	_	_	obj	3	_	p	_
+ja	5	413-415	_	J	ja	_	_	_	_	cc	6	_	_	_
+kasutama	6	416-424	_	V	kasutama	_	_	_	_	conj	3	ma	_	_
+puhtam	7	425-431	sg	C	puhtam	false	1	puhtamat	R:NOM:FORM	amod	8	_	n	vorm
+energia	8	432-439	sg	S	energia	false	1	energiat	R:NOM:FORM	obj	6	_	n	vorm
+.	9	440-441	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+</text>
+<text id="Teema_3_3">
+<sentence id="Teema_3_3_1">
+Linnas	1	0-6	sg	S	linn	_	_	_	_	nmod	3	_	in	_
+elamise	2	7-14	sg	S	elamine	_	_	_	_	nmod	3	_	g	_
+plussid	3	15-22	pl	S	pluss	_	_	_	_	root	3	_	n	_
+ja	4	23-25	_	J	ja	_	_	_	_	cc	5	_	_	_
+miinused	5	26-34	pl	S	miinus	_	_	_	_	conj	3	_	n	_
+</sentence>
+<sentence id="Teema_3_3_2">
+Linnas	1	35-41	sg	S	linn	_	_	_	_	obl	2	_	in	_
+elada	2	42-47	_	V	elama	_	_	_	_	root	2	da	_	_
+võib	3	48-52	_	V	võima	_	_	_	_	aux	2	b	_	_
+olla	4	53-57	_	V	olema	_	_	_	_	cop	5	da	_	_
+huvitav	5	58-65	sg	A	huvitav	_	_	_	_	xcomp	2	_	n	_
+,	6	66-67	_	Z	,	_	_	_	_	punct	9	_	_	_
+kuid	7	68-72	_	J	kuid	_	_	_	_	cc	9	_	_	_
+ka	8	73-75	_	D	ka	_	_	_	_	advmod	9	_	_	_
+raske	9	76-81	sg	A	raske	_	_	_	_	conj	2	_	n	_
+.	10	82-83	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_3_3_3">
+linnas	1	84-90	sg	S	linn	false	1	Linnas	R:CASE	root	1	_	in	suurtähestus
+on	2	91-93	_	V	olema	_	_	_	_	cop	1	vad	_	_
+palju	3	94-99	_	D	palju	_	_	_	_	advmod	4	_	_	_
+koolid	4	100-106	pl	S	kool	false	1	koole	R:NOM:FORM	nsubj:cop	1	_	n	vorm
+,	5	107-108	_	Z	,	_	_	_	_	punct	6	_	_	_
+töökoht	6	109-116	sg	S	töökoht	false	1	töökohti	R:NOM:FORM	conj	4	_	n	vorm
+ja	7	117-119	_	J	ja	_	_	_	_	cc	8	_	_	_
+tegevused	8	120-129	pl	S	tegevus	false	1	tegevusi	R:NOM:FORM	conj	4	_	n	vorm
+.	9	130-131	_	Z	.	_	_	_	_	punct	1	_	_	_
+</sentence>
+<sentence id="Teema_3_3_4">
+Inimesed	1	132-140	pl	S	inimene	_	_	_	_	nsubj	3	_	n	_
+saavad	2	141-147	_	V	saama	_	_	_	_	aux	3	vad	_	_
+õppida	3	148-154	_	V	õppima	_	_	_	_	root	3	da	_	_
+ja	4	155-157	_	J	ja	_	_	_	_	cc	5	_	_	_
+töötada	5	158-165	_	V	töötama	_	_	_	_	conj	3	da	_	_
+erinevates	6	166-176	pl	A	erinev	_	_	_	_	acl	7	_	in	_
+kohtades	7	177-185	pl	S	koht	_	_	_	_	obl	5	_	in	_
+.	8	186-187	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_3_3_5">
+Kuid	1	188-192	_	J	kuid	_	_	_	_	cc	2	_	_	_
+linnas	2	193-199	sg	S	linn	_	_	_	_	root	2	_	in	_
+on	3	200-202	_	V	olema	_	_	_	_	cop	2	vad	_	_
+ka	4	203-205	_	D	ka	_	_	_	_	advmod	6	_	_	_
+palju	5	206-211	_	D	palju	_	_	_	_	advmod	6	_	_	_
+müra	6	212-216	sg	S	müra	_	_	_	_	nsubj:cop	2	_	n	_
+ja	7	217-219	_	J	ja	_	_	_	_	cc	8	_	_	_
+liiklusummikud	8	220-234	pl	S	liiklusummik	false	1	liiklusummikuid	R:NOM:FORM	conj	6	_	n	vorm
+.	9	235-236	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_3_3_6">
+<phrase_with_errors id="R:WO[1]">
+Inimesed	1	237-245	pl	S	inimene	false[1]	1	Sageli inimesed ei tunne[1]	R:WO[1]	nsubj	3	_	n	sõnajärg
+ei	2	246-248	_	V	ei	false[1]	1	Sageli inimesed ei tunne[1]	R:WO[1]	aux	3	neg	_	sõnajärg
+tunne	3	249-254	_	V	tundma	false[1]	1	Sageli inimesed ei tunne[1]	R:WO[1]	root	3	o	_	sõnajärg
+sageli	4	255-261	_	D	sageli	false[1]	1	Sageli inimesed ei tunne[1]	R:WO[1]	advmod	3	_	_	sõnajärg
+</phrase_with_errors id="R:WO[1]">
+oma	5	262-265	sg	P	oma	_	_	_	_	nmod	6	_	g	_
+naabrid	6	266-273	pl	S	naaber	false	1	naabreid	R:NOM:FORM	obj	3	_	n	vorm
+ja	7	274-276	_	J	ja	_	_	_	_	cc	11	_	_	_
+elu	8	277-280	sg	S	elu	_	_	_	_	nsubj:cop	11	_	n	_
+võib	9	281-285	_	V	võima	_	_	_	_	aux	11	b	_	_
+olla	10	286-290	_	V	olema	_	_	_	_	cop	11	da	_	_
+üksildane	11	291-300	sg	A	üksildane	_	_	_	_	conj	3	_	n	_
+.	12	301-302	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_3_3_7">
+Samas	1	303-308	_	D	samas	_	_	_	_	advmod	5	_	_	_
+,	2	309-310	_	Z	,	_	_	_	_	punct	5	_	_	_
+maal	3	311-315	sg	S	maa	_	_	_	_	obl	5	_	ad	_
+on	4	316-318	_	V	olema	_	_	_	_	cop	3	b	_	_
+rahulikum	5	319-328	sg	C	rahulikum	_	_	_	_	root	5	_	n	_
+ja	6	329-331	_	J	ja	_	_	_	_	cc	9	_	_	_
+õhk	7	332-335	sg	S	õhk	_	_	_	_	nsubj:cop	9	_	n	_
+on	8	336-338	_	V	olema	_	_	_	_	cop	9	b	_	_
+puhas	9	339-344	sg	A	puhas	_	_	_	_	conj	5	_	n	_
+,	10	345-346	_	Z	,	_	_	_	_	punct	16	_	_	_
+kuid	11	347-351	_	J	kuid	_	_	_	_	cc	16	_	_	_
+seal	12	352-356	_	D	seal	_	_	_	_	advmod	16	_	_	_
+pole	13	357-361	neg	V	olema	_	_	_	_	cop	16	_	o	_
+nii	14	362-365	_	D	nii	_	_	_	_	advmod	16	_	_	_
+palju	15	366-371	_	D	palju	_	_	_	_	advmod	16	_	_	_
+töövõimalused	16	372-385	pl	S	töövõimalus	false	1	töövõimalusi	R:NOM:FORM	conj	5	_	n	vorm
+.	17	386-387	_	Z	.	_	_	_	_	punct	5	_	_	_
+</sentence>
+</text>
+<text id="Teema_3_2">
+<sentence id="Teema_3_2_1">
+Linnas	1	0-6	sg	S	linn	_	_	_	_	nmod	3	_	in	_
+elamise	2	7-14	sg	S	elamine	_	_	_	_	nmod	3	_	g	_
+plussid	3	15-22	pl	S	pluss	_	_	_	_	root	3	_	n	_
+ja	4	23-25	_	J	ja	_	_	_	_	cc	5	_	_	_
+miinused	5	26-34	pl	S	miinus	_	_	_	_	conj	3	_	n	_
+</sentence>
+<sentence id="Teema_3_2_2">
+Linnas	1	35-41	sg	S	linn	_	_	_	_	nmod	2	_	in	_
+elamine	2	42-49	sg	S	elamine	_	_	_	_	nsubj	3	_	n	_
+annab	3	50-55	_	V	andma	_	_	_	_	root	3	b	_	_
+palju	4	56-61	_	D	palju	_	_	_	_	advmod	3	_	_	_
+võimalused	5	62-72	pl	S	võimalus	false	1	võimalusi	R:NOM:FORM	obj	3	_	n	vorm
+,	6	73-74	_	Z	,	_	_	_	_	punct	11	_	_	_
+aga	7	75-78	_	J	aga	_	_	_	_	cc	11	_	_	_
+seal	8	79-83	_	D	seal	false	1	selle juures	R:LEX	advmod	11	_	_	sõnavalik
+on	9	84-86	_	V	olema	_	_	_	_	cop	11	b	_	_
+ka	10	87-89	_	D	ka	_	_	_	_	advmod	11	_	_	_
+raskused	11	90-98	pl	S	raskus	false	1	raskusi	R:NOM:FORM	conj	3	_	n	vorm
+.	12	99-100	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_3_2_3">
+linnas	1	101-107	sg	S	linn	false	1	Linnas	R:CASE	obl	4	_	in	suurtähestus
+saab	2	108-112	_	V	saama	_	_	_	_	aux	4	b	_	_
+palju	3	113-118	_	D	palju	_	_	_	_	advmod	4	_	_	_
+teha	4	119-123	_	V	tegema	_	_	_	_	root	4	da	_	_
+–	5	124-125	_	Z	-	_	_	_	_	punct	6	_	_	_
+minna	6	126-131	_	V	minema	false	1	käia	R:LEX	acl	7	da	_	sõnavalik
+restoranides	7	132-144	pl	S	restoran	_	_	_	_	obl	4	_	in	_
+,	8	145-146	_	Z	,	_	_	_	_	punct	9	_	_	_
+kinno	9	147-152	adt	S	kino	false	1	kinos	R:NOM:FORM	conj	7	_	_	vorm
+ja	10	153-155	_	J	ja	_	_	_	_	cc	11	_	_	_
+kasutada	11	156-164	_	V	kasutama	_	_	_	_	conj	7	da	_	_
+ühistransporti	12	165-179	sg	S	ühistransport	_	_	_	_	obj	11	_	p	_
+.	13	180-181	_	Z	.	_	_	_	_	punct	4	_	_	_
+</sentence>
+<sentence id="Teema_3_2_4">
+Samas	1	182-187	sg	P	sama	false	1	,	M:PUNCT	det	2	_	in	kirjavahemärk
+linnas	2	188-194	sg	S	linn	_	_	_	_	nmod	3	_	in	_
+<phrase_with_errors id="R:WO[1]">
+elu	3	195-198	sg	S	elu	false[1]	1	on kallim elu[1]	R:WO[1]	nsubj:cop	5	_	n	sõnajärg
+on	4	199-201	_	V	olema	false[1]	1	on kallim elu[1]	R:WO[1]	cop	5	b	_	sõnajärg
+kallim	5	202-208	sg	C	kallim	false[1]	1	on kallim elu[1]	R:WO[1]	root	5	_	n	sõnajärg
+</phrase_with_errors id="R:WO[1]">
+ja	6	209-211	_	J	ja	_	_	_	_	cc	7	_	_	_
+vähem	7	212-217	sg	C	vähem	_	_	_	_	conj	8	_	n	_
+loodus	8	218-224	sg	S	loodus	false	1	loodust	R:NOM:FORM	nsubj:cop	5	_	n	vorm
+.	9	225-226	_	Z	.	_	_	_	_	punct	5	_	_	_
+</sentence>
+<sentence id="Teema_3_2_5">
+Suured	1	227-233	pl	A	suur	_	_	_	_	amod	2	_	n	_
+rahvahulgad	2	234-245	pl	S	rahvahulk	_	_	_	_	nsubj	6	_	n	_
+ja	3	246-248	_	J	ja	_	_	_	_	cc	4	_	_	_
+liiklus	4	249-256	sg	S	liiklus	_	_	_	_	conj	2	_	n	_
+võib	5	257-261	_	V	võima	false	1	võivad	R:VERB:FORM	aux	6	b	_	vorm
+muuta	6	262-267	_	V	muutma	_	_	_	_	root	6	da	_	_
+elu	7	268-271	sg	S	elu	_	_	_	_	obl	8	_	g	_
+raskemaks	8	272-281	sg	C	raskem	_	_	_	_	xcomp	6	_	tr	_
+.	9	282-283	_	Z	.	_	_	_	_	punct	6	_	_	_
+</sentence>
+<sentence id="Teema_3_2_6">
+Linn	1	284-288	sg	S	linn	_	_	_	_	nsubj	2	_	n	_
+sobib	2	289-294	_	V	sobima	_	_	_	_	root	2	b	_	_
+inimestele	3	295-305	pl	S	inimene	_	_	_	_	obl	2	_	all	_
+,	4	306-307	_	Z	,	_	_	_	_	punct	6	_	_	_
+kellele	5	308-315	pl	P	kes	_	_	_	_	obl	6	_	all	_
+meeldib	6	316-323	_	V	meeldima	_	_	_	_	acl:relcl	3	b	_	_
+kiire	7	324-329	sg	A	kiire	_	_	_	_	amod	8	_	n	_
+elu	8	330-333	sg	S	elu	_	_	_	_	nsubj	6	_	n	_
+,	9	334-335	_	Z	,	_	_	_	_	punct	18	_	_	_
+aga	10	336-339	_	J	aga	_	_	_	_	cc	18	_	_	_
+need	11	340-344	pl	P	see	_	_	_	_	nsubj	18	_	n	_
+,	12	345-346	_	Z	,	_	_	_	_	punct	14	_	_	_
+kes	13	347-350	sg	P	kes	_	_	_	_	nsubj	14	_	n	_
+soovivad	14	351-359	_	V	soovima	_	_	_	_	acl:relcl	11	vad	_	_
+rohkem	15	360-366	_	D	rohkem	_	_	_	_	advmod	14	_	_	_
+rahu	16	367-371	sg	S	rahu	_	_	_	_	obj	14	_	p	_
+,	17	372-373	_	Z	,	_	_	_	_	punct	14	_	_	_
+eelistab	18	374-382	_	V	eelistama	false	1	eelistavad	R:VERB:FORM	conj	2	b	_	vorm
+elu	19	383-386	sg	S	elu	_	_	_	_	nmod	20	_	g	_
+maal	20	387-391	sg	S	maa	_	_	_	_	obl	18	_	ad	_
+.	21	392-393	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+</text>
+<text id="Teema_2_3">
+<sentence id="Teema_2_3_1">
+Kliimamuutused	1	0-14	pl	S	kliimamuutus	_	_	_	_	root	1	_	n	_
+ja	2	15-17	_	J	ja	_	_	_	_	cc	4	_	_	_
+nende	3	18-23	pl	P	see	_	_	_	_	nmod	4	_	g	_
+mõju	4	24-28	sg	S	mõju	_	_	_	_	conj	1	_	g	_
+tulevastele	5	29-40	pl	A	tulevane	_	_	_	_	amod	6	_	all	_
+põlvkondadele	6	41-54	pl	S	põlvkond	_	_	_	_	nmod	4	_	all	_
+</sentence>
+<sentence id="Teema_2_3_2">
+Kliimamuutused	1	55-69	pl	S	kliimamuutus	_	_	_	_	nsubj:cop	3	_	n	_
+<phrase_with_errors id="R:LEX[1]">
+on	2	70-72	_	V	olema	false[1]	1	kujutavad ohtu[1]	R:LEX[1]	cop	3	b	_	sõnavalik
+ohtlik	3	73-79	sg	A	ohtlik	false[1]	1	kujutavad ohtu[1]	R:LEX[1]	root	3	_	n	sõnavalik
+</phrase_with_errors id="R:LEX[1]">
+tulevatele	4	80-90	pl	A	tulev	_	_	_	_	amod	5	_	all	_
+põlvkondadele	5	91-104	pl	S	põlvkond	_	_	_	_	obl	3	_	all	_
+.	6	105-106	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_2_3_3">
+Temperatuur	1	107-118	sg	S	temperatuur	false	1	Temperatuurid	R:NOM:FORM	nsubj	2	_	n	vorm
+tõusevad	2	119-127	_	V	tõusma	_	_	_	_	root	2	vad	_	_
+,	3	128-129	_	Z	,	_	_	_	_	punct	5	_	_	_
+looduskatastroofid	4	130-148	pl	S	looduskatastroof	_	_	_	_	nsubj	5	_	n	_
+<phrase_with_errors id="R:LEX[2]">
+tulevad	5	149-156	_	V	tulema	false[2]	1	sagenevad[2]	R:LEX[2]	conj	2	vad	_	sõnavalik
+tihemini	6	157-165	_	D	tihemini	false[2]	1	sagenevad[2]	R:LEX[2]	advmod	5	_	_	sõnavalik
+</phrase_with_errors id="R:LEX[2]">
+ja	7	166-168	_	J	ja	_	_	_	_	cc	9	_	_	_
+loodusressursid	8	169-184	pl	S	loodusressurss	_	_	_	_	nsubj	9	_	n	_
+hävivad	9	185-192	_	V	hävima	_	_	_	_	conj	2	vad	_	_
+.	10	193-194	_	Z	.	_	_	_	_	punct	2	_	_	_
+</sentence>
+<sentence id="Teema_2_3_4">
+Meie	1	195-199	pl	P	mina	_	_	_	_	nmod	2	_	g	_
+lapsed	2	200-206	pl	S	laps	_	_	_	_	nsubj	4	_	n	_
+peavad	3	207-213	_	V	pidama	_	_	_	_	aux	4	vad	_	_
+elada	4	214-219	_	V	elama	false	1	elama	R:VERB:FORM	root	4	da	_	vorm
+maailmas	5	220-228	sg	S	maailm	_	_	_	_	obl	4	_	in	_
+,	6	229-230	_	Z	,	_	_	_	_	punct	10	_	_	_
+kus	7	231-234	_	D	kus	_	_	_	_	mark	10	_	_	_
+on	8	235-237	_	V	olema	_	_	_	_	cop	10	b	_	_
+vähem	9	238-243	_	D	vähem	true	1	kaunist	M:LEX	advmod	10	_	_	sõnavalik
+loodus	10	244-250	sg	S	loodus	false	1	loodust	R:NOM:FORM	nsubj:cop	4	_	n	vorm
+ja	11	251-253	_	J	ja	_	_	_	_	cc	13	_	_	_
+rohkem	12	254-260	_	D	rohkem	_	_	_	_	advmod	13	_	_	_
+probleemid	13	261-271	pl	S	probleem	false	1	probleeme	R:NOM:FORM	conj	10	_	n	vorm
+toiduga	14	272-279	sg	S	toit	_	_	_	_	nmod	13	_	kom	_
+.	15	280-281	_	Z	.	_	_	_	_	punct	4	_	_	_
+</sentence>
+<sentence id="Teema_2_3_5">
+Et	1	282-284	_	J	et	_	_	_	_	mark	3	_	_	_
+seda	2	285-289	sg	P	see	_	_	_	_	obj	3	_	p	_
+vältida	3	290-297	_	V	vältima	_	_	_	_	advcl	7	da	_	_
+,	4	298-299	_	Z	,	_	_	_	_	punct	3	_	_	_
+peame	5	300-305	_	V	pidama	_	_	_	_	aux	7	me	_	_
+me	6	306-308	pl	P	mina	_	_	_	_	nsubj	7	_	n	_
+<phrase_with_errors id="R:WO:VERB:FORM[3]">
+muuta	7	309-314	_	V	muutma	false[3]	1	enda elu muutma[3]	R:WO:VERB:FORM[3]	root	7	da	_	vorm|sõnajärg
+meie	8	315-319	pl	P	mina	false[3]	1	enda elu muutma[3]	R:WO:VERB:FORM[3]	nmod	9	_	g	vorm|sõnajärg
+elu	9	320-323	sg	S	elu	false[3]	1	enda elu muutma[3]	R:WO:VERB:FORM[3]	obj	7	_	p	vorm|sõnajärg
+</phrase_with_errors id="R:WO:VERB:FORM[3]">
+.	10	324-325	_	Z	.	_	_	_	_	punct	7	_	_	_
+</sentence>
+<sentence id="Teema_2_3_6">
+Me	1	326-328	pl	P	mina	_	_	_	_	nsubj	3	_	n	_
+peame	2	329-334	_	V	pidama	_	_	_	_	aux	3	me	_	_
+vähendada	3	335-344	_	V	vähendama	false	1	vähendama	R:VERB:FORM	root	3	da	_	vorm
+energia	4	345-352	sg	S	energia	_	_	_	_	nmod	5	_	g	_
+tarbimist	5	353-362	sg	S	tarbimine	_	_	_	_	obj	3	_	p	_
+ja	6	363-365	_	J	ja	_	_	_	_	cc	7	_	_	_
+saastet	7	366-373	sg	S	saaste	_	_	_	_	conj	5	_	p	_
+.	8	374-375	_	Z	.	_	_	_	_	punct	3	_	_	_
+</sentence>
+<sentence id="Teema_2_3_7">
+Kõik	1	376-380	pl	P	kõik	_	_	_	_	det	2	_	n	_
+inimesed	2	381-389	pl	S	inimene	_	_	_	_	nsubj	4	_	n	_
+peavad	3	390-396	_	V	pidama	_	_	_	_	aux	4	vad	_	_
+töötama	4	397-404	_	V	töötama	_	_	_	_	root	4	ma	_	_
+koos	5	405-409	_	D	koos	_	_	_	_	compound:prt	4	_	_	_
+,	6	410-411	_	Z	,	_	_	_	_	punct	10	_	_	_
+et	7	412-414	_	J	et	_	_	_	_	mark	10	_	_	_
+<phrase_with_errors id="R:LEX:WO[4]">
+tulevik	8	415-422	sg	S	tulevik	true[4]	1	tagada parem tulevik[4]	R:LEX:WO[4]	nsubj:cop	10	_	n	sõnavalik|sõnajärg
+oleks	9	423-428	_	V	olema	true[4]	1	tagada parem tulevik[4]	R:LEX:WO[4]	cop	10	ks	_	sõnavalik|sõnajärg
+parem	10	429-434	sg	C	parem	true[4]	1	tagada parem tulevik[4]	R:LEX:WO[4]	ccomp	4	_	n	sõnavalik|sõnajärg
+</phrase_with_errors id="R:LEX:WO[4]">
+.	11	435-436	_	Z	.	_	_	_	_	punct	4	_	_	_
+</sentence>
+</text>
+</corpus>

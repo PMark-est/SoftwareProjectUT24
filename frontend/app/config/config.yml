@@ -154,7 +154,7 @@ word_picture_conf:
         css_class: color_green
 
 default_overview_context: 1 sentence
-default_reading_context: 1 paragraph
+default_reading_context: 2 sentence
 
 default_within:
   sentence: sentence

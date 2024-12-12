@@ -60,7 +60,7 @@ angular.module("korpApp").component("kwic", {
             </span>
             <span><word-color-meanings /></span>
             <div class="table_scrollarea">
-                <table class="results_table kwic">
+                <table class="results_table kwic" ng-if="!$ctrl.useContext" cellspacing="0">
                     <tr
                         class="sentence"
                         ng-repeat="sentence in $ctrl.kwic"
@@ -195,12 +195,6 @@ angular.module("korpApp").component("kwic", {
             let $ctrl = this
 
             const selectionManager = new SelectionManager()
-
-            const errorTypes = new Set()
-
-            let tooltipsVisible = false
-
-            //popupService.onShowPopups($scope, function () {})
 
             $ctrl.getClass = (sentence) => {
                 if (!sentence.match) return
@@ -598,7 +592,7 @@ angular.module("korpApp").component("kwic", {
                             wordData: obj,
                             corpus: sent.corpus.toLowerCase(),
                             tokens: sent.tokens,
-                            inReadingMode: true,
+                            inReadingMode: false,
                         })
                     else {
                         const clicked_word = word[0].innerText
@@ -612,7 +606,7 @@ angular.module("korpApp").component("kwic", {
                             wordData: token,
                             corpus: sent.corpus.toLowerCase(),
                             tokens: sent.tokens,
-                            inReadingMode: true,
+                            inReadingMode: false,
                         })
                     }
                 }

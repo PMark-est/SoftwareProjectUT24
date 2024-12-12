@@ -5,12 +5,6 @@ mode:
   - name: default
 within:
   - label:
-      eng: corpus
-    value: corpus
-  - label:
-      eng: text
-    value: text
-  - label:
       eng: sentence
     value: sentence
   - label:
@@ -19,22 +13,28 @@ within:
   - label:
       eng: phrase_with_errors1
     value: phrase_with_errors1
+  - label:
+      eng: corpus
+    value: corpus
+  - label:
+      eng: text
+    value: text
 context:
   - label:
-      eng: 1 corpus
-    value: 1 corpus
-  - label:
-      eng: 1 text
-    value: 1 text
-  - label:
-      eng: 1 sentence
-    value: 1 sentence
+      eng: 2 sentence
+    value: 2 sentence
   - label:
       eng: 1 phrase_with_errors
     value: 1 phrase_with_errors
   - label:
       eng: 1 phrase_with_errors1
     value: 1 phrase_with_errors1
+  - label:
+      eng: 1 corpus
+    value: 1 corpus
+  - label:
+      eng: 1 text
+    value: 1 text
 pos_attributes:
   - word_id: word_id
   - word_tokens: word_tokens

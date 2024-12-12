@@ -61,14 +61,18 @@ def upload():
             # write context
             for sAttr in sAttrs:
                 if "max" in sAttr: continue
+                contextLength = 1
                 sAttrMax = sAttrs[sAttr+"_max"]
                 if sAttrMax > 1: cwb.append(f"-S {sAttr}:{sAttrMax-1}")
                 else: cwb.append(f"-S {sAttr}")
+                if sAttr == "sentence":
+                    contextLength = 2
                 for i in range(sAttrMax):
                     if i == 0:
-                        corpusYaml.write(f"  - label:\n      eng: 1 {sAttr}\n    value: 1 {sAttr}\n")
+                        corpusYaml.write(f"  - label:\n      eng: {contextLength} {sAttr}\n    value: {contextLength} {sAttr}\n")
                     else:
-                        corpusYaml.write(f"  - label:\n      eng: 1 {sAttr+str(i)}\n    value: 1 {sAttr+str(i)}\n")
+                        corpusYaml.write(f"  - label:\n      eng: {contextLength} {sAttr+str(i)}\n    value: {contextLength} {sAttr+str(i)}\n")
+
             corpusYaml.write("pos_attributes:\n")
             for pAttr in pAttrs:
                 if pAttr == "word": continue

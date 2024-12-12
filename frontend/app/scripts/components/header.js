@@ -168,14 +168,12 @@ angular.module("korpApp").component("header", {
                 const payload = Object.fromEntries(formData)
                 const file = payload.corpus
 
-                console.log(formData)
-
                 if (file.name === "") return
 
                 if (file.name.slice(file.name.lastIndexOf("."), file.name.length) !== ".vrt") return
 
                 //TODO post backendi
-                fetch("http://localhost:1234/upload", {
+                fetch(`${settings.korp_backend_url}/upload`, {
                     method: "POST",
                     body: formData,
                 })

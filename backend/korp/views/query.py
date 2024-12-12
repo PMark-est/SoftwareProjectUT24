@@ -537,16 +537,6 @@ def query_corpus(corpus, cqp, within=None, cut=None, context=None, show=None, sh
             pass
     return lines, nr_hits, attrs
 
-def write_dict_to_json(data_dict, file_path):
-    """Write a dictionary to a JSON file.
-
-    Args:
-        data_dict (dict): The dictionary to write.
-        file_path (str): The path to the file where the JSON will be saved.
-    """
-    with open(file_path, 'w') as json_file:
-        json.dump(data_dict, json_file, indent=4)
-
 
 def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=False, abort_event=None):
     """Parse concordance lines from CWB."""

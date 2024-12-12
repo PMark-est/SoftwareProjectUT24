@@ -2,6 +2,7 @@
 import angular, { element } from "angular"
 import { html } from "@/util"
 import { generateColors } from "@/colors"
+import settings from "@/settings"
 
 export default angular.module("korpApp").component("wordColorMeanings", {
     template: html`<span class="wordColors">
@@ -17,7 +18,7 @@ export default angular.module("korpApp").component("wordColorMeanings", {
     controller: [
         "$http",
         function ($http) {
-            const apiUrl = `http://andmebaas.zapto.org:8080/lexicon?positional_attribute=error_type`
+            const apiUrl = `${settings.korp_backend_url}/lexicon?positional_attribute=error_type`
 
             const errors = new Set()
 

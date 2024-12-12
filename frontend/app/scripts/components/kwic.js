@@ -58,7 +58,7 @@ angular.module("korpApp").component("kwic", {
                 <span ng-if="!$ctrl.isReading">{{'show_reading' | loc:$root.lang}}</span>
                 <span ng-if="$ctrl.isReading">{{'show_kwic' | loc:$root.lang}}</span>
             </span>
-            <span><word-color-meanings /></span>
+            <span ng-if="$ctrl.hits"><word-color-meanings /></span>
             <div class="table_scrollarea">
                 <table class="results_table kwic" ng-if="!$ctrl.useContext" cellspacing="0">
                     <tr
@@ -336,20 +336,6 @@ angular.module("korpApp").component("kwic", {
                 return sentence.tokens.slice(0, sentence.match.start[0])
             }
 
-            $ctrl.selectMatchPhraseLeft = function (sentence) {
-                if (!sentence.match) return
-                const phrase = sentence.tokens[sentence.match.phrase].phrase.tokens
-                const tokens = []
-                for (let index = 0; index < phrase.length; index++) {
-                    const element = phrase[index]
-                    if (Number(element.word_id) === sentence.match.start) {
-                        return tokens
-                    }
-                    tokens.push(element)
-                }
-                return tokens
-            }
-
             $ctrl.selectMatch = function (sentence) {
                 if (!sentence.match) {
                     return
@@ -372,29 +358,6 @@ angular.module("korpApp").component("kwic", {
                     from += 1
                 }
                 return sentence.tokens.slice(from, len)
-            }
-
-            $ctrl.selectMatchPhraseRight = function (sentence) {
-                if (!sentence.match) return
-                if (!sentence.match.phrase) {
-                    return
-                }
-                const phrase = sentence.tokens[sentence.match.phrase].phrase.tokens
-                const tokens = []
-                let start = 0
-                for (let index = 0; index < phrase.length; index++) {
-                    const element = phrase[index]
-                    if (Number(element.word_id) === sentence.match.start) {
-                        start = index
-                        break
-                    }
-                }
-
-                for (let index = start + 1; index < phrase.length; index++) {
-                    const element = phrase[index]
-                    tokens.push(element)
-                }
-                return tokens
             }
 
             function addColors() {

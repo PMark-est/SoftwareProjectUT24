@@ -9,15 +9,21 @@ export default angular.module("korpApp").component("wordColorMeanings", {
         <div
             ng-repeat="error in $ctrl.errors"
             ng-style="{'text-align': 'center', 'padding': '2px', 'border-radius': '6px', 'background-color': $ctrl.colors[$index]}"
+            class="{{error}}_meaning"
         >
+        <a href="" ng-click="$ctrl.selectItem(error)">
             <div></div>
             {{error}}
+        </a>
         </div>
     </span>`,
-    bindings: {},
+    bindings: {
+        changeColor: "&",
+    },
     controller: [
         "$http",
         function ($http) {
+            let $ctrl = this
             const apiUrl = `${settings.korp_backend_url}/lexicon?positional_attribute=error_type`
 
             const errors = new Set()
@@ -40,6 +46,37 @@ export default angular.module("korpApp").component("wordColorMeanings", {
                     ...generateColors("#7AD6EB", "#46E079", errors.size - Math.floor(errors.size / 2)),
                 ]
             })
+
+            $ctrl.selected = "_"
+
+            $ctrl.selectItem = function (error) {
+                //Change current selected color
+                if (error == $ctrl.selected) {
+                    $ctrl.selected = "_"
+                    error = "_"
+                } else {
+                    $ctrl.selected = error
+                }
+                //console.log(error)
+
+                //Visual update
+                ;[...errors].forEach((errorType) => {
+                    ;[...document.getElementsByClassName(errorType + "_meaning")].forEach((meaning) => {
+                        let style = meaning.getAttribute("style")
+                        if (error == errorType) {
+                            style += " border-style: solid; border-width: 2px; border-color: black"
+                            style = style.replace("padding: 2px", "padding: 0px")
+                        } else {
+                            style = style.replace(" border-style: solid; border-width: 2px; border-color: black", "")
+                            style = style.replace("padding: 0px", "padding: 2px")
+                        }
+                        meaning.setAttribute("style", style)
+                    })
+                })
+
+                //Update colors
+                $ctrl.changeColor({error: error})
+            }
         },
     ],
 })

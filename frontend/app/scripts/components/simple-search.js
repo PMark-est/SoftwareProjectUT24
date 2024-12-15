@@ -161,14 +161,14 @@ angular.module("korpApp").component("simpleSearch", {
                                 orParts.push(regescape(token))
                             }
                         }
-                        console.log(orParts)
+                        //console.log(orParts)
 
                         let res = _.map(orParts, (orPart) => `word = "${orPart}"${suffix}`)
                         if (ctrl.searchForCorrection) {
                             //res = res.concat(_.map(orParts, (orPart) => `error_correction = "${orPart}"${suffix}`))
                             res = _.map(orParts, (orPart) => `error_correction = "${orPart}"${suffix}`)
                         } 
-                        console.log(res)
+                        //console.log(res)
                         return `[${res.join(" | ")}]`
                     })
                     val = tokenArray.join(" ")

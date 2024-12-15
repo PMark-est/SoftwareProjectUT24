@@ -742,12 +742,11 @@ td {
 .word.has_error {
   display: inline-flex;
   flex-direction: column;
-  background-color: rgb(238, 168, 168);
+  //background-color: rgb(238, 168, 168);
   border-radius: 5px;
-  margin: 0 2px;
-  &.token_selected {
-    background-color: #666;
-  }
+  //&.token_selected {
+  //  background-color: #666;
+  //}
 }
 
 .token_selected {
@@ -2244,6 +2243,12 @@ li.active a span .num-to-find {
   height: 64px;
   flex-direction: column;
   margin-top: 16px;
+  a {
+    color: #000;
+  }
+  a:hover {
+    color: indianred;
+  }
 }
 
 .popup{

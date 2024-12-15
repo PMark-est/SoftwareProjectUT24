@@ -58,7 +58,11 @@ angular.module("korpApp").component("kwic", {
                 <span ng-if="!$ctrl.isReading">{{'show_reading' | loc:$root.lang}}</span>
                 <span ng-if="$ctrl.isReading">{{'show_kwic' | loc:$root.lang}}</span>
             </span>
-            <span ng-if="$ctrl.hits"><word-color-meanings /></span>
+            <span ng-if="$ctrl.hits">
+                <word-color-meanings
+                    change-color="$ctrl.updateColor(error)"
+                ></word-color-meanings>
+            </span>
             <div class="table_scrollarea">
                 <table class="results_table kwic" ng-if="!$ctrl.useContext" cellspacing="0">
                     <tr
@@ -360,6 +364,14 @@ angular.module("korpApp").component("kwic", {
                 return sentence.tokens.slice(from, len)
             }
 
+            $ctrl.currentErrorColor = "_"
+
+            $ctrl.updateColor = function(error = "_") {
+                $ctrl.currentErrorColor = error
+                console.log($ctrl.currentErrorColor)
+                addColors()
+            }
+
             function addColors() {
                 $timeout(() => {
                     if (!$ctrl.kwic) return
@@ -385,12 +397,59 @@ angular.module("korpApp").component("kwic", {
                             ...generateColors("#7AD6EB", "#46E079", errorTypes.size - Math.floor(errorTypes.size / 2)),
                         ]
 
+                        //Delete old colors
+                        ;[...errorTypes].forEach((error, index) => {
+                            ;[...document.getElementsByClassName(error)].forEach((word) => {
+                                word.removeAttribute("style")
+                            })
+                        })
+
                         // Apply color styles to each error type
                         ;[...errorTypes].forEach((error, index) => {
-                            const tag = `background-color:${colors[index]};`
-                            ;[...document.getElementsByClassName(error)].forEach((word) =>
-                                word.setAttribute("style", tag)
-                            )
+                            //console.log(error)
+                            if (error == $ctrl.currentErrorColor || $ctrl.currentErrorColor == "_") {
+                                ;[...document.getElementsByClassName(error)].forEach((word) => {
+                                    let tag = `background-color:${colors[index]};`
+                                    //console.log(word)
+                                    //Add error tag to all words in a phrase, so we can add gradients to them correctly
+                                    if (word.classList.contains("phrase")) {
+                                        [...word.getElementsByClassName("word")].forEach((phraseWord) => {
+                                            if (!phraseWord.className.contains(error)) {
+                                                phraseWord.className += " " + error
+                                            }
+                                            if (!phraseWord.className.contains("has_error")) {
+                                                phraseWord.className += " has_error"
+                                            }
+                                        })
+                                    }
+                                    //Add a color to error words without a color   
+                                    if (word.getAttribute("style") == null) {
+                                        word.setAttribute("style", tag)
+                                    } else {
+                                        //Create a gradient if a word already has a color
+                                        let styles = word.getAttribute("style").split(";")
+                                        let prevColor = styles[0].split(":")[1]
+                                        let gradients = new Set()
+                                        gradients.add(prevColor)
+                                        if (styles[1] != "") {
+                                            //For whatever reason regex doesn't get all the colors...
+                                            /*
+                                            for (let color of styles[1].match(/#[\d|\w]+/)) {
+                                                gradients.add(color)
+                                            }
+                                            */
+                                            //... This is so stupid
+                                            for (let color of styles[1].split("(")[1].split(",").slice(1)) {
+                                                gradients.add(color.match(/#[\d|\w]+/)[0])
+                                            }
+                                        }
+                                        gradients.add(colors[index])
+                                        gradients = Array.from(gradients)
+                                        tag = `background-color:${prevColor}; background-image: linear-gradient(to top, ${gradients});`
+                                        word.setAttribute("style", tag)
+                                    }
+                                })
+                            }
                         })
                     })
                 }, 50)

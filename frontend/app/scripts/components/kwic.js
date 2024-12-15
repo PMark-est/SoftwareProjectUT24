@@ -368,7 +368,6 @@ angular.module("korpApp").component("kwic", {
 
             $ctrl.updateColor = function(error = "_") {
                 $ctrl.currentErrorColor = error
-                console.log($ctrl.currentErrorColor)
                 addColors()
             }
 
@@ -410,7 +409,6 @@ angular.module("korpApp").component("kwic", {
                             if (error == $ctrl.currentErrorColor || $ctrl.currentErrorColor == "_") {
                                 ;[...document.getElementsByClassName(error)].forEach((word) => {
                                     let tag = `background-color:${colors[index]};`
-                                    //console.log(word)
                                     //Add error tag to all words in a phrase, so we can add gradients to them correctly
                                     if (word.classList.contains("phrase")) {
                                         [...word.getElementsByClassName("word")].forEach((phraseWord) => {
@@ -438,7 +436,6 @@ angular.module("korpApp").component("kwic", {
                                                 gradients.add(color)
                                             }
                                             */
-                                            //... This is so stupid
                                             for (let color of styles[1].split("(")[1].split(",").slice(1)) {
                                                 gradients.add(color.match(/#[\d|\w]+/)[0])
                                             }

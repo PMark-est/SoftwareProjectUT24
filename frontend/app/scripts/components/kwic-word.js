@@ -8,7 +8,7 @@ angular.module("korpApp").component("kwicWord", {
             <span ng-if="!$ctrl.word.word" class="phrase" ng-class="$ctrl.getClass($ctrl.word)">
                     <span ng-if="word.error" class="tooltip"> {{word.error.error_correction}} </span>
                     <span style="display:flex;gap:4px;">
-                        <span ng-repeat="phraseWord in $ctrl.word.phrase_tokens">
+                        <span ng-repeat="phraseWord in $ctrl.word.phrase_tokens" ng-class="$ctrl.getClass(phraseWord)">
                             <span ng-if="phraseWord.error_correction !== '_'" class="tooltip"> {{phraseWord.error_correction}} </span>
                             <span class="word" ng-if"phraseWord.word" ng-class="$ctrl.getClass(phraseWord)">{{phraseWord.word}}</span>
                             <span ng-if="!phraseWord.word" class="phrase" ng-class="$ctrl.getClass(phraseWord)">

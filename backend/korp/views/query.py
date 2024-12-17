@@ -98,6 +98,7 @@ def query(args, abort_event=None):
     context = defaultdict(lambda: (default_context,))
     contexts = {}
 
+
     for c in ("left_context", "right_context", "context"):
         cv = args.get(c, "")
         if cv:
@@ -275,12 +276,10 @@ def query(args, abort_event=None):
                 if nr_hits - 1 < ns.start_local:
                     kwic = []
                     skip_corpus = True
-
             if not skip_corpus:
                 kwic, nr_hits = query_and_parse(corpus, within=within[corpus], context=context[corpus],
                                                 start=ns.start_local, end=ns.end_local, abort_event=abort_event,
                                                 **queryparams)
-
             statistics[corpus] = nr_hits
             ns.total_hits += nr_hits
 
@@ -509,7 +508,7 @@ def query_corpus(corpus, cqp, within=None, cut=None, context=None, show=None, sh
 
     # Skip the CQP version
     next(lines)
-
+    
     # Remove cache file if it exceeds max cache file size
     if use_cache and not is_cached and cache_max_query_data:
         cache_file = os.path.join(cache_dir, f"{corpus}:{cache_query_temp}")
@@ -518,6 +517,7 @@ def query_corpus(corpus, cqp, within=None, cut=None, context=None, show=None, sh
                 os.remove(cache_file)
         except FileNotFoundError:
             pass
+
 
     # Read the attributes and their relative order
     attrs = cwb.read_attributes(lines)
@@ -551,7 +551,6 @@ def query_parse_lines(corpus, lines, attrs, show, show_structs, free_matches=Fal
     last_line_span = ()
     
     kwic = []
-    matchestemp = []
     for line in lines:
         if abort_event and abort_event.is_set():
             return

@@ -60,6 +60,7 @@ angular.module("korpApp").component("kwic", {
             </span>
             <span ng-if="$ctrl.hits">
                 <word-color-meanings
+                    corpus="$ctrl.corpusOrder"
                     change-color="$ctrl.updateColor(error)"
                 ></word-color-meanings>
             </span>
@@ -197,7 +198,6 @@ angular.module("korpApp").component("kwic", {
          */
         function ($location, $element, $timeout, $scope, popupService, $http) {
             let $ctrl = this
-
             const selectionManager = new SelectionManager()
 
             $ctrl.getClass = (sentence) => {
@@ -366,7 +366,7 @@ angular.module("korpApp").component("kwic", {
 
             $ctrl.currentErrorColor = "_"
 
-            $ctrl.updateColor = function(error = "_") {
+            $ctrl.updateColor = function (error = "_") {
                 $ctrl.currentErrorColor = error
                 addColors()
             }
@@ -376,10 +376,11 @@ angular.module("korpApp").component("kwic", {
                     if (!$ctrl.kwic) return
 
                     const errorTypes = new Set()
-                    const apiUrl = `${settings.korp_backend_url}/lexicon?positional_attribute=error_type`
+                    const apiUrl = `${settings.korp_backend_url}/lexicon?positional_attribute=error_type&corpus=${$ctrl.corpusOrder}`
 
                     $http.get(apiUrl).then((response) => {
                         const resp = response.data.Arguments
+                        if (resp === undefined) return
                         for (let index = 0; index < resp.length; index++) {
                             const error_type = resp[index]
                             if (error_type === "_" || error_type === "__UNDEF__" || error_type === "") continue
@@ -411,7 +412,7 @@ angular.module("korpApp").component("kwic", {
                                     let tag = `background-color:${colors[index]};`
                                     //Add error tag to all words in a phrase, so we can add gradients to them correctly
                                     if (word.classList.contains("phrase")) {
-                                        [...word.getElementsByClassName("word")].forEach((phraseWord) => {
+                                        ;[...word.getElementsByClassName("word")].forEach((phraseWord) => {
                                             if (!phraseWord.className.contains(error)) {
                                                 phraseWord.className += " " + error
                                             }
@@ -420,7 +421,7 @@ angular.module("korpApp").component("kwic", {
                                             }
                                         })
                                     }
-                                    //Add a color to error words without a color   
+                                    //Add a color to error words without a color
                                     if (word.getAttribute("style") == null) {
                                         word.setAttribute("style", tag)
                                     } else {
@@ -442,7 +443,7 @@ angular.module("korpApp").component("kwic", {
                                         }
                                         gradients.add(colors[index])
                                         gradients = Array.from(gradients)
-                                        tag = `background-color:${prevColor}; background-image: linear-gradient(to top, ${gradients});`
+                                        tag = `background-color:${prevColor}; background-image: linear-gradient(to left, ${gradients});`
                                         word.setAttribute("style", tag)
                                     }
                                 })

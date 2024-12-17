@@ -8,15 +8,12 @@ bp = Blueprint("upload", __name__)
 
 @bp.route("/upload", methods=["GET", "POST"])
 def upload():
-    # TODO: kui uploadid ja puudub config kaust, tekita selle
     uploaded_file = request.files.get('corpus')
-    #if os.path.exists(app.config["CWB_VRTS"] + "/" + uploaded_file.filename):
-    #    return jsonify({
-    #        "message": "juba olmas"
-    #    })
-    uploaded_file.save(app.config["CWB_VRTS"] + "/" + uploaded_file.filename)
-    fileName = uploaded_file.filename[:uploaded_file.filename.index(".")]
-    cwb = [f"cwb-encode -d {app.config["CWB_DATA"]} -f {app.config["CWB_VRTS"] + "/" + uploaded_file.filename} -R {app.config["CWB_REGISTRY"] + "/" + fileName}"]
+    fileName = uploaded_file.filename[:uploaded_file.filename.index(".")].lower()
+    os.makedirs(f"{app.config['CWB_VRTS']}", exist_ok=True)
+    os.makedirs(f"{app.config['CWB_DATA']}/{fileName}", exist_ok=True)
+    uploaded_file.save(f"{app.config['CWB_VRTS']}/{uploaded_file.filename}")
+    cwb = [f"cwb-encode -d {app.config['CWB_DATA']}/{fileName} -f {app.config['CWB_VRTS']}/{uploaded_file.filename} -R {app.config['CWB_REGISTRY']}/{fileName}"]
     with open(app.config["CWB_VRTS"] + "/" + uploaded_file.filename, 'r') as vrtFile:
         pAttrs = vrtFile.readline()[1:].split()
         configPath = "./config/attributes/positional"
@@ -35,6 +32,8 @@ def upload():
             if len(sAttr) == 1: sAttr = sAttr[0][1:-1]
             else: sAttr = sAttr[0][1:]
 
+            if "corpus" in sAttr or "text" in sAttr: continue
+
             if sAttr[0] != "/": # check for closing tag
                 if sAttr in sAttrs:
                     sAttrs[sAttr] += 1
@@ -44,6 +43,10 @@ def upload():
                     sAttrs[sAttr+"_max"] = 1
             else:
                 sAttrs[sAttr[1:]] -= 1
+        sAttrs["text"] = 1
+        sAttrs["text_max"] = 1
+        sAttrs["corpus"] = 1
+        sAttrs["corpus_max"] = 1
 
         # generating corpus yaml file
         configPath = "./config/corpora"
@@ -68,7 +71,7 @@ def upload():
                 if sAttr == "sentence":
                     contextLength = 2
                 for i in range(sAttrMax):
-                    for j in range(contextLength):
+                    for j in range(1, contextLength + 1):
                         if i == 0:
                             corpusYaml.write(f"  - label:\n      eng: {j} {sAttr}\n    value: {j} {sAttr}\n")
                         else:
@@ -95,10 +98,9 @@ def upload():
         command = " ".join(cwb)
         try:
             result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
-            command = f"cwb-makeall -r {app.config["CWB_REGISTRY"]} {fileName}"
+            command = f"cwb-makeall -r {app.config['CWB_REGISTRY']} {fileName}"
             result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
         except subprocess.CalledProcessError as e:
-            print("error")
             print(e)
 
     return jsonify({

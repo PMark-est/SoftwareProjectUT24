@@ -750,8 +750,7 @@ td {
 }
 
 .token_selected {
-  color: #fff !important;
-  background-color: #0006 !important;
+  color: #888
 }
 
 .aux_selected {
@@ -2231,8 +2230,7 @@ li.active a span .num-to-find {
   position: relative;
   text-align: center;
   width: 100%;
-  background-color:lightgreen;
-  color: #000;  
+  border: 2px solid black;
 }
 
 .wordColors{

@@ -104,26 +104,17 @@ angular.module("korpApp").component("header", {
                     </svg>
                 </div>
 
-                <div class="grow min-[1150px]_hidden"></div>
-                <form id="corpusForm" ng-submit="$ctrl.onSubmit()">
-                    <input name="corpus" type="file" />
-                    <button type="submit" id="addCorpusBtn">LISA KORPUS</button>
-                    <corpus-chooser></corpus-chooser>
-                </form>
-                <div class="grow hidden min-[1150px]_block"></div>
-
-                <a
-                    class="hidden min-[1150px]_flex h-20 shrink flex-col justify-end"
-                    href="https://spraakbanken.gu.se/"
-                    target="_blank"
-                >
-                    <img ng-if="$root.lang == 'swe'" src="${sbxLogo}" />
-                    <img ng-if="$root.lang != 'swe'" src="${sbxLogoEn}" />
-                </a>
-
-                <a class="hidden xl_block shrink-0 h-32 -mt-2" href="https://gu.se/" target="_blank">
-                    <img src="${guLogo}" class="h-full" />
-                </a>
+                <corpus-chooser></corpus-chooser>
+                <div>
+                    <form id="corpusForm" ng-submit="$ctrl.addCorpus()">
+                        <input name="corpus" type="file" accept=".vrt" />
+                        <button type="submit" id="addCorpusBtn">LISA KORPUS</button>
+                    </form>
+                    <form id="genForm" ng-submit="$ctrl.generateVRT()">
+                        <input name="vrt" type="file" accept=".txt .html" />
+                        <button type="submit" id="addCorpusBtn">Tekita VRT</button>
+                    </form>
+                </div>
             </div>
         </div>
     `,
@@ -162,21 +153,43 @@ angular.module("korpApp").component("header", {
                 $rootScope.show_modal = "about"
             }
 
-            $ctrl.onSubmit = () => {
+            $ctrl.addCorpus = () => {
                 const formElement = document.getElementById("corpusForm")
                 const formData = new FormData(formElement)
-                const payload = Object.fromEntries(formData)
-                const file = payload.corpus
 
-                if (file.name === "") return
-
-                if (file.name.slice(file.name.lastIndexOf("."), file.name.length) !== ".vrt") return
-
-                //TODO post backendi
                 fetch(`${settings.korp_backend_url}/upload`, {
                     method: "POST",
                     body: formData,
                 })
+            }
+
+            $ctrl.generateVRT = () => {
+                const formElement = document.getElementById("genForm")
+                const formData = new FormData(formElement)
+                let filename = Object.fromEntries(formData).vrt.name
+                filename = filename.substring(0, filename.lastIndexOf("."))
+
+                fetch(`${settings.korp_backend_url}/genvrt`, {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            return null
+                        }
+                        return response.blob()
+                    })
+                    .then((blob) => {
+                        if (blob === null) return
+                        const url = window.URL.createObjectURL(blob)
+                        const a = document.createElement("a")
+                        a.style.display = "none"
+                        a.href = url
+                        a.download = `${filename}.vrt`
+                        document.body.appendChild(a)
+                        a.click()
+                        window.URL.revokeObjectURL(url)
+                    })
             }
 
             $rootScope.show_modal = false
